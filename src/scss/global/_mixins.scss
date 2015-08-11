@@ -1,0 +1,4 @@
+@mixin globalSlideTransition() {
+    transition: transform .8s $easeInOutQuart;
+}
+

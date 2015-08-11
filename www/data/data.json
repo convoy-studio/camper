@@ -1,0 +1,22 @@
+{
+	"content": {
+		"header-title": "Header",
+		"footer-title": "Footer"
+	},
+
+	"menu": [
+		{
+			"id": "landing",
+			"name": "Landing",
+			"url": "/landing"
+		}
+	],
+
+	"default-route": "/landing",
+
+	"routing": {
+		"/landing": {
+			"title": "landing page"
+		}
+	}
+}
