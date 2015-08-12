@@ -1,7 +1,5 @@
 {
-	"content": {
-		"header-title": "Header",
-		"footer-title": "Footer"
+	"infos": {
 	},
 
 	"menu": [
@@ -12,26 +10,175 @@
 		}
 	],
 
+	"planets": ["ski", "metal", "alaska", "wood", "gemstone"],
+
+	"lang": {
+		"en": {
+			"global": {
+				"header-title": "Header",
+				"footer-title": "Footer"
+			},
+			"landing": {
+				"main-title": "landing page"
+			},
+			"ski": {
+				"main-title": "ski page"
+			},
+			"metal": {
+				"main-title": "metal page"
+			},
+			"alaska": {
+				"main-title": "alaska page"
+			},
+			"wood": {
+				"main-title": "wood page"
+			},
+			"gemstone": {
+				"main-title": "gemstone page"
+			}
+		},
+		"fr": {
+			"global": {
+				"header-title": "Header fr",
+				"footer-title": "Footer fr"
+			},
+			"landing": {
+				"main-title": "landing page fr"
+			},
+			"ski": {
+				"main-title": "ski page fr"
+			},
+			"metal": {
+				"main-title": "metal page fr"
+			},
+			"alaska": {
+				"main-title": "alaska page fr"
+			},
+			"wood": {
+				"main-title": "wood page fr"
+			},
+			"gemstone": {
+				"main-title": "gemstone page fr"
+			}
+		},
+		"es": {
+			"global": {
+				"header-title": "Header es",
+				"footer-title": "Footer es"
+			},
+			"landing": {
+				"main-title": "landing page es"
+			},
+			"ski": {
+				"main-title": "ski page es"
+			},
+			"metal": {
+				"main-title": "metal page es"
+			},
+			"alaska": {
+				"main-title": "alaska page es"
+			},
+			"wood": {
+				"main-title": "wood page es"
+			},
+			"gemstone": {
+				"main-title": "gemstone page es"
+			}
+		},
+		"it": {
+			"global": {
+				"header-title": "Header it",
+				"footer-title": "Footer it"
+			},
+			"landing": {
+				"main-title": "landing page it"
+			},
+			"ski": {
+				"main-title": "ski page it"
+			},
+			"metal": {
+				"main-title": "metal page it"
+			},
+			"alaska": {
+				"main-title": "alaska page it"
+			},
+			"wood": {
+				"main-title": "wood page it"
+			},
+			"gemstone": {
+				"main-title": "gemstone page it"
+			}
+		},
+		"ge": {
+			"global": {
+				"header-title": "Header ge",
+				"footer-title": "Footer ge"
+			},
+			"landing": {
+				"main-title": "landing page ge"
+			},
+			"ski": {
+				"main-title": "ski page ge"
+			},
+			"metal": {
+				"main-title": "metal page ge"
+			},
+			"alaska": {
+				"main-title": "alaska page ge"
+			},
+			"wood": {
+				"main-title": "wood page ge"
+			},
+			"gemstone": {
+				"main-title": "gemstone page ge"
+			}
+		},
+		"pt": {
+			"global": {
+				"header-title": "Header pt",
+				"footer-title": "Footer pt"
+			},
+			"landing": {
+				"main-title": "landing page pt"
+			},
+			"ski": {
+				"main-title": "ski page pt"
+			},
+			"metal": {
+				"main-title": "metal page pt"
+			},
+			"alaska": {
+				"main-title": "alaska page pt"
+			},
+			"wood": {
+				"main-title": "wood page pt"
+			},
+			"gemstone": {
+				"main-title": "gemstone page pt"
+			}
+		},
+	},
+
 	"default-route": "/landing",
 
 	"routing": {
 		"/landing": {
-			"title": "landing page"
+			"id": "landing"
 		},
 		"/planet/ski": {
-			"title": "ski page"
+			"id": "ski"
 		},
 		"/planet/metal": {
-
+			"id": "metal"
 		},
 		"/planet/alaska": {
-			"title": "alaska page"
+			"id": "alaska"
 		},
 		"/planet/wood": {
-
+			"id": "wood"
 		},
 		"/planet/gemstone": {
-
+			"id": "gemstone"
 		}
 	}
 }

@@ -20,7 +20,7 @@ class Router {
 		hasher.init()
 	}
 	_setupCrossroads() {
-		var planets = ['ski', 'metal', 'alaska', 'wood', 'gemstone']
+		var planets = AppStore.planets()
 		var basicSection = crossroads.addRoute('{page}', this._onFirstDegreeURLHandler.bind(this), 3)
 		basicSection.rules = {
 	        page : ['landing'] //valid sections

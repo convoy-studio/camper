@@ -31,6 +31,19 @@ class Utils {
 		
 		return css
 	}
+	static Closest(array, num) {
+        var i=0;
+	    var minDiff=2000;
+	    var ans;
+	    for(i in array){
+			var m=Math.abs(num-array[i]);
+			if(m<minDiff){ 
+				minDiff=m; 
+				ans=array[i]; 
+			}
+		}
+	    return ans;
+    }
 }
 
 export default Utils

@@ -14,6 +14,11 @@ export default class Alaska extends BasePlanetPage {
 	    this.pxContainer.addChild(this.bunny)
 		super.componentDidMount()
 	}
+	setupAnimations() {
+		this.tlIn.from(this.bunny, 1, { alpha:0, ease:Expo.easeInOut }, 0)
+		this.tlOut.to(this.bunny, 1, { alpha:0, ease:Expo.easeInOut }, 0)
+		super.setupAnimations()
+	}
 	didTransitionInComplete() {
 		super.didTransitionInComplete()
 	}

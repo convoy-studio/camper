@@ -4,16 +4,22 @@ import {EventEmitter2} from 'eventemitter2'
 import assign from 'object-assign'
 import data from 'GlobalData'
 import Router from 'Router'
+import Utils from 'Utils'
 
 function _pageRouteIdChanged(id) {
 }
 function _getPageContent() {
     var hashObj = Router.getNewHash()
-    var content = data.routing[hashObj.hash]
-    return content
+    var contentId = data.routing[hashObj.hash].id
+    var langContent = _getContentByLang(JS_lang)
+    var pageContent = langContent[contentId]
+    return pageContent
 }
 function _getMenuContent() {
     return data.menu
+}
+function _getContentByLang(lang) {
+    return data.lang[lang]
 }
 function _getAppData() {
     return data
@@ -22,7 +28,8 @@ function _getDefaultRoute() {
     return data['default-route']
 }
 function _getGlobalContent() {
-    return data.content
+    var langContent = _getContentByLang(JS_lang)
+    return langContent['global']
 }
 function _windowWidthHeight() {
     return {
@@ -48,6 +55,30 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     globalContent: function() {
         return _getGlobalContent()
+    },
+    mainImageUrl: function(id, responsiveArray) {
+        return AppStore.baseMediaPath() + '/image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
+    },
+    baseMediaPath: function() {
+        return AppStore.getEnvironment().static
+    },
+    getEnvironment: function() {
+        return AppConstants.ENVIRONMENTS[ENV]
+    },
+    responsiveImageWidth: function(responsiveArray) {
+        var windowW = AppStore.Window.w
+        return Utils.Closest(responsiveArray, windowW)
+    },
+    responsiveImageSize: function(responsiveArray, baseWidth, baseHeight) {
+        var baseW = baseWidth || AppConstants.MEDIA_GLOBAL_W
+        var baseH = baseHeight || AppConstants.MEDIA_GLOBAL_H
+        var responsiveWidth = AppStore.responsiveImageWidth(responsiveArray)
+        var scale = (responsiveWidth / baseW) * 1
+        var responsiveHeight = baseH * scale
+        return [ responsiveWidth, responsiveHeight ]
+    },
+    planets: function() {
+        return data.planets
     },
     Window: function() {
         return _windowWidthHeight()
