@@ -2,8 +2,6 @@
 html, body {
     padding: 0;
     margin: 0;
-    font-family: "CircularBook";
-    background-color: $gray;
 }
 
 html {
@@ -13,17 +11,17 @@ html {
 }
 
 #app-container  {
-    
     // font smoothing
     -webkit-font-smoothing: antialiased;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 
     // disable text-selection & text cursor
-    // @include user-select(none);
     cursor: default;
 
     // overall text params
     font-size: $globalFontSize;
+    font-family: "CircularBook";
+    background-color: $gray;
 
     position: absolute;
     @extend .full;
@@ -53,3 +51,7 @@ footer, header {
     color: $white;
 }
 
+#px-container {
+    position: absolute;
+    @extend .top-left;
+}

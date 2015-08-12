@@ -12,6 +12,7 @@
     "babel-core": "^5.8.21",
     "babelify": "^6.1.2",
     "bower-resolve": "^2.2.1",
+    "brfs": "^1.4.0",
     "browser-sync": "^2.7.10",
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.8",

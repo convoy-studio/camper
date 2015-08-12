@@ -20,21 +20,29 @@ class Router {
 		hasher.init()
 	}
 	_setupCrossroads() {
+		var planets = ['ski', 'metal', 'alaska', 'wood', 'gemstone']
 		var basicSection = crossroads.addRoute('{page}', this._onFirstDegreeURLHandler.bind(this), 3)
 		basicSection.rules = {
 	        page : ['landing'] //valid sections
 	    }
-	    var planetSection = crossroads.addRoute('/planet/{planetId}/{productId}', this._onPlanetURLHandler.bind(this), 2)
+	    var planetProductSection = crossroads.addRoute('/planet/{planetId}/{productId}', this._onPlanetProductURLHandler.bind(this), 2)
+	    planetProductSection.rules = {
+	    	planetId: planets,
+	    	productId : /^[0-2]/
+	    }
+	    var planetSection = crossroads.addRoute('/planet/{planetId}', this._onPlanetURLHandler.bind(this), 2)
 	    planetSection.rules = {
-	    	planetId: ['ski', 'metal', 'alaska', 'wood', 'gemstone'],
-	    	productId : /^[0-9]/
+	    	planetId: planets
 	    }
 	}
 	_onFirstDegreeURLHandler(pageId) {
 		this._assignRoute(pageId)
 	}
-	_onPlanetURLHandler(planetId, productId) {
+	_onPlanetProductURLHandler(planetId, productId) {
 		this._assignRoute(productId)
+	}
+	_onPlanetURLHandler(planetId) {
+		this._assignRoute(planetId)
 	}
 	_onBlogPostURLHandler(postId) {
 		this._assignRoute(postId)
@@ -61,7 +69,6 @@ class Router {
 			parent: parent,
 			targetId: targetId
 		}
-		console.log(hasher.newHash)
 		AppActions.pageHasherChanged()
 	}
 	_didHasherChange(newHash, oldHash) {

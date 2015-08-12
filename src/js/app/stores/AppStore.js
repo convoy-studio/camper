@@ -30,7 +30,6 @@ function _windowWidthHeight() {
         h: window.innerHeight
     }
 }
-
 var AppStore = assign({}, EventEmitter2.prototype, {
     emitChange: function(type, item) {
         this.emit(type, item)
@@ -53,6 +52,13 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     Window: function() {
         return _windowWidthHeight()
     },
+    addPXChild: function(item) {
+        AppStore.PXContainer.add(item.child)
+    },
+    removePXChild: function(item) {
+        AppStore.PXContainer.remove(item.child)
+    },
+    PXContainer: undefined,
     Orientation: AppConstants.LANDSCAPE,
     dispatcherIndex: AppDispatcher.register(function(payload){
         var action = payload.action
@@ -67,6 +73,19 @@ var AppStore = assign({}, EventEmitter2.prototype, {
                 AppStore.Orientation = (AppStore.Window.w > AppStore.Window.h) ? AppConstants.LANDSCAPE : AppConstants.PORTRAIT
                 AppStore.emitChange(action.actionType)
                 break
+            case AppConstants.PX_CONTAINER_IS_READY:
+                AppStore.PXContainer = action.item
+                AppStore.emitChange(action.actionType)
+                break
+            case AppConstants.PX_CONTAINER_ADD_CHILD:
+                AppStore.addPXChild(action.item)
+                AppStore.emitChange(action.actionType)
+                break
+            case AppConstants.PX_CONTAINER_REMOVE_CHILD:
+                AppStore.removePXChild(action.item)
+                AppStore.emitChange(action.actionType)
+                break
+
         }
         return true
     })

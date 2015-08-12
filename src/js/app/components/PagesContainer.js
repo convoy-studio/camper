@@ -5,6 +5,10 @@ import BasePager from 'BasePager'
 import Router from 'Router'
 import Landing from 'Landing'
 import LandingTemplate from 'Landing_hbs'
+import Alaska from 'Alaska'
+import AlaskaTemplate from 'Alaska_hbs'
+import Ski from 'Ski'
+import SkiTemplate from 'Ski_hbs'
 
 class PagesContainer extends BasePager {
 	constructor() {
@@ -24,26 +28,38 @@ class PagesContainer extends BasePager {
 	}
 	didHasherChange() {
 		var hash = Router.getNewHash()
-		var type = undefined
-		var template = undefined
-		switch(hash.parent) {
-			// case 'about':
-			// 	type = About
-			// 	template = AboutTemplate
-			// 	break
-			// case 'contact':
-			// 	type = Contact
-			// 	template = ContactTemplate
-			// 	break
-			case 'landing':
-				type = Landing
-				template = LandingTemplate
+		var template = { type: undefined, partial: undefined }
+		switch(hash.parts.length) {
+			case 1:
+				template.type = Landing
+				template.partial = LandingTemplate
+				break
+			case 2:
+				switch(hash.targetId) {
+					case 'ski':
+						template.type = Ski
+						template.partial = SkiTemplate
+						break
+					case 'metal':
+						break
+					case 'alaska':
+						template.type = Alaska
+						template.partial = AlaskaTemplate
+						break
+					case 'wood':
+						break
+					case 'gemstone':
+						break
+				}
+				break
+			case 3:
 				break
 			default:
-				type = Landing
-				template = LandingTemplate
+				template.type = Landing
+				template.partial = LandingTemplate		
 		}
-		this.setupNewComponent(hash.parent, type, template)
+
+		this.setupNewComponent(hash.parent, template)
 	}
 }
 
