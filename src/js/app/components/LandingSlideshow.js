@@ -13,6 +13,7 @@ export default class LandingSlideshow {
 	 	this.slideshowWrapper = new PIXI.Container()
 	 	this.pxContainer.addChild(this.slideshowContainer)
 	 	this.slideshowContainer.addChild(this.slideshowWrapper)
+	 	this.counter = 0
 	 	
 	 	var planets = AppStore.planets()
 	 	this.slides = []
@@ -107,7 +108,7 @@ export default class LandingSlideshow {
 	}
 	update() {
 		var slides = this.slides
-
+		this.counter += 0.012
 		for (var i = 0; i < slides.length; i++) {
 			var s = slides[i]
 			s.maskRect.valueScale += (0.4 - s.maskRect.valueScale) * 0.05
@@ -116,9 +117,12 @@ export default class LandingSlideshow {
 			s.maskRect.width = s.maskRect.newW * ease
 			var maskRectX = (1 - ease) * s.maskRect.newX
 			this.drawCenteredMaskRect(s.maskRect.g, maskRectX, 0, s.maskRect.width, s.maskRect.height)
+			s.sprite.skew.x = Math.cos(this.counter) * 0.020
+			s.sprite.skew.y = Math.sin(this.counter) * 0.020
 		}
 		this.slideshowContainer.scale.x += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
-		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.06
+		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
+		// this.slideshowContainer.y = this.slideshowContainer.baseY + Math.sin(this.counter) * 4
 	}
 	positionSlideshowContainer() {
 		var windowW = AppStore.Window.w
@@ -129,9 +133,10 @@ export default class LandingSlideshow {
 		this.slideshowContainer.pivot.y = windowH >> 1
 		this.slideshowContainer.x = (windowW >> 1)
 		this.slideshowContainer.y = (windowH >> 1)
-		this.slideshowContainer.scale.x = 1.2
-		this.slideshowContainer.scale.y = 1.2
-		this.slideshowContainer.scaleXY = 1
+		this.slideshowContainer.baseY = this.slideshowContainer.y
+		this.slideshowContainer.scale.x = 1.3
+		this.slideshowContainer.scale.y = 1.3
+		this.slideshowContainer.scaleXY = 1.05
 	}
 	applyValuesToSlides() {
 		var windowW = AppStore.Window.w
@@ -140,14 +145,11 @@ export default class LandingSlideshow {
 		for (var i = 0; i < this.slides.length; i++) {
 			var s = this.slides[i]
 			this.applyResponsiveImgToSlideDependsWindow(s)
-			var hightlightedSlideW = windowW * 0.8
-			var normalSlideW = windowW * 0.1
+			var hightlightedSlideW = windowW * 0.7
+			var normalSlideW = windowW * 0.15
 			var slideW = 0
-			if(s.highlight) {
-				slideW = hightlightedSlideW
-			}else{
-				slideW = normalSlideW
-			}
+			if(s.highlight) slideW = hightlightedSlideW
+			else slideW = normalSlideW
 			this.resizeAndPositionImgSprite(s, slideW, windowW, windowH)
 			s.maskRect.newW = slideW
 			s.maskRect.height = windowH

@@ -1,6 +1,7 @@
 import Page from 'Page'
 import LandingSlideshow from 'LandingSlideshow'
 import AppStore from 'AppStore'
+import Compass from 'Compass'
 
 export default class Landing extends Page {
 	constructor(props) {
@@ -9,6 +10,9 @@ export default class Landing extends Page {
 	componentDidMount() {
 		this.landingSlideshow = new LandingSlideshow(this.pxContainer)
 		this.landingSlideshow.componentDidMount()
+
+		this.compass = new Compass(this.pxContainer)
+		this.compass.componentDidMount()
 
 		this.onKeyPressed = this.onKeyPressed.bind(this)
 		$(document).keydown(this.onKeyPressed)
@@ -35,12 +39,14 @@ export default class Landing extends Page {
 	}
 	update() {
 		this.landingSlideshow.update()
+		this.compass.update()
 		super.update()
 	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.landingSlideshow.resize()
+		this.compass.resize()
 		super.resize()
 	}
 }

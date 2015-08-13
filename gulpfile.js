@@ -23,6 +23,7 @@ var browserify = require('browserify')
 var watchify = require('watchify')
 var babelify = require('babelify')
 var svg = require('svg-browserify');
+var glslify = require('glslify')
 var hbsfy = require("hbsfy").configure({
     extensions: ["hbs"]
 });
@@ -254,6 +255,7 @@ var tasks = {
         bundler.transform(hbsfy)
         bundler.transform(aliasify)
         bundler.transform(svg)
+        bundler.transform(glslify)
     }
 }
 

@@ -7,6 +7,7 @@ import TweenMax from 'gsap'
 import raf from 'raf'
 import FastClick from 'fastclick'
 import pixi from 'pixi.js'
+
 window.jQuery = window.$ = $
 
 FastClick(document.body)
