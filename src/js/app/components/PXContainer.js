@@ -11,11 +11,7 @@ export default class PXContainer {
 		$(this.renderer.view).attr('id', 'px-container')
 		el.append(this.renderer.view)
 
-		this.animate = this.animate.bind(this)
-
 		this.stage = new PIXI.Container()
-
-		this.animate()
 	}
 	add(child) {
 		this.stage.addChild(child)
@@ -23,8 +19,7 @@ export default class PXContainer {
 	remove(child) {
 		this.stage.removeChild(child)
 	}
-	animate() {
-	    requestAnimationFrame(this.animate)
+	update() {
 	    this.renderer.render(this.stage)
 	}
 	resize() {

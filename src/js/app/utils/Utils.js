@@ -26,9 +26,23 @@ class Utils {
 			width: newW,
 			height: newH,
 			left: (windowW >> 1) - (newW >> 1),
-			top: (windowH >> 1) - (newH >> 1)
+			top: (windowH >> 1) - (newH >> 1),
+			scale: scale
 		}
-		
+		return css
+	}
+	static ResizePositionProportionallyWithAnchorCenter(windowW, windowH, contentW, contentH) {
+		var aspectRatio = contentW / contentH
+		var scale = ((windowW / windowH) < aspectRatio) ? (windowH / contentH) * 1 : (windowW / contentW) * 1
+		var newW = contentW * scale
+		var newH = contentH * scale
+		var css = {
+			width: newW,
+			height: newH,
+			left: (windowW >> 1),
+			top: (windowH >> 1),
+			scale: scale
+		}
 		return css
 	}
 	static Closest(array, num) {

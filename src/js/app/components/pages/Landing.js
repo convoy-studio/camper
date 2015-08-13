@@ -18,11 +18,9 @@ export default class Landing extends Page {
 	onKeyPressed(e) {
 		switch(e.which) {
 	        case 37: // left
-	        	console.log('left')
 	        	this.landingSlideshow.previous()
 	        break;
 	        case 39: // right
-	        	console.log('right')
 	        	this.landingSlideshow.next()
 	        break;
 	        default: return;
@@ -34,6 +32,10 @@ export default class Landing extends Page {
 	}
 	didTransitionOutComplete() {
 		super.didTransitionOutComplete()
+	}
+	update() {
+		this.landingSlideshow.update()
+		super.update()
 	}
 	resize() {
 		var windowW = AppStore.Window.w

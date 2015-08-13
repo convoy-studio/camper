@@ -56,6 +56,7 @@
     "yargs": "^3.10.0"
   },
   "devDependencies": {
+    "bezier-easing": "^1.1.1",
     "by": "^0.2.3",
     "crossroads": "^0.12.0",
     "eventemitter2": "^0.4.14",

@@ -20,20 +20,27 @@ class AppTemplate extends BaseComponent {
 	componentDidMount() {
 		super.componentDidMount()
 
-		var frontContainer = new FrontContainer()
-		frontContainer.render('#app-template')
+		// var frontContainer = new FrontContainer()
+		// frontContainer.render('#app-template')
 
-		var pagesContainer = new PagesContainer()
-		pagesContainer.render('#app-template')
+		this.pagesContainer = new PagesContainer()
+		this.pagesContainer.render('#app-template')
 
 		this.pxContainer = new PXContainer()
 		this.pxContainer.init('#app-template')
 		AppActions.pxContainerIsReady(this.pxContainer)
 
 		GlobalEvents.resize()
+
+		this.animate()
 	}
 	componentWillUnmount() {
 		super.componentWillUnmount()
+	}
+	animate() {
+		requestAnimationFrame(this.animate)
+	    this.pxContainer.update()
+	    this.pagesContainer.update()
 	}
 	resize() {
 		this.pxContainer.resize()

@@ -27,6 +27,8 @@ export default class Page extends BasePage {
 	resize() {
 		super.resize()
 	}
+	update() {
+	}
 	componentWillUnmount() {
 		AppStore.off(AppConstants.WINDOW_RESIZE, this.resize)
 		super.componentWillUnmount()

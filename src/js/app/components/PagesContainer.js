@@ -60,6 +60,10 @@ class PagesContainer extends BasePager {
 		}
 
 		this.setupNewComponent(hash.parent, template)
+		this.currentComponent = this.components['new-component']
+	}
+	update() {
+		if(this.currentComponent != undefined) this.currentComponent.update()
 	}
 }
 
