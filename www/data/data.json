@@ -11,12 +11,20 @@
 	],
 
 	"planets": ["ski", "metal", "alaska", "wood", "gemstone"],
+	"elements": ["fire", "earth", "metal", "water", "wood"],
 
 	"lang": {
 		"en": {
 			"global": {
 				"header-title": "Header",
-				"footer-title": "Footer"
+				"footer-title": "Footer",
+				"elements": {
+					"fire": "fire",
+					"earth": "earth",
+					"metal": "metal",
+					"water": "water",
+					"wood": "wood"
+				}
 			},
 			"landing": {
 				"main-title": "landing page"
@@ -40,7 +48,14 @@
 		"fr": {
 			"global": {
 				"header-title": "Header fr",
-				"footer-title": "Footer fr"
+				"footer-title": "Footer fr",
+				"elements": {
+					"fire": "fire",
+					"earth": "earth",
+					"metal": "metal",
+					"water": "water",
+					"wood": "wood"
+				}
 			},
 			"landing": {
 				"main-title": "landing page fr"
@@ -64,7 +79,14 @@
 		"es": {
 			"global": {
 				"header-title": "Header es",
-				"footer-title": "Footer es"
+				"footer-title": "Footer es",
+				"elements": {
+					"fire": "fire",
+					"earth": "earth",
+					"metal": "metal",
+					"water": "water",
+					"wood": "wood"
+				}
 			},
 			"landing": {
 				"main-title": "landing page es"
@@ -88,7 +110,14 @@
 		"it": {
 			"global": {
 				"header-title": "Header it",
-				"footer-title": "Footer it"
+				"footer-title": "Footer it",
+				"elements": {
+					"fire": "fire",
+					"earth": "earth",
+					"metal": "metal",
+					"water": "water",
+					"wood": "wood"
+				}
 			},
 			"landing": {
 				"main-title": "landing page it"
@@ -112,7 +141,14 @@
 		"ge": {
 			"global": {
 				"header-title": "Header ge",
-				"footer-title": "Footer ge"
+				"footer-title": "Footer ge",
+				"elements": {
+					"fire": "fire",
+					"earth": "earth",
+					"metal": "metal",
+					"water": "water",
+					"wood": "wood"
+				}
 			},
 			"landing": {
 				"main-title": "landing page ge"
@@ -136,7 +172,14 @@
 		"pt": {
 			"global": {
 				"header-title": "Header pt",
-				"footer-title": "Footer pt"
+				"footer-title": "Footer pt",
+				"elements": {
+					"fire": "fire",
+					"earth": "earth",
+					"metal": "metal",
+					"water": "water",
+					"wood": "wood"
+				}
 			},
 			"landing": {
 				"main-title": "landing page pt"

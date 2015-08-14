@@ -48,6 +48,15 @@ class Utils {
 	static Rand(min, max) {
 		return Math.random() * (max - min) + min
 	}
+	static DegreesToRadians(degrees) {
+		return degrees * (Math.PI / 180)
+	}
+    static RadiansToDegrees(radians) {
+        return radians * (180 / Math.PI)
+    }
+    static Limit(v, min, max) {
+    	return (Math.min(max, Math.max(min, v)));
+    }
 	static Closest(array, num) {
         var i=0;
 	    var minDiff=2000;

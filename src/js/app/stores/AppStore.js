@@ -83,6 +83,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     planets: function() {
         return data.planets
     },
+    elementsOfNature: function() {
+        return data.elements
+    },
     Window: function() {
         return _windowWidthHeight()
     },
