@@ -5,7 +5,7 @@ export default class PXContainer {
 	}
 	init(elementId) {
 		// this.renderer = new PIXI.CanvasRenderer(800, 600)
-		this.renderer = new PIXI.autoDetectRenderer(800, 600)
+		this.renderer = new PIXI.autoDetectRenderer(800, 600, { antialias: true })
 
 		var el = $(elementId)
 		$(this.renderer.view).attr('id', 'px-container')

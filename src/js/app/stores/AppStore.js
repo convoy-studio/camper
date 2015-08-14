@@ -65,6 +65,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     getEnvironment: function() {
         return AppConstants.ENVIRONMENTS[ENV]
     },
+    getLineWidth: function() {
+        return 3
+    },
     responsiveImageWidth: function(responsiveArray) {
         var windowW = AppStore.Window.w
         return Utils.Closest(responsiveArray, windowW)
@@ -89,6 +92,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     removePXChild: function(item) {
         AppStore.PXContainer.remove(item.child)
     },
+    Mouse: undefined,
     PXContainer: undefined,
     Orientation: AppConstants.LANDSCAPE,
     dispatcherIndex: AppDispatcher.register(function(payload){

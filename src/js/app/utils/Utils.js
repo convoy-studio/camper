@@ -45,6 +45,9 @@ class Utils {
 		}
 		return css
 	}
+	static Rand(min, max) {
+		return Math.random() * (max - min) + min
+	}
 	static Closest(array, num) {
         var i=0;
 	    var minDiff=2000;
