@@ -9,6 +9,17 @@
 *, *:before, *:after {
     box-sizing: inherit;
 }
+#temp {
+    // left: -10000px;
+    // top: -10000px;
+    text-transform: uppercase;
+    text-align: left;
+    font-size: 30px;
+    font-family: 'FuturaBold';
+    position: absolute;
+    z-index: 99999;
+    @include opacity(1);
+}
 button {
     background: none repeat scroll 0 0 transparent;
     border: medium none;

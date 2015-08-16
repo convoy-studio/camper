@@ -8,7 +8,9 @@ export default class CompassRings {
 	}
 	componentDidMount() {
 		this.ringsContainer = new PIXI.Container()
+		this.titlesContainer = new PIXI.Container()
 		this.container.addChild(this.ringsContainer)
+		this.container.addChild(this.titlesContainer)
 
 		this.circles = []
 		var ciclesLen = 6
@@ -18,35 +20,79 @@ export default class CompassRings {
 			this.ringsContainer.addChild(g)
 		}
 
+		// var tempHtml = '<div>'
+
 		this.titles = []
 		var elements = AppStore.elementsOfNature()
 		var elementsTexts = AppStore.globalContent().elements
 		this.fontSize = 30
+		this.letterSpacing = 0.19
 		for (var i = 0; i < elements.length; i++) {
 			var elementId = elements[i]
 			var elementTitle = elementsTexts[elementId].toUpperCase()
 			var letters = elementTitle.split('')
-			var texts = []
-			for (var j = 0; j < letters.length; j++) {
-				var txt = new PIXI.Text(letters[j], { font: this.fontSize + 'px FuturaBold', fill: 'white', align: 'left' })
-				txt.anchor.x = 0.5
-				txt.anchor.y = 0.5
-				this.ringsContainer.addChild(txt)
-				texts.push(txt)
-			}
+			// var texts = []
+			
+			// tempHtml += '<div class="title-temp">'+elementTitle+'</div>'
+
+			// for (var j = 0; j < letters.length; j++) {
+			// 	var l = {}
+			// 	var char = new PIXI.Text(letters[j], { font: this.fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
+			// 	l.char = char
+			// 	// char.anchor.x = 0.5
+			// 	// char.anchor.y = 0.5
+			// 	this.titlesContainer.addChild(char)
+			// 	texts.push(l)
+			// }
+			// this.titles.push({
+			// 	letters: texts,
+			// 	degBegin: this.getDegreesBeginForTitlesById(elementId),
+			// })
+			
+			var txt = new PIXI.Text(elementTitle, { font: this.fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
+			txt.anchor.x = 0.5
+			txt.anchor.y = 0.5
+			this.titlesContainer.addChild(txt)
 			this.titles.push({
-				letters: texts,
-				degBegin: this.getDegreesBeginForTitlesById(elementId)
+				txt: txt,
+				width: txt.width,
+				degBegin: this.getDegreesBeginForTitlesById(elementId),
 			})
 		}
+
+		// // add stuff temporary so to grab the width of each char
+		// var $temp = $('#temp .relative')
+		// tempHtml += '</div>'
+		// var $tempEl = $(tempHtml)
+		// $temp.html($tempEl)
+		// var $tempTitles = $tempEl.find(".title-temp")
+		// console.log($tempTitles)
+
+		// for (var i = 0; i < this.titles.length; i++) {
+		// 	var totalWordW = 0
+		// 	var title = this.titles[i]
+		// 	var splitTitle = new SplitText($tempTitles[i], {type:"chars"})
+		// 	for (var j = 0; j < title.letters.length; j++) {
+		// 		var letter = title.letters[j] 
+		// 		var $splitChar = $(splitTitle.chars[j])
+		// 		var posLeft = $splitChar.position().left
+		// 		letter.width = $splitChar.width()
+		// 		console.log($splitChar.get(0), $splitChar.position().left, $splitChar.width())
+		// 		// console.log(tempSlitText)
+		// 		// letter.width = Utils.Limit(letter.width, 18, 24)
+		// 		totalWordW += posLeft
+		// 	}
+		// 	// console.log(totalWordW)
+		// }
 	}
 	getDegreesBeginForTitlesById(id) {
+		// be careful starts from center -90deg
 		switch(id) {
-			case 'fire': return 135
-			case 'earth': return 60
-			case 'metal': return 330
-			case 'water': return 270
-			case 'wood': return 210
+			case 'fire': return -130
+			case 'earth': return -50
+			case 'metal': return 15
+			case 'water': return 90
+			case 'wood': return 165
 		}
 	}
 	drawRings() {
@@ -165,25 +211,49 @@ export default class CompassRings {
 	}
 	drawTitles(r, color) {
 		var titles = this.titles
-		var r = r + 24
+		var r = r + 44
 		for (var i = 0; i < titles.length; i++) {
 			var title = titles[i]
 			var letters = title.letters
-			var degBegin = 240 + title.degBegin
-			var deg, angle, x, y, letter, letterW;
+			var degBegin = title.degBegin
+			var deg, angle, x, y, letter, letterW, letterScale, numDegreesPerLetter, marginScale;
 			var totalDeg = degBegin
-			var lettersLen = letters.length
-			for (var j = 0; j < lettersLen; j++) {
-				letter = letters[j]
-				deg = totalDeg
-				angle = Utils.DegreesToRadians(deg)
-				letter.x = r * Math.cos(angle)
-				letter.y = r * Math.sin(angle)
-				letter.rotation = angle + Utils.DegreesToRadians(90)
-				letterW = letter.width
-				letterW = Utils.Limit(letterW, 21, 29)
-				totalDeg += (letterW * 0.19)
-			}
+			// var totalDeg = 0
+			// var lettersLen = letters.length
+			// letterScale = (this.radius / 320) * 1
+
+			angle = Utils.DegreesToRadians(degBegin)
+			title.txt.rotation = angle + Utils.DegreesToRadians(90)
+			title.txt.x = r * Math.cos(angle)
+			title.txt.y = r * Math.sin(angle)
+
+			// for (var j = 0; j < lettersLen; j++) {
+			// 	letter = letters[j]
+			// 	deg = totalDeg
+			// 	marginScale = 1.4 + ((letter.width / 25) * 1.4)
+			// 	numDegreesPerLetter = (letter.width * 0.4)
+			// 	angle = Utils.DegreesToRadians(deg)
+			// 	letter.char.scale.x = letterScale
+			// 	letter.char.scale.y = letterScale
+			// 	letter.deg = totalDeg
+			// 	letter.currentDeg = numDegreesPerLetter
+			// 	// letter.char.x = totalDeg
+			// 	// letter.char.y = 40 * i
+			// 	totalDeg += numDegreesPerLetter
+			// }
+
+			// for (j = 0; j < lettersLen; j++) {
+			// 	letter = letters[j]
+			// 	// console.log(totalDeg)
+			// 	deg = letter.deg
+			// 	angle = Utils.DegreesToRadians(deg)
+			// 	letter.char.rotation = angle + Utils.DegreesToRadians(90)
+			// 	letter.char.x = r * Math.cos(angle)
+			// 	letter.char.y = r * Math.sin(angle)
+
+			// 	// letter.char.y = r * Math.sin(angle)
+			// }
+
 		}
 	}
 	resize(radius) {
