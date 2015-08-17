@@ -16,8 +16,8 @@
   ],
   "dependencies": {
     "gsap": "~1.17.0",
-    "fastclick": "~1.0.6",
-    "pixi.js": "~3.0.7"
+    "pixi.js": "~3.0.7",
+    "PreloadJS": "browserify_support"
   },
   "moduleType": [
     "node"

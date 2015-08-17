@@ -10,7 +10,14 @@ function _pageRouteIdChanged(id) {
 }
 function _getPageContent() {
     var hashObj = Router.getNewHash()
-    var contentId = data.routing[hashObj.hash].id
+    var contentId, routeScope;
+    if(hashObj.parts.length > 2) {
+        var parentPath = hashObj.hash.replace('/'+hashObj.targetId, '')
+        routeScope = AppStore.getRoutePathScope(parentPath)
+    }else{
+        routeScope = AppStore.getRoutePathScope(hashObj.hash)
+    }
+    contentId = routeScope.id
     var langContent = _getContentByLang(JS_lang)
     var pageContent = langContent[contentId]
     return pageContent
@@ -61,6 +68,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     baseMediaPath: function() {
         return AppStore.getEnvironment().static
+    },
+    getRoutePathScope: function(id) {
+        return data.routing[id]
     },
     getEnvironment: function() {
         return AppConstants.ENVIRONMENTS[ENV]

@@ -5,14 +5,14 @@ import App from 'App'
 import $ from 'jquery'
 import TweenMax from 'gsap'
 import raf from 'raf'
-import FastClick from 'fastclick'
 import pixi from 'pixi.js'
+import PreloadJS from 'PreloadJS'
 
 window.jQuery = window.$ = $
-
-FastClick(document.body)
+console.log(PreloadJS)
 
 // Start App
 var app = new App()
 app.init()
 
+malheureusement

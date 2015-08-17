@@ -5,10 +5,10 @@ import BasePager from 'BasePager'
 import Router from 'Router'
 import Landing from 'Landing'
 import LandingTemplate from 'Landing_hbs'
-import Alaska from 'Alaska'
-import AlaskaTemplate from 'Alaska_hbs'
-import Ski from 'Ski'
-import SkiTemplate from 'Ski_hbs'
+import PlanetExperiencePage from 'PlanetExperiencePage'
+import PlanetExperiencePageTemplate from 'PlanetExperiencePage_hbs'
+import PlanetCampaignPage from 'PlanetCampaignPage'
+import PlanetCampaignPageTemplate from 'PlanetCampaignPage_hbs'
 
 class PagesContainer extends BasePager {
 	constructor() {
@@ -35,24 +35,12 @@ class PagesContainer extends BasePager {
 				template.partial = LandingTemplate
 				break
 			case 2:
-				switch(hash.targetId) {
-					case 'ski':
-						template.type = Ski
-						template.partial = SkiTemplate
-						break
-					case 'metal':
-						break
-					case 'alaska':
-						template.type = Alaska
-						template.partial = AlaskaTemplate
-						break
-					case 'wood':
-						break
-					case 'gemstone':
-						break
-				}
+				template.type = PlanetExperiencePage
+				template.partial = PlanetExperiencePageTemplate
 				break
 			case 3:
+				template.type = PlanetCampaignPage
+				template.partial = PlanetCampaignPageTemplate
 				break
 			default:
 				template.type = Landing
