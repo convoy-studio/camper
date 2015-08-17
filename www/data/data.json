@@ -388,19 +388,44 @@
 			"id": "landing"
 		},
 		"/planet/ski": {
-			"id": "ski"
+			"id": "ski",
+			"experience-assets": [
+				"bunny.png"
+			],
+			"campaign-assets": [
+			]
 		},
 		"/planet/metal": {
-			"id": "metal"
+			"id": "metal",
+			"experience-assets": [
+				"bunny.png"
+			],
+			"campaign-assets": [
+			]
 		},
 		"/planet/alaska": {
-			"id": "alaska"
+			"id": "alaska",
+			"experience-assets": [
+				"bunny.png"
+			],
+			"campaign-assets": [
+			]
 		},
 		"/planet/wood": {
-			"id": "wood"
+			"id": "wood",
+			"experience-assets": [
+				"bunny.png"
+			],
+			"campaign-assets": [
+			]
 		},
 		"/planet/gemstone": {
-			"id": "gemstone"
+			"id": "gemstone",
+			"experience-assets": [
+				"bunny.png"
+			],
+			"campaign-assets": [
+			]
 		}
 	}
 }

@@ -1,4 +1,5 @@
 import BaseComponent from 'BaseComponent'
+import TransitionAnimations from 'TransitionAnimations'
 
 export default class BasePage extends BaseComponent {
 	constructor(props) {
@@ -6,12 +7,6 @@ export default class BasePage extends BaseComponent {
 		this.props = props
 		this.didTransitionInComplete = this.didTransitionInComplete.bind(this)
 		this.didTransitionOutComplete = this.didTransitionOutComplete.bind(this)
-		this.tlIn = new TimelineMax({
-			onComplete:this.didTransitionInComplete
-		})
-		this.tlOut = new TimelineMax({
-			onComplete:this.didTransitionOutComplete
-		})
 	}
 	componentDidMount() {
 		this.resize()
@@ -19,22 +14,15 @@ export default class BasePage extends BaseComponent {
 		setTimeout(() => this.props.isReady(this.props.hash), 0)
 	}
 	setupAnimations() {
-		var wrapper = this.child
-
-		// transition In
-		this.tlIn.from(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
-
-		// transition Out
-		this.tlOut.to(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
-
-		// reset
-		this.tlIn.pause(0)
-		this.tlOut.pause(0)
 	}
 	willTransitionIn() {
+		var keyName = this.props.type.toLowerCase() + '-in'
+		this.tlIn = TransitionAnimations[keyName](this, {onComplete:this.didTransitionInComplete})
 		this.tlIn.play(0)
 	}
 	willTransitionOut() {
+		var keyName = this.props.type.toLowerCase() + '-out'
+		this.tlOut = TransitionAnimations[keyName](this, {onComplete:this.didTransitionOutComplete})
 		this.tlOut.play(0)
 	}
 	didTransitionInComplete() {
@@ -46,12 +34,12 @@ export default class BasePage extends BaseComponent {
 	resize() {
 	}
 	forceUnmount() {
-		this.tlIn.pause(0)
-		this.tlOut.pause(0)
+		if(this.tlIn != undefined) this.tlIn.pause(0)
+		if(this.tlOut != undefined) this.tlOut.pause(0)
 		this.didTransitionOutComplete()
 	}
 	componentWillUnmount() {
-		this.tlIn.clear()
-		this.tlOut.clear()
+		if(this.tlIn != undefined) this.tlIn.clear()
+		if(this.tlOut != undefined) this.tlOut.clear()
 	}
 }

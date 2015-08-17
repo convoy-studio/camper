@@ -55,6 +55,7 @@ class BasePager extends BaseComponent {
 		var props = {
 			id: this.currentPageDivRef,
 			isReady: this.onPageReady,
+			type: AppStore.getTypeOfPage(),
 			hash: hash,
 			didTransitionInComplete: this.didPageTransitionInComplete,
 			didTransitionOutComplete: this.didPageTransitionOutComplete,

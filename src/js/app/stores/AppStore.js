@@ -9,18 +9,63 @@ import Utils from 'Utils'
 function _pageRouteIdChanged(id) {
 }
 function _getPageContent() {
+    var scope = _getPageId()
+    var langContent = _getContentByLang(JS_lang)
+    var pageContent = langContent[scope]
+    return pageContent
+}
+function _getPageId() {
+    return _getContentScope().id
+}
+function _getTypeOfNewAndOldPage() {
+    var newHasher = Router.getNewHash()
+    var oldHasher = Router.getOldHash()
+    return { newType: _getTypeOfPage(newHasher), oldType: _getTypeOfPage(oldHasher) }
+}
+function _getTypeOfPage(hash) {
+    var h = hash || Router.getNewHash()
+    if(h == undefined) return AppConstants.NONE
+    if(h.parts.length == 3) return AppConstants.CAMPAIGN
+    else if(h.parts.length == 2) return AppConstants.EXPERIENCE
+    else return AppConstants.LANDING
+}
+function _getContentScope() {
     var hashObj = Router.getNewHash()
-    var contentId, routeScope;
+    var routeScope;
     if(hashObj.parts.length > 2) {
         var parentPath = hashObj.hash.replace('/'+hashObj.targetId, '')
-        routeScope = AppStore.getRoutePathScope(parentPath)
+        routeScope = AppStore.getRoutePathScopeById(parentPath)
     }else{
-        routeScope = AppStore.getRoutePathScope(hashObj.hash)
+        routeScope = AppStore.getRoutePathScopeById(hashObj.hash)
     }
-    contentId = routeScope.id
-    var langContent = _getContentByLang(JS_lang)
-    var pageContent = langContent[contentId]
-    return pageContent
+    return routeScope
+}
+function _getPageAssetsToLoad() {
+    var scope = _getContentScope()
+    var hashObj = Router.getNewHash()
+    var targetId;
+    if(hashObj.parts.length > 2) targetId = 'campaign-assets'
+    else targetId = 'experience-assets'
+    var manifest = _addBasePathsToUrls(scope[targetId], scope.id, targetId)
+    return manifest
+}
+function _addBasePathsToUrls(urls, pageId, targetId) {
+    var basePath = _getPageAssetsBasePathById(pageId, targetId)
+    var manifest = []
+    if(urls == undefined || urls.length < 1) return manifest
+    for (var i = 0; i < urls.length; i++) {
+        var splitter = urls[i].split('.')
+        var fileName = splitter[0]
+        var extension = splitter[1]
+        manifest[i] = {
+            id: pageId + "-" + fileName,
+            src: basePath + fileName + '.' + extension
+        }
+    }
+    return manifest
+}
+function _getPageAssetsBasePathById(id, assetGroupId) {
+    return AppStore.baseMediaPath() + '/image/planets/' + id + '/' + assetGroupId + '/'
 }
 function _getMenuContent() {
     return data.menu
@@ -69,14 +114,26 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     baseMediaPath: function() {
         return AppStore.getEnvironment().static
     },
-    getRoutePathScope: function(id) {
+    getRoutePathScopeById: function(id) {
         return data.routing[id]
+    },
+    getPageId: function() {
+        return _getPageId()
+    },
+    getTypeOfNewAndOldPage: function() {
+        return _getTypeOfNewAndOldPage()
+    },
+    getTypeOfPage: function(hash) {
+        return _getTypeOfPage(hash)
     },
     getEnvironment: function() {
         return AppConstants.ENVIRONMENTS[ENV]
     },
     getLineWidth: function() {
         return 3
+    },
+    pageAssetsToLoad: function() {
+        return _getPageAssetsToLoad()
     },
     responsiveImageWidth: function(responsiveArray) {
         var windowW = AppStore.Window.w

@@ -13,6 +13,7 @@ import PlanetCampaignPageTemplate from 'PlanetCampaignPage_hbs'
 class PagesContainer extends BasePager {
 	constructor() {
 		super()
+		this.swallowHasherChange = false
 	}
 	componentWillMount() {
 		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
@@ -27,6 +28,15 @@ class PagesContainer extends BasePager {
 		super.componentWillUnmount()
 	}
 	didHasherChange() {
+		// Swallow hasher change if the change is fast as 1sec
+		if(this.swallowHasherChange) return 
+		else this.setupNewbornComponents()
+		this.swallowHasherChange = true
+		this.hasherChangeTimeout = setTimeout(()=>{
+			this.swallowHasherChange = false
+		}, 1000)
+	}
+	setupNewbornComponents() {
 		var hash = Router.getNewHash()
 		var template = { type: undefined, partial: undefined }
 		switch(hash.parts.length) {

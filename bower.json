@@ -17,7 +17,7 @@
   "dependencies": {
     "gsap": "~1.17.0",
     "pixi.js": "~3.0.7",
-    "PreloadJS": "browserify_support"
+    "createjs-preloadjs": "~0.6.1"
   },
   "moduleType": [
     "node"
