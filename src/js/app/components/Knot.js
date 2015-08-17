@@ -1,3 +1,5 @@
+import AppStore from 'AppStore'
+
 export default class Knot {
 	constructor(springContainer) {
 		this.springContainer = springContainer
@@ -12,10 +14,10 @@ export default class Knot {
 		this.g = new PIXI.Graphics()
 		this.springContainer.addChild(this.g)
 		
-		var radius = 20
-		this.g.lineStyle(0);
+		var radius = 8
+		this.g.lineStyle(AppStore.getLineWidth(), 0xffffff, 1);
 		this.g.beginFill(0xffffff, 1);
-		this.g.drawCircle(0,0,radius);
+		this.g.drawCircle(0, 0, radius);
 		this.g.endFill()
 
 		return this

@@ -7,6 +7,7 @@ import BezierEasing from 'bezier-easing'
 export default class LandingSlideshow {
 	constructor(pxContainer) {
 		this.pxContainer = pxContainer
+		this.currentId = 'alaska'
 	}
 	componentDidMount() {
 		this.slideshowContainer = new PIXI.Container()
@@ -76,6 +77,7 @@ export default class LandingSlideshow {
 			var slide = this.slides[i]
 			if(i == 2) {
 				slide.highlight = true // Highlight the middle elements
+				this.currentId = slide.id
 				this.slideshowWrapper.setChildIndex(slide.wrapperContainer, totalLen)
 			}else{
 				slide.highlight = false

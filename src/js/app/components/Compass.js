@@ -25,11 +25,40 @@ export default class Compass {
  		this.sprite.width = this.sprite.originalW * scale
  		this.sprite.height = this.sprite.originalH * scale
 
- 		this.springGarden = new SpringGarden(this.container)
- 		this.springGarden.componentDidMount()
-
  		this.rings = new CompassRings(this.container)
- 		this.rings.componentDidMount()
+	 	this.rings.componentDidMount()
+
+	 	var skiData = AppStore.productsDataById('ski')
+	 	var planets = AppStore.planets()
+
+ 		this.planets = []
+	 	for (var i = 0; i < planets.length; i++) {
+	 		var p = {}
+	 		var planetId = planets[i]
+	 		var planetData = AppStore.productsDataById(planetId)
+	 		p.products = []
+	 		for (var j = 0; j < planetData.length; j++) {
+	 			var product = planetData[j]
+	 			var springGarden = new SpringGarden(this.container, product.knots, product.color)
+ 				springGarden.componentDidMount()
+ 				p.products[j] = springGarden
+	 		};
+	 		p.id = planetId
+	 		this.planets[i] = p
+	 	}
+
+ 		// var products = skiData
+ 		// for (var i = 0; i < products.length; i++) {
+ 		// 	var product = products[i]
+ 		// 	var springGarden = new SpringGarden(this.container, product.knots, product.color)
+ 		// 	springGarden.componentDidMount()
+ 		// 	this.productSpringGardens[i] = springGarden
+ 		// }
+
+ 		setTimeout(()=>{
+ 			this.highlightPlanet('alaska')
+ 		}, 1000)
+
 
  	// 	this.explosionConfig = {
 		//     animation: 0,
@@ -49,9 +78,37 @@ export default class Compass {
 	    // 	this.explosionConfig.shoot()
 	    // }, 4000)
 	}
+	highlightPlanet(id) {
+		for (var i = 0; i < this.planets.length; i++) {
+			var planet = this.planets[i]
+			var len = planet.products.length
+			if(planet.id == id) {
+				
+				for (var j = 0; j < len; j++) {
+					var garden = planet.products[j]
+					garden.open()
+				}
+				
+			}else{
+
+				for (var j = 0; j < len; j++) {
+					var garden = planet.products[j]
+					garden.close()
+				}
+
+			}
+		}
+	}
 	update() {
 		// this.explosionEffect.update()
-		this.springGarden.update()
+	 	for (var i = 0; i < this.planets.length; i++) {
+			var planet = this.planets[i]
+			var len = planet.products.length
+			for (var j = 0; j < len; j++) {
+				var garden = planet.products[j]
+				garden.update()
+			}
+		}
 	}
 	resize() {
 		var windowW = AppStore.Window.w
@@ -59,10 +116,17 @@ export default class Compass {
 		var sizePercentage = 0.3
 		// var radius = (AppStore.Orientation == AppConstants.LANDSCAPE) ? (windowW * sizePercentage) : (windowH * sizePercentage)
 		// this.explosionEffect.resize()
-		
 		var radius = windowH * sizePercentage
-		this.springGarden.resize(radius)
 		this.rings.resize(radius)
+
+		for (var i = 0; i < this.planets.length; i++) {
+			var planet = this.planets[i]
+			var len = planet.products.length
+			for (var j = 0; j < len; j++) {
+				var garden = planet.products[j]
+				garden.resize(radius)
+			}
+		}
 
 		this.container.x = (windowW >> 1)
 		this.container.y = (windowH >> 1)

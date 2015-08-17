@@ -22,10 +22,10 @@ export default class Landing extends Page {
 	onKeyPressed(e) {
 		switch(e.which) {
 	        case 37: // left
-	        	this.landingSlideshow.previous()
+	        	this.previous()
 	        break;
 	        case 39: // right
-	        	this.landingSlideshow.next()
+	        	this.next()
 	        break;
 	        default: return;
 	    }
@@ -36,6 +36,14 @@ export default class Landing extends Page {
 	}
 	didTransitionOutComplete() {
 		super.didTransitionOutComplete()
+	}
+	next() {
+		this.landingSlideshow.next()
+		this.compass.highlightPlanet(this.landingSlideshow.currentId)
+	}
+	previous() {
+		this.landingSlideshow.previous()
+		this.compass.highlightPlanet(this.landingSlideshow.currentId)
 	}
 	update() {
 		this.landingSlideshow.update()

@@ -86,6 +86,16 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     elementsOfNature: function() {
         return data.elements
     },
+    allGender: function() {
+        return data.gender
+    },
+    productsData: function() {
+        return data['products-data']
+    },
+    productsDataById: function(id) {
+        var data = AppStore.productsData()
+        return data[id]
+    },
     Window: function() {
         return _windowWidthHeight()
     },

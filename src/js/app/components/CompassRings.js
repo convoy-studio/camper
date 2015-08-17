@@ -9,8 +9,10 @@ export default class CompassRings {
 	componentDidMount() {
 		this.ringsContainer = new PIXI.Container()
 		this.titlesContainer = new PIXI.Container()
+		this.genderContainer = new PIXI.Container()
 		this.container.addChild(this.ringsContainer)
 		this.container.addChild(this.titlesContainer)
+		this.container.addChild(this.genderContainer)
 
 		this.circles = []
 		var ciclesLen = 6
@@ -20,70 +22,40 @@ export default class CompassRings {
 			this.ringsContainer.addChild(g)
 		}
 
-		// var tempHtml = '<div>'
-
 		this.titles = []
+		this.genders = []
+		var globalContent = AppStore.globalContent()
 		var elements = AppStore.elementsOfNature()
-		var elementsTexts = AppStore.globalContent().elements
-		this.fontSize = 30
-		this.letterSpacing = 0.19
+		var allGender = AppStore.allGender()
+		var elementsTexts = globalContent.elements
+		var genderTexts = globalContent.gender
+		var fontSize = 30
+
 		for (var i = 0; i < elements.length; i++) {
 			var elementId = elements[i]
 			var elementTitle = elementsTexts[elementId].toUpperCase()
-			var letters = elementTitle.split('')
-			// var texts = []
-			
-			// tempHtml += '<div class="title-temp">'+elementTitle+'</div>'
-
-			// for (var j = 0; j < letters.length; j++) {
-			// 	var l = {}
-			// 	var char = new PIXI.Text(letters[j], { font: this.fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
-			// 	l.char = char
-			// 	// char.anchor.x = 0.5
-			// 	// char.anchor.y = 0.5
-			// 	this.titlesContainer.addChild(char)
-			// 	texts.push(l)
-			// }
-			// this.titles.push({
-			// 	letters: texts,
-			// 	degBegin: this.getDegreesBeginForTitlesById(elementId),
-			// })
-			
-			var txt = new PIXI.Text(elementTitle, { font: this.fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
+			var txt = new PIXI.Text(elementTitle, { font: fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
 			txt.anchor.x = 0.5
 			txt.anchor.y = 0.5
 			this.titlesContainer.addChild(txt)
 			this.titles.push({
 				txt: txt,
-				width: txt.width,
 				degBegin: this.getDegreesBeginForTitlesById(elementId),
 			})
 		}
 
-		// // add stuff temporary so to grab the width of each char
-		// var $temp = $('#temp .relative')
-		// tempHtml += '</div>'
-		// var $tempEl = $(tempHtml)
-		// $temp.html($tempEl)
-		// var $tempTitles = $tempEl.find(".title-temp")
-		// console.log($tempTitles)
-
-		// for (var i = 0; i < this.titles.length; i++) {
-		// 	var totalWordW = 0
-		// 	var title = this.titles[i]
-		// 	var splitTitle = new SplitText($tempTitles[i], {type:"chars"})
-		// 	for (var j = 0; j < title.letters.length; j++) {
-		// 		var letter = title.letters[j] 
-		// 		var $splitChar = $(splitTitle.chars[j])
-		// 		var posLeft = $splitChar.position().left
-		// 		letter.width = $splitChar.width()
-		// 		console.log($splitChar.get(0), $splitChar.position().left, $splitChar.width())
-		// 		// console.log(tempSlitText)
-		// 		// letter.width = Utils.Limit(letter.width, 18, 24)
-		// 		totalWordW += posLeft
-		// 	}
-		// 	// console.log(totalWordW)
-		// }
+		for (var i = 0; i < allGender.length; i++) {
+			var genderId = allGender[i]
+			var genderTitle = genderTexts[genderId].toUpperCase()
+			var txt = new PIXI.Text(genderTitle, { font: fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
+			txt.anchor.x = 0.5
+			txt.anchor.y = 0.5
+			this.genderContainer.addChild(txt)
+			this.genders.push({
+				txt: txt,
+				degBegin: this.getDegreesBeginForGenderById(genderId),
+			})
+		}
 	}
 	getDegreesBeginForTitlesById(id) {
 		// be careful starts from center -90deg
@@ -93,6 +65,14 @@ export default class CompassRings {
 			case 'metal': return 15
 			case 'water': return 90
 			case 'wood': return 165
+		}
+	}
+	getDegreesBeginForGenderById(id) {
+		// be careful starts from center -90deg
+		switch(id) {
+			case 'male': return -150
+			case 'female': return -30
+			case 'animal': return 90
 		}
 	}
 	drawRings() {
@@ -113,7 +93,10 @@ export default class CompassRings {
 			else r = lastR + radiusMargin
 
 			// lines
-			if(i==3) this.drawAroundThreeGroupLines(lastR, r, g, lineW, color)
+			if(i==3) {
+				this.drawAroundThreeGroupLines(lastR, r, g, lineW, color)
+				this.drawGenders(r, color)
+			}
 			if(i==6) {
 				this.drawAroundFourGroupLines(lastR, r, g, lineW, color)
 				this.drawTitles(r, color)
@@ -214,46 +197,21 @@ export default class CompassRings {
 		var r = r + 44
 		for (var i = 0; i < titles.length; i++) {
 			var title = titles[i]
-			var letters = title.letters
-			var degBegin = title.degBegin
-			var deg, angle, x, y, letter, letterW, letterScale, numDegreesPerLetter, marginScale;
-			var totalDeg = degBegin
-			// var totalDeg = 0
-			// var lettersLen = letters.length
-			// letterScale = (this.radius / 320) * 1
-
-			angle = Utils.DegreesToRadians(degBegin)
+			var angle = Utils.DegreesToRadians(title.degBegin)
 			title.txt.rotation = angle + Utils.DegreesToRadians(90)
 			title.txt.x = r * Math.cos(angle)
 			title.txt.y = r * Math.sin(angle)
-
-			// for (var j = 0; j < lettersLen; j++) {
-			// 	letter = letters[j]
-			// 	deg = totalDeg
-			// 	marginScale = 1.4 + ((letter.width / 25) * 1.4)
-			// 	numDegreesPerLetter = (letter.width * 0.4)
-			// 	angle = Utils.DegreesToRadians(deg)
-			// 	letter.char.scale.x = letterScale
-			// 	letter.char.scale.y = letterScale
-			// 	letter.deg = totalDeg
-			// 	letter.currentDeg = numDegreesPerLetter
-			// 	// letter.char.x = totalDeg
-			// 	// letter.char.y = 40 * i
-			// 	totalDeg += numDegreesPerLetter
-			// }
-
-			// for (j = 0; j < lettersLen; j++) {
-			// 	letter = letters[j]
-			// 	// console.log(totalDeg)
-			// 	deg = letter.deg
-			// 	angle = Utils.DegreesToRadians(deg)
-			// 	letter.char.rotation = angle + Utils.DegreesToRadians(90)
-			// 	letter.char.x = r * Math.cos(angle)
-			// 	letter.char.y = r * Math.sin(angle)
-
-			// 	// letter.char.y = r * Math.sin(angle)
-			// }
-
+		}
+	}
+	drawGenders(r, color) {
+		var genders = this.genders
+		var r = r + 34
+		for (var i = 0; i < genders.length; i++) {
+			var gender = genders[i]
+			var angle = Utils.DegreesToRadians(gender.degBegin)
+			gender.txt.rotation = angle + Utils.DegreesToRadians(90)
+			gender.txt.x = r * Math.cos(angle)
+			gender.txt.y = r * Math.sin(angle)
 		}
 	}
 	resize(radius) {
