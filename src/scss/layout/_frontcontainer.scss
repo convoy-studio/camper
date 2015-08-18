@@ -1,24 +1,77 @@
 #front-container {
 	position: fixed;
 	z-index: 20;
-	a {
-		color: $black;
+	text-transform: uppercase;
+	&, a {
+		font-size: $globalFontSize;
+		color: $white;
+		white-space: nowrap;
 	}
 	header {
-		width: 100%;
-		background-color: yellow;
-		position: fixed;
-		ul {
-			li {
+		& > * {
+			position: absolute;
+		}
+		.logo {
+			$w: 140px;
+			width: $w;
+			left: $PADDING_AROUND;
+			top: $PADDING_AROUND;
+			svg > * {
+				fill: $white;
+			}
+		}
+		.shop-wrapper {
+			& > div {
 				@include inline-block;
-				margin-right: 20px;
+			}
+			.separator {
+				width: 2px;
+				height: $globalFontSize;
+				background-color: $white;
+				position: relative;
+				top: 2px;
+			}
+			.shop-title {
+				margin-right: 6px;
+			}
+			.gender-wrapper {
+				& > div {
+					@include inline-block;
+				}	
+			}
+		}
+		.lang-wrapper {
+			text-align: center;
+			li {
+				margin: 8px 0;
+			}
+			.countries-wrapper {
+			}
+			@for $i from 5 to -1 {
+				.country-#{$i} {
+					@include opacity(0);
+					@include anim(.4s, $i*0.02s, $easeInExpo, scaleY(0.5) translateY(4px) translateZ(0), 0%, 100%, transform opacity);
+				}
+			}
+			&.hovered {
+				.countries-wrapper {
+				}
+
+				@for $i from 0 through 5 {
+					.country-#{$i} {
+						@include opacity(1);
+						@include anim(.6s, $i*0.04s, $easeOutExpo, scaleY(1) translateY(0px) translateZ(0), 0%, 0%, transform opacity);
+					}
+				}
 			}
 		}
 	}
 	footer {
+		& > * {
+			position: absolute;
+		}
 		ul#social-wrapper{
 			$w: 34px;
-			position: absolute;
 			li {
 				width: $w;
 				height: $w;

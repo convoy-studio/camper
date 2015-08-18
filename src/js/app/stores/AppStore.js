@@ -10,7 +10,7 @@ function _pageRouteIdChanged(id) {
 }
 function _getPageContent() {
     var scope = _getPageId()
-    var langContent = _getContentByLang(JS_lang)
+    var langContent = _getContentByLang(AppStore.lang())
     var pageContent = langContent[scope]
     return pageContent
 }
@@ -73,6 +73,9 @@ function _getMenuContent() {
 function _getContentByLang(lang) {
     return data.lang[lang]
 }
+function _getGeneralInfos() {
+    return data.infos.lang[AppStore.lang()]
+}
 function _getAppData() {
     return data
 }
@@ -80,7 +83,7 @@ function _getDefaultRoute() {
     return data['default-route']
 }
 function _getGlobalContent() {
-    var langContent = _getContentByLang(JS_lang)
+    var langContent = _getContentByLang(AppStore.lang())
     return langContent['global']
 }
 function _windowWidthHeight() {
@@ -99,8 +102,14 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     menuContent: function() {
         return _getMenuContent()
     },
+    countries: function() {
+        return data.countries
+    },
     appData: function() {
         return _getAppData()
+    },
+    lang: function() {
+        return JS_lang
     },
     defaultRoute: function() {
         return _getDefaultRoute()
@@ -110,6 +119,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     generalInfos: function() {
         return data.infos
+    },
+    generalInfosLangScope: function() {
+        return _getGeneralInfos()
     },
     mainImageUrl: function(id, responsiveArray) {
         return AppStore.baseMediaPath() + '/image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'

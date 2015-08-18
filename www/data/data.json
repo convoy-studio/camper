@@ -2,17 +2,152 @@
 	"infos": {
 		"twitter_url": "http://twitter.com",
 		"facebook_url": "http://facebook.com",
-		"instagram_url": "http://instagram.com"
+		"instagram_url": "http://instagram.com",
+		"lang": {
+			"en": {
+				"countries": {
+					"GBR": "english",
+					"FRA": "french",
+					"ESP": "spanish",
+					"ITA": "italian",
+					"DEU": "german",
+					"PRT": "portugese"
+				},
+				"legal": "legal",
+				"legal_url": "http://google.com",
+				"camper_lab": "camper lab",
+				"camper_lab_url": "http://google.com",
+				"shop_title": "shop",
+				"shop_men": "man",
+				"shop_men_url": "http://google.com",
+				"shop_women": "woman",
+				"shop_women_url": "http://google.com"
+			},
+			"fr": {
+				"countries": {
+					"GBR": "english",
+					"FRA": "french",
+					"ESP": "spanish",
+					"ITA": "italian",
+					"DEU": "german",
+					"PRT": "portugese"
+				},
+				"legal": "legal",
+				"legal_url": "http://google.com",
+				"camper_lab": "camper lab",
+				"camper_lab_url": "http://google.com",
+				"shop_title": "shop",
+				"shop_men": "man",
+				"shop_men_url": "http://google.com",
+				"shop_women": "woman",
+				"shop_women_url": "http://google.com"
+			},
+			"es": {
+				"countries": {
+					"GBR": "english",
+					"FRA": "french",
+					"ESP": "spanish",
+					"ITA": "italian",
+					"DEU": "german",
+					"PRT": "portugese"
+				},
+				"legal": "legal",
+				"legal_url": "http://google.com",
+				"camper_lab": "camper lab",
+				"camper_lab_url": "http://google.com",
+				"shop_title": "shop",
+				"shop_men": "man",
+				"shop_men_url": "http://google.com",
+				"shop_women": "woman",
+				"shop_women_url": "http://google.com"
+			},
+			"it": {
+				"countries": {
+					"GBR": "english",
+					"FRA": "french",
+					"ESP": "spanish",
+					"ITA": "italian",
+					"DEU": "german",
+					"PRT": "portugese"
+				},
+				"legal": "legal",
+				"legal_url": "http://google.com",
+				"camper_lab": "camper lab",
+				"camper_lab_url": "http://google.com",
+				"shop_title": "shop",
+				"shop_men": "man",
+				"shop_men_url": "http://google.com",
+				"shop_women": "woman",
+				"shop_women_url": "http://google.com"
+			},
+			"de": {
+				"countries": {
+					"GBR": "english",
+					"FRA": "french",
+					"ESP": "spanish",
+					"ITA": "italian",
+					"DEU": "german",
+					"PRT": "portugese"
+				},
+				"legal": "legal",
+				"legal_url": "http://google.com",
+				"camper_lab": "camper lab",
+				"camper_lab_url": "http://google.com",
+				"shop_title": "shop",
+				"shop_men": "man",
+				"shop_men_url": "http://google.com",
+				"shop_women": "woman",
+				"shop_women_url": "http://google.com"
+			},
+			"pt": {
+				"countries": {
+					"GBR": "english",
+					"FRA": "french",
+					"ESP": "spanish",
+					"ITA": "italian",
+					"DEU": "german",
+					"PRT": "portugese"
+				},
+				"legal": "legal",
+				"legal_url": "http://google.com",
+				"camper_lab": "camper lab",
+				"camper_lab_url": "http://google.com",
+				"shop_title": "shop",
+				"shop_men": "man",
+				"shop_men_url": "http://google.com",
+				"shop_women": "woman",
+				"shop_women_url": "http://google.com"
+			}
+		}
 	},
 
-	"menu": [
+	"countries": [
 		{
-			"id": "landing",
-			"name": "Landing",
-			"url": "/landing"
+			"id": "GBR",
+			"lang": "en",
+			"url": "http://google.com"
+		},{
+			"id": "FRA",
+			"lang": "fr",
+			"url": "http://google.com"
+		},{
+			"id": "ESP",
+			"lang": "es",
+			"url": "http://google.com"
+		},{
+			"id": "ITA",
+			"lang": "it",
+			"url": "http://google.com"
+		},{
+			"id": "DEU",
+			"lang": "de",
+			"url": "http://google.com"
+		},{
+			"id": "PRT",
+			"lang": "pt",
+			"url": "http://google.com"
 		}
 	],
-
 	"planets": ["ski", "metal", "alaska", "wood", "gemstone"],
 	"elements": ["fire", "earth", "metal", "water", "wood"],
 	"gender": ["male", "female", "animal"],
@@ -310,7 +445,7 @@
 				"main-title": "gemstone page it"
 			}
 		},
-		"ge": {
+		"de": {
 			"global": {
 				"header-title": "Header ge",
 				"footer-title": "Footer ge",

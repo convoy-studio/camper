@@ -276,7 +276,7 @@ bundler.on('update', function() {
 gulp.task('reload-templates', ['templates']);
 
 gulp.task('watch', function() {
-    gulp.watch('./src/scss/**/*.scss', ['reload-sass']);
+    gulp.watch('./src/**/*.scss', ['reload-sass']);
     gulp.watch('./resources/**/*.php', ['reload-templates']);
     gutil.log(gutil.colors.bgRed('Watching for changes...'));
 });
