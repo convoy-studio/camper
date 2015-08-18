@@ -9,6 +9,7 @@ import AppActions from 'AppActions'
 class AppTemplate extends BaseComponent {
 	constructor() {
 		super()
+		this.isReady = undefined
 		AppStore.on(AppConstants.WINDOW_RESIZE, this.resize)
 	}
 	render(parent) {
@@ -33,6 +34,8 @@ class AppTemplate extends BaseComponent {
 		GlobalEvents.resize()
 
 		this.animate()
+
+		setTimeout(()=>{this.isReady()}, 0)
 	}
 	componentWillUnmount() {
 		super.componentWillUnmount()

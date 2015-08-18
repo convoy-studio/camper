@@ -7,7 +7,7 @@ export default class Page extends BasePage {
 	constructor(props) {
 		super(props)
 		this.resize = this.resize.bind(this)
-		this.pxContainer = new PIXI.Container()
+		this.pxContainer = AppStore.getContainer()
 	}
 	componentDidMount() {
 		setTimeout(()=>{AppActions.pxAddChild(this.pxContainer)}, 0)
@@ -24,12 +24,17 @@ export default class Page extends BasePage {
 	setupAnimations() {
 		super.setupAnimations()
 	}
+	getImageUrlById(id) {
+		return Preloader.getImageURL(this.id + '-' + this.props.type.toLowerCase() + '-' + id)
+	}
 	resize() {
 		super.resize()
 	}
 	update() {
 	}
 	componentWillUnmount() {
+		this.pxContainer.removeChildren()
+		AppStore.releaseContainer(this.pxContainer)
 		AppStore.off(AppConstants.WINDOW_RESIZE, this.resize)
 		super.componentWillUnmount()
 	}

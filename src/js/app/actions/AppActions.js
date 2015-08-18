@@ -2,7 +2,7 @@ import AppConstants from 'AppConstants'
 import AppDispatcher from 'AppDispatcher'
 import AppStore from 'AppStore'
 
-function _proceedHasherChangedAction(pageId) {
+function _proceedHasherChangeAction(pageId) {
     AppDispatcher.handleViewAction({
         actionType: AppConstants.PAGE_HASHER_CHANGED,
         item: pageId
@@ -12,10 +12,10 @@ var AppActions = {
     pageHasherChanged: function(pageId) {
         var manifest = AppStore.pageAssetsToLoad()
         if(manifest.length < 1) {
-            _proceedHasherChangedAction(pageId)
+            _proceedHasherChangeAction(pageId)
         }else{
             Preloader.load(manifest, ()=>{
-                _proceedHasherChangedAction(pageId)
+                _proceedHasherChangeAction(pageId)
             })
         }
     },

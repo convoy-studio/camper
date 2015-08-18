@@ -21,7 +21,6 @@ class PagesContainer extends BasePager {
 	}
 	componentDidMount() {
 		super.componentDidMount()
-		this.didHasherChange()
 	}
 	componentWillUnmount() {
 		AppStore.off(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)

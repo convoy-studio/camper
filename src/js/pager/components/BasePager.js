@@ -26,11 +26,15 @@ class BasePager extends BaseComponent {
 		super.componentWillMount()
 	}
 	willPageTransitionIn() {
-		this.switchPagesDivIndex()
-		this.components['new-component'].willTransitionIn()
+		if(PagerStore.firstPageTransition) {
+			this.switchPagesDivIndex()
+			this.components['new-component'].willTransitionIn()
+		}
 	}
 	willPageTransitionOut() {
 		this.components['old-component'].willTransitionOut()
+		this.switchPagesDivIndex()
+		this.components['new-component'].willTransitionIn()
 	}
 	didPageTransitionInComplete() {
 		// console.log('didPageTransitionInComplete')
@@ -62,6 +66,7 @@ class BasePager extends BaseComponent {
 			data: AppStore.pageContent()
 		}
 		var page = new template.type(props)
+		page.id = AppStore.getPageId()
 		page.render(id, el, template.partial, props.data)
 		this.components['old-component'] = this.components['new-component']
 		this.components['new-component'] = page

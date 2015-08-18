@@ -44,12 +44,12 @@ function _getPageAssetsToLoad() {
     var scope = _getContentScope()
     var hashObj = Router.getNewHash()
     var targetId;
-    if(hashObj.parts.length > 2) targetId = 'campaign-assets'
-    else targetId = 'experience-assets'
-    var manifest = _addBasePathsToUrls(scope[targetId], scope.id, targetId)
+    var type = _getTypeOfPage()
+    targetId = type.toLowerCase() + '-assets'
+    var manifest = _addBasePathsToUrls(scope[targetId], scope.id, targetId, type)
     return manifest
 }
-function _addBasePathsToUrls(urls, pageId, targetId) {
+function _addBasePathsToUrls(urls, pageId, targetId, type) {
     var basePath = _getPageAssetsBasePathById(pageId, targetId)
     var manifest = []
     if(urls == undefined || urls.length < 1) return manifest
@@ -58,7 +58,7 @@ function _addBasePathsToUrls(urls, pageId, targetId) {
         var fileName = splitter[0]
         var extension = splitter[1]
         manifest[i] = {
-            id: pageId + "-" + fileName,
+            id: pageId + '-' + type.toLowerCase() + '-' + fileName,
             src: basePath + fileName + '.' + extension
         }
     }
@@ -172,6 +172,19 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     removePXChild: function(item) {
         AppStore.PXContainer.remove(item.child)
     },
+    getTimeline: function() {
+        return AppStore.Pool.getTimeline()
+    },
+    releaseTimeline: function(item) {
+        return AppStore.Pool.releaseTimeline(item)
+    },
+    getContainer: function() {
+        return AppStore.Pool.getContainer()
+    },
+    releaseContainer: function(item) {
+        return AppStore.Pool.releaseContainer(item)
+    },
+    Pool: undefined,
     Mouse: undefined,
     PXContainer: undefined,
     Orientation: AppConstants.LANDSCAPE,

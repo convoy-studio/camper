@@ -18,7 +18,7 @@ class Preloader  {
 		return this.getContentById(id+"-svg")
 	}
 	getImageURL(id) {
-		return this.queue.getResult(id).getAttribute("src")
+		return this.getContentById(id).getAttribute("src")
 	}
 }
 
