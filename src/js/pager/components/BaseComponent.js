@@ -4,10 +4,12 @@ import slug from 'to-slug-case'
 class BaseComponent {
 	constructor() {
 		autobind(this)
+		this.domIsReady = false
 	}
 	componentWillMount() {
 	}
 	componentDidMount() {
+		this.domIsReady = true
 	}
 	render(childId, parentId, template, object) {
 		this.componentWillMount()

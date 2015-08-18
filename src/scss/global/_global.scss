@@ -6,8 +6,7 @@ html, body {
 
 html {
     @extend .full;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 
 #app-container  {
@@ -39,11 +38,6 @@ html {
         position: absolute;
     }
 }
-
-footer, header {
-    padding: 14px;
-}
-
 .page-wrapper {
     @extend .full;
     position: fixed;

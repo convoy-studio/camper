@@ -108,6 +108,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     globalContent: function() {
         return _getGlobalContent()
     },
+    generalInfos: function() {
+        return data.infos
+    },
     mainImageUrl: function(id, responsiveArray) {
         return AppStore.baseMediaPath() + '/image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
     },

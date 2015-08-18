@@ -8,17 +8,28 @@
 		width: 100%;
 		background-color: yellow;
 		position: fixed;
+		ul {
+			li {
+				@include inline-block;
+				margin-right: 20px;
+			}
+		}
 	}
 	footer {
-		width: 100%;
-		background-color: yellow;
-		position: fixed;
-		bottom: 0;
-	}
-	ul {
-		li {
-			@include inline-block;
-			margin-right: 20px;
+		ul#social-wrapper{
+			$w: 34px;
+			position: absolute;
+			li {
+				width: $w;
+				height: $w;
+				margin: 16px 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				svg > * {
+					fill: $white;
+				}
+			}
 		}
 	}
 }

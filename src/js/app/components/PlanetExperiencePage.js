@@ -1,6 +1,11 @@
 import BasePlanetPage from 'BasePlanetPage'
 import AppActions from 'AppActions'
 import AppStore from 'AppStore'
+import AlaskaXP from 'AlaskaXP'
+import SkiXP from 'SkiXP'
+import MetalXP from 'MetalXP'
+import WoodXP from 'WoodXP'
+import GemStoneXP from 'GemStoneXP'
 
 export default class PlanetExperiencePage extends BasePlanetPage {
 	constructor(props) {
@@ -15,14 +20,32 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.pxContainer.addChild(this.g)
 		this.pxContainer.addChild(bunny)
 
+		var XpClazz = this.getExperienceById(this.id)
+		this.experience = new XpClazz()
+		this.experience.componentDidMount()
+
 		super.componentDidMount()
+	}
+	getExperienceById(id) {
+		switch(id){
+			case 'ski': return SkiXP
+			case 'metal': return MetalXP
+			case 'alaska': return AlaskaXP
+			case 'wood': return WoodXP
+			case 'gemstone': return GemStoneXP
+		}
 	}
 	didTransitionOutComplete() {
 		super.didTransitionOutComplete()
 	}
+	update() {
+		this.experience.update()
+	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
+
+		this.experience.resize()
 
 		// draw a rectangle
 		this.g.clear()
@@ -31,5 +54,8 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.g.endFill()
 
 		super.resize()
+	}
+	componentWillUnmount() {
+		super.componentWillUnmount()
 	}
 }

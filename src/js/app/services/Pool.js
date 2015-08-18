@@ -12,11 +12,9 @@ export default class Pool {
 		this.timelines.release(item)
 	}
 	getContainer() {
-		// console.log('get >>>>>>>>>>>>', item)
 		return this.pxContainers.get()
 	}
 	releaseContainer(item) {
-		// console.log('release <<<<<<<<<<<<<', item)
 		this.pxContainers.release(item)
 	}
 }

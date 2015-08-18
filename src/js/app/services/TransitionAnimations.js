@@ -24,6 +24,9 @@ var TransitionAnimations = {
 			case AppConstants.LANDING:
 				timeline.fromTo(scope.pxContainer, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
+			case AppConstants.EXPERIENCE:
+				timeline.fromTo(scope.pxContainer, 1, { x:windowW, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
+				break
 			case AppConstants.CAMPAIGN:
 				timeline.fromTo(scope.pxContainer, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
@@ -38,6 +41,7 @@ var TransitionAnimations = {
 		var types = AppStore.getTypeOfNewAndOldPage()
 		var timeline = _getTimeline(args)
 
+		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
 		timeline.to(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
@@ -45,6 +49,9 @@ var TransitionAnimations = {
 		switch(types.newType){
 			case AppConstants.LANDING:
 				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
+				break
+			case AppConstants.EXPERIENCE:
+				timeline.fromTo(scope.pxContainer, 1, { x:0, ease:Expo.easeInOut }, { x:-windowH, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
 				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:-windowH, ease:Expo.easeInOut }, 0)

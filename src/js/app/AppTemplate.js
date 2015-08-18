@@ -21,8 +21,8 @@ class AppTemplate extends BaseComponent {
 	componentDidMount() {
 		super.componentDidMount()
 
-		// var frontContainer = new FrontContainer()
-		// frontContainer.render('#app-template')
+		this.frontContainer = new FrontContainer()
+		this.frontContainer.render('#app-template')
 
 		this.pagesContainer = new PagesContainer()
 		this.pagesContainer.render('#app-template')
@@ -46,6 +46,7 @@ class AppTemplate extends BaseComponent {
 	    this.pagesContainer.update()
 	}
 	resize() {
+		this.frontContainer.resize()
 		this.pxContainer.resize()
 	}
 }
