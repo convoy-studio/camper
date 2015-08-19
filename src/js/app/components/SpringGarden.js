@@ -44,21 +44,27 @@ export default class SpringGarden {
 		this.filledPolygon.lineStyle(0)
 		this.filledPolygon.moveTo(this.garden[0].k.x, this.garden[0].k.y)
 		var len = this.garden.length
+		var spring = this.config.spring
+		var friction = this.config.friction
+		var springLength = this.config.springLength
 		for (var i = 0; i < len; i++) {
 			var knot = this.garden[i]
+			var knotK = knot.k
 			var previousKnot = this.garden[i-1]
 			previousKnot = (previousKnot == undefined) ? this.garden[len-1] : previousKnot
-			this.springTo(knot.k, knot.toX, knot.toY, i)
+
+			Utils.SpringTo(knotK, knot.toX, knot.toY, i, spring, friction, springLength)
+			knotK.position(knotK.x + knotK.vx, knotK.y + knotK.vy)
 
 			// outline
 			this.outlinePolygon.lineStyle(this.lineW, this.color, 0.8)
 			this.outlinePolygon.moveTo(previousKnot.k.x, previousKnot.k.y)
-			this.outlinePolygon.lineTo(knot.k.x, knot.k.y)
+			this.outlinePolygon.lineTo(knotK.x, knotK.y)
 
 			// this.filledPolygon.lineTo(knot.k.x, knot.k.y)
 		}
 		this.filledPolygon.endFill()
-		this.config.springLength -= (this.config.springLength) * 0.1
+		springLength -= (springLength) * 0.1
 		this.container.rotation -= (this.container.rotation) * 0.1
 		// if(this.config.springLength < 0.0001) {
 		// 	this.paused = true
@@ -80,18 +86,6 @@ export default class SpringGarden {
 		this.opened = false
 		this.assignToGoValues()
 		this.assignClosedConfig()
-	}
-	springTo(knotA, toX, toY, index) {
-		var dx = toX - knotA.x
-    	var dy = toY - knotA.y
-		var angle = Math.atan2(dy, dx)
-		var targetX = toX - Math.cos(angle) * (this.config.springLength * index)
-		var targetY = toY - Math.sin(angle) * (this.config.springLength * index)
-		knotA.vx += (targetX - knotA.x) * this.config.spring
-		knotA.vy += (targetY - knotA.y) * this.config.spring
-		knotA.vx *= this.config.friction
-		knotA.vy *= this.config.friction
-		knotA.position(knotA.x + knotA.vx, knotA.y + knotA.vy)
 	}
 	getToX(knot) {
 		if(this.opened) return knot.x * (this.radius)

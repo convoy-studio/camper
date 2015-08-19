@@ -13,17 +13,17 @@ export default class Compass {
 		this.container = new PIXI.Container()
 		this.pxContainer.addChild(this.container)
 
-		var imgUrl = 'image/compass.png'
- 		var texture = PIXI.Texture.fromImage(imgUrl)
- 		this.sprite = new PIXI.Sprite(texture)
- 		this.spriteSize = [997, 1019]
- 		this.sprite.originalW = this.spriteSize[0]
- 		this.sprite.originalH = this.spriteSize[1]
+		// var imgUrl = 'image/compass.png'
+ 	// 	var texture = PIXI.Texture.fromImage(imgUrl)
+ 	// 	this.sprite = new PIXI.Sprite(texture)
+ 	// 	this.spriteSize = [997, 1019]
+ 	// 	this.sprite.originalW = this.spriteSize[0]
+ 	// 	this.sprite.originalH = this.spriteSize[1]
  		// this.sprite.anchor.set(0.5, 0.5)
  		// this.container.addChild(this.sprite)
- 		var scale = 0.5
- 		this.sprite.width = this.sprite.originalW * scale
- 		this.sprite.height = this.sprite.originalH * scale
+ 		// var scale = 0.5
+ 		// this.sprite.width = this.sprite.originalW * scale
+ 		// this.sprite.height = this.sprite.originalH * scale
 
  		this.rings = new CompassRings(this.container)
 	 	this.rings.componentDidMount()

@@ -70,6 +70,17 @@ class Utils {
 		}
 	    return ans;
     }
+    static SpringTo(item, toX, toY, index, spring, friction, springLength) {
+    	var dx = toX - item.x
+    	var dy = toY - item.y
+		var angle = Math.atan2(dy, dx)
+		var targetX = toX - Math.cos(angle) * (springLength * index)
+		var targetY = toY - Math.sin(angle) * (springLength * index)
+		item.vx += (targetX - item.x) * spring
+		item.vy += (targetY - item.y) * spring
+		item.vx *= friction
+		item.vy *= friction
+    }
 }
 
 export default Utils

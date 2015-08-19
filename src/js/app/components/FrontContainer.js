@@ -23,7 +23,7 @@ class FrontContainer extends BaseComponent {
 		for (var i = 0; i < countries.length; i++) {
 			var country = countries[i]
 			if(country.lang == lang) {
-				currentLang = country
+				currentLang = fullnameCountries[country.id]
 			}else{
 				country.name = fullnameCountries[country.id]
 				restCountries.push(country)
@@ -91,7 +91,7 @@ class FrontContainer extends BaseComponent {
 			top: AppConstants.PADDING_AROUND - 2,
 		}
 		var langCss = {
-			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND),
+			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND << 1),
 			top: AppConstants.PADDING_AROUND,
 		}
 
