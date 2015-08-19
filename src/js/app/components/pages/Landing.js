@@ -4,13 +4,14 @@ import AppStore from 'AppStore'
 import Compass from 'Compass'
 import ArrowBtn from 'ArrowBtn'
 import AppConstants from 'AppConstants'
+import Router from 'Router'
 
 export default class Landing extends Page {
 	constructor(props) {
 		super(props)
 	}
 	componentDidMount() {
-		this.landingSlideshow = new LandingSlideshow(this.pxContainer)
+		this.landingSlideshow = new LandingSlideshow(this.pxContainer, this.child)
 		this.landingSlideshow.componentDidMount()
 
 		this.compass = new Compass(this.pxContainer)
@@ -25,10 +26,30 @@ export default class Landing extends Page {
 		this.onKeyPressed = this.onKeyPressed.bind(this)
 		$(document).on('keydown', this.onKeyPressed)
 
+		this.parent.css('cursor', 'pointer')
+
+		this.onStageClicked = this.onStageClicked.bind(this)
+		this.parent.on('click', this.onStageClicked)
+
 		super.componentDidMount()
 	}
+	onStageClicked(e) {
+		e.preventDefault()
+		switch(this.direction) {
+			case AppConstants.LEFT:
+				this.previous()
+				break
+			case AppConstants.RIGHT:
+				this.next()
+				break
+			case AppConstants.TOP:
+				var url = "/planet/" + this.landingSlideshow.currentId
+				Router.setHash(url)
+				break
+		}
+	}
 	onKeyPressed(e) {
-	    e.preventDefault();
+	    e.preventDefault()
 		switch(e.which) {
 	        case 37: // left
 	        	this.previous()
@@ -40,6 +61,9 @@ export default class Landing extends Page {
 	    }
 	}
 	didTransitionInComplete() {
+		var planetData = AppStore.productsDataById(this.landingSlideshow.currentId)
+		console.log(planetData)
+		this.compass.highlightPlanet(this.landingSlideshow.currentId)
 		super.didTransitionInComplete()
 	}
 	didTransitionOutComplete() {
@@ -60,12 +84,20 @@ export default class Landing extends Page {
 		var windowW = AppStore.Window.w
 		var mouseX = AppStore.Mouse.x
 		if(mouseX < windowW * 0.25) {
+			this.direction = AppConstants.LEFT
 			this.arrowLeft.rollover()
 		}else if(mouseX > windowW * 0.75) {
+			this.direction = AppConstants.RIGHT
 			this.arrowRight.rollover()
 		}else{
+			this.direction = AppConstants.NONE
 			this.arrowLeft.rollout()
 			this.arrowRight.rollout()
+		}
+
+		var area = windowW * 0.25
+		if(mouseX > ((windowW >> 1) - area) && mouseX < ((windowW >> 1) + area)) {
+			this.direction = AppConstants.TOP
 		}
 
 		super.update()
@@ -94,6 +126,7 @@ export default class Landing extends Page {
 		this.arrowLeft.componentWillUnmount()
 		this.arrowRight.componentWillUnmount()
 		$(document).off('keydown', this.onKeyPressed)
+		this.parent.off('click', this.onStageClicked)
 		super.componentWillUnmount()
 	}
 }

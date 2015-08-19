@@ -14,8 +14,8 @@ export default class ArrowBtn {
 			friction: 0,
 			springLength: 0
 		}
-		this.config.spring = 0.03
-		this.config.friction = 0.92
+		this.config.spring = 0.1
+		this.config.friction = 0.8
 		this.config.springLength = 0
 	}
 	componentDidMount() {
@@ -44,12 +44,18 @@ export default class ArrowBtn {
 		this.knotsTriangle[0].fromY = -margin*0.7
 		this.knotsTriangle[1].position(-margin*0.6, margin*0.7)
 		this.knotsTriangle[1].fromX = -margin*0.6
-		this.knotsTriangle[1].fromY = -margin*0.7
+		this.knotsTriangle[1].fromY = margin*0.7
 
 		// mouseover positions
-		this.knotsLine[0].toX = this.knotsLine[0].x - margin
-		this.knotsLine[1].toX = this.knotsLine[1].x - margin
-		this.knotsLine[2].toX = this.knotsLine[2].x
+		this.knotsLine[0].toX = this.knotsLine[0].x - (margin * 0.6)
+		this.knotsLine[1].toX = this.knotsLine[1].x - (margin * 0.2)
+		this.knotsLine[2].toX = this.knotsLine[2].x + (margin * 0.2)
+
+		this.knotsTriangle[0].toX = this.knotsTriangle[0].fromX
+		this.knotsTriangle[0].toY = this.knotsTriangle[0].fromY + (margin*0.1)
+
+		this.knotsTriangle[1].toX = this.knotsTriangle[1].fromX
+		this.knotsTriangle[1].toY = this.knotsTriangle[1].fromY - (margin*0.1)
 
 		this.g = new PIXI.Graphics()
 		this.container.addChild(this.g)
@@ -87,8 +93,14 @@ export default class ArrowBtn {
 		var friction = this.config.friction
 		var springLength = this.config.springLength
 		var knotsLine = this.knotsLine
+		var knotsTriangle = this.knotsTriangle
 		for (var i = 0; i < knotsLine.length; i++) {
 			var knot = knotsLine[i]
+			Utils.SpringTo(knot, knot[dirX], knot[dirY], i, spring, friction, springLength)
+			knot.position(knot.x + knot.vx, knot.y + knot.vy)
+		}
+		for (i = 0; i < knotsTriangle.length; i++) {
+			var knot = knotsTriangle[i]
 			Utils.SpringTo(knot, knot[dirX], knot[dirY], i, spring, friction, springLength)
 			knot.position(knot.x + knot.vx, knot.y + knot.vy)
 		}
@@ -116,6 +128,5 @@ export default class ArrowBtn {
 			this.knotsTriangle[i].componentWillUnmount()
 		}
 		this.container.removeChildren()
-		this.parentContainer.removeChild(this.container)
 	}
 }

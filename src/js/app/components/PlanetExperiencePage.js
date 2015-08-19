@@ -1,6 +1,7 @@
 import BasePlanetPage from 'BasePlanetPage'
 import AppActions from 'AppActions'
 import AppStore from 'AppStore'
+import CompassesContainer from 'CompassesContainer'
 import AlaskaXP from 'AlaskaXP'
 import SkiXP from 'SkiXP'
 import MetalXP from 'MetalXP'
@@ -19,6 +20,9 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.g = new PIXI.Graphics()
 		this.pxContainer.addChild(this.g)
 		this.pxContainer.addChild(bunny)
+
+		this.compassesContainer = new CompassesContainer(this.pxContainer)
+		this.compassesContainer.componentDidMount()
 
 		var XpClazz = this.getExperienceById(this.id)
 		this.experience = new XpClazz()
@@ -40,12 +44,14 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 	}
 	update() {
 		this.experience.update()
+		this.compassesContainer.update()
 	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
 		this.experience.resize()
+		this.compassesContainer.resize()
 
 		// draw a rectangle
 		this.g.clear()
@@ -56,6 +62,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.resize()
 	}
 	componentWillUnmount() {
+		this.compassesContainer.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }

@@ -10,6 +10,8 @@ export default {
 	CAMPAIGN: 'CAMPAIGN',
 	NONE: 'NONE',
 
+	COMPASS_SIZE_PERCENTAGE: 0.24,
+
 	LEFT: 'LEFT',
 	RIGHT: 'RIGHT',
 	TOP: 'TOP',

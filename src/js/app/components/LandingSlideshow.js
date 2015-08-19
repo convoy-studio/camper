@@ -5,17 +5,29 @@ import Utils from 'Utils'
 import BezierEasing from 'bezier-easing'
 
 export default class LandingSlideshow {
-	constructor(pxContainer) {
+	constructor(pxContainer, parentEl) {
+		this.parentEl = parentEl
 		this.pxContainer = pxContainer
 		this.currentId = 'alaska'
 	}
 	componentDidMount() {
+		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = new PIXI.Container()
 		// this.slideshowContainer = AppStore.getContainer()
 	 	this.slideshowWrapper = AppStore.getContainer()
 	 	this.pxContainer.addChild(this.slideshowContainer)
 	 	this.slideshowContainer.addChild(this.slideshowWrapper)
 	 	this.counter = 0
+	 	this.planetTitleTxt = infos.planet.toUpperCase()
+
+		var slideshowTitle = this.parentEl.find('.slideshow-title')
+		var planetTitle = slideshowTitle.find('.planet-title')
+		var planetName = slideshowTitle.find('.planet-name')
+	 	this.titleContainer = {
+	 		parent: slideshowTitle,
+	 		planetTitle: planetTitle,
+	 		planetName: planetName
+	 	}
 	 	
 	 	var planets = AppStore.planets()
 	 	this.slides = []
@@ -44,6 +56,7 @@ export default class LandingSlideshow {
 	 		s.sprite = sprite
 	 		s.texture = texture
 	 		s.maskRect = maskRect
+	 		s.planetName = id.toUpperCase()
 	 		s.imgResponsiveSize = AppStore.responsiveImageSize(AppConstants.RESPONSIVE_IMAGE)
 	 		s.imgUrl = imgUrl
 	 		s.id = planets[i]
@@ -53,6 +66,12 @@ export default class LandingSlideshow {
 	 	this.maskEasing = BezierEasing(.21,1.47,.52,1)
 	 	this.chooseSlideToHighlight()
 	}
+	updateTitles(title, name) {
+		var planetTitle = this.titleContainer.planetTitle
+		var planetName = this.titleContainer.planetName
+	 	planetTitle.text(title)
+	 	planetName.text(name)
+	 }
 	drawCenteredMaskRect(graphics, x, y, w, h) {
 		graphics.clear()
 		graphics.beginFill(0xffff00, 1)
@@ -81,6 +100,8 @@ export default class LandingSlideshow {
 				slide.highlight = true // Highlight the middle elements
 				this.currentId = slide.id
 				this.slideshowWrapper.setChildIndex(slide.wrapperContainer, totalLen)
+				this.updateTitles(this.planetTitleTxt, slide.planetName)
+				this.positionTitlesContainer()
 			}else{
 				slide.highlight = false
 				this.slideshowWrapper.setChildIndex(slide.wrapperContainer, i)
@@ -168,8 +189,22 @@ export default class LandingSlideshow {
 		}
 		this.positionSlideshowContainer()
 	}
+	positionTitlesContainer() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		clearTimeout(this.titleTimeout)
+		this.titleTimeout = setTimeout(()=>{
+			var topOffset = (windowH >> 1) + (windowH * AppConstants.COMPASS_SIZE_PERCENTAGE) - (this.titleContainer.parent.height() >> 1)
+			var titlesContainerCss = {
+				top: topOffset + ((windowH - topOffset) >> 1),
+				left: (windowW >> 1) - (this.titleContainer.parent.width() >> 1),
+			}
+			this.titleContainer.parent.css(titlesContainerCss)
+		}, 0)
+	}
 	resize() {
 		this.applyValuesToSlides()
+		this.positionTitlesContainer()
 	}
 	componentWillUnmount() {
 

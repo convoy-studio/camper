@@ -100,3 +100,11 @@ a {
     color: $white;
     text-decoration: none;
 }
+#landing.page-wrapper {
+    .slideshow-title {
+        font-size: 32px;
+        position: absolute;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+}

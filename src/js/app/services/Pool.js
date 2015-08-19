@@ -4,7 +4,7 @@ import AppStore from 'AppStore'
 export default class Pool {
 	constructor() {
 		var planets = AppStore.planets()
-		var pxContainerNum = 3 + planets.length
+		var pxContainerNum = 5 + (planets.length * 1)
 		var graphicsNum = planets.length
 		var spritesNum = planets.length
 

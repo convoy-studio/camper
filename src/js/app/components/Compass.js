@@ -1,6 +1,6 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
-import ExplosionEffect from 'ExplosionEffect'
+// import ExplosionEffect from 'ExplosionEffect'
 import SpringGarden from 'SpringGarden'
 import CompassRings from 'CompassRings'
 
@@ -45,11 +45,6 @@ export default class Compass {
 	 		p.id = planetId
 	 		this.planets[i] = p
 	 	}
-
- 		setTimeout(()=>{
- 			this.highlightPlanet('alaska')
- 		}, 1000)
-
  	// 	this.explosionConfig = {
 		//     animation: 0,
 		//     wave: 0.1,
@@ -103,7 +98,7 @@ export default class Compass {
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
-		var sizePercentage = 0.24
+		var sizePercentage = AppConstants.COMPASS_SIZE_PERCENTAGE
 		// var radius = (AppStore.Orientation == AppConstants.LANDSCAPE) ? (windowW * sizePercentage) : (windowH * sizePercentage)
 		// this.explosionEffect.resize()
 		var radius = windowH * sizePercentage
@@ -119,7 +114,7 @@ export default class Compass {
 		}
 
 		this.container.x = (windowW >> 1)
-		this.container.y = (windowH >> 1)
+		this.container.y = (windowH >> 1) - (windowH * 0.05)
 
 		// this.sprite.x = (windowW >> 1) - (this.sprite.width >> 1)
 		// this.sprite.y = (windowH >> 1) - (this.sprite.height >> 1)
