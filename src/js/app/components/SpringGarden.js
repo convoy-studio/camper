@@ -37,6 +37,7 @@ export default class SpringGarden {
 		for (var i = 0; i < this.knots.length; i++) {
 			var newKnotScale = knots[i]
 			var knot = this.knots[i]
+			knot.changeSize(this.knotRadius)
 			knot.toX = newKnotScale.x * (this.radius)
 			knot.toY = newKnotScale.y * (this.radius)
 		}

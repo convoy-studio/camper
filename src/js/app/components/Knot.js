@@ -18,13 +18,19 @@ export default class Knot {
 	componentDidMount() {
 		this.g = new PIXI.Graphics()
 		this.springContainer.addChild(this.g)
-		
+		this.draw()
+		return this
+	}
+	changeSize(radius) {
+		this.radius = radius || 8
+		this.draw()
+	}
+	draw() {
+		this.g.clear()
 		this.g.lineStyle(AppStore.getLineWidth(), 0xffffff, 1);
 		this.g.beginFill(0xffffff, 1);
 		this.g.drawCircle(0, 0, this.radius);
-		this.g.endFill()
-
-		return this
+		this.g.endFill()	
 	}
 	position(x, y) {
 		this.g.x = x
