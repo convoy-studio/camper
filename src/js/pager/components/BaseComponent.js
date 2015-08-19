@@ -24,7 +24,6 @@ class BaseComponent {
 	remove() {
 		this.componentWillUnmount()
 		this.child.remove()
-		// console.log(this.childId, 'removed from', this.parentId)
 	}
 	componentWillUnmount() {
 	}

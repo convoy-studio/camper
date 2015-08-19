@@ -194,24 +194,32 @@ export default class CompassRings {
 	}
 	drawTitles(r, color) {
 		var titles = this.titles
-		var r = r + 44
+		var offset = (this.radius / 270) * 44
+		var scale = (this.radius / 270) * 1
+		var r = r + offset
 		for (var i = 0; i < titles.length; i++) {
 			var title = titles[i]
 			var angle = Utils.DegreesToRadians(title.degBegin)
 			title.txt.rotation = angle + Utils.DegreesToRadians(90)
 			title.txt.x = r * Math.cos(angle)
 			title.txt.y = r * Math.sin(angle)
+			title.txt.scale.x = scale
+			title.txt.scale.y = scale
 		}
 	}
 	drawGenders(r, color) {
 		var genders = this.genders
-		var r = r + 34
+		var offset = (this.radius / 270) * 34
+		var scale = (this.radius / 270) * 1
+		var r = r + offset
 		for (var i = 0; i < genders.length; i++) {
 			var gender = genders[i]
 			var angle = Utils.DegreesToRadians(gender.degBegin)
 			gender.txt.rotation = angle + Utils.DegreesToRadians(90)
 			gender.txt.x = r * Math.cos(angle)
 			gender.txt.y = r * Math.sin(angle)
+			gender.txt.scale.x = scale
+			gender.txt.scale.y = scale
 		}
 	}
 	resize(radius) {

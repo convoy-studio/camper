@@ -199,6 +199,18 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     releaseContainer: function(item) {
         return AppStore.Pool.releaseContainer(item)
     },
+    getGraphics: function() {
+        return AppStore.Pool.getGraphics()
+    },
+    releaseGraphics: function(item) {
+        return AppStore.Pool.releaseGraphics(item)
+    },
+    getSprite: function() {
+        return AppStore.Pool.getSprite()
+    },
+    releaseSprite: function(item) {
+        return AppStore.Pool.releaseSprite(item)
+    },
     Pool: undefined,
     Mouse: undefined,
     PXContainer: undefined,

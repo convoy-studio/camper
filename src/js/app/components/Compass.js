@@ -28,7 +28,6 @@ export default class Compass {
  		this.rings = new CompassRings(this.container)
 	 	this.rings.componentDidMount()
 
-	 	var skiData = AppStore.productsDataById('ski')
 	 	var planets = AppStore.planets()
 
  		this.planets = []
@@ -47,18 +46,9 @@ export default class Compass {
 	 		this.planets[i] = p
 	 	}
 
- 		// var products = skiData
- 		// for (var i = 0; i < products.length; i++) {
- 		// 	var product = products[i]
- 		// 	var springGarden = new SpringGarden(this.container, product.knots, product.color)
- 		// 	springGarden.componentDidMount()
- 		// 	this.productSpringGardens[i] = springGarden
- 		// }
-
  		setTimeout(()=>{
  			this.highlightPlanet('alaska')
  		}, 1000)
-
 
  	// 	this.explosionConfig = {
 		//     animation: 0,
@@ -113,7 +103,7 @@ export default class Compass {
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
-		var sizePercentage = 0.3
+		var sizePercentage = 0.24
 		// var radius = (AppStore.Orientation == AppConstants.LANDSCAPE) ? (windowW * sizePercentage) : (windowH * sizePercentage)
 		// this.explosionEffect.resize()
 		var radius = windowH * sizePercentage
@@ -135,5 +125,8 @@ export default class Compass {
 		// this.sprite.y = (windowH >> 1) - (this.sprite.height >> 1)
 		// this.sprite.x = (windowW >> 1)
 		// this.sprite.y = (windowH >> 1)
+	}
+	componentWillUnmount() {
+
 	}
 }

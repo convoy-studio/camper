@@ -54,23 +54,25 @@ class FrontContainer extends BaseComponent {
 		this.$lang.on('mouseleave', this.onLangMouseLeave)
 
 		this.resize()
+		this.$lang.css('height', this.countriesTitleH)
 	}
 	onLangMouseEnter(e) {
 		e.preventDefault()
 		this.$lang.addClass('hovered')
-		console.log(this.countriesH)
+		this.$lang.css('height', this.countriesH + this.countriesTitleH)
 	}
 	onLangMouseLeave(e) {
 		e.preventDefault()
 		this.$lang.removeClass('hovered')
-		console.log(this.countriesH)
+		this.$lang.css('height', this.countriesTitleH)
 	}
 	resize() {
 		if(!this.domIsReady) return
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		this.countriesH = this.$countries.height()
+		this.countriesH = this.$countries.height() + 20
+		this.countriesTitleH = this.$langCurrentTitle.height()
 
 		var socialCss = {
 			left: windowW - AppConstants.PADDING_AROUND - this.$socialWrapper.width(),
@@ -89,7 +91,7 @@ class FrontContainer extends BaseComponent {
 			top: AppConstants.PADDING_AROUND - 2,
 		}
 		var langCss = {
-			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND << 1),
+			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
 

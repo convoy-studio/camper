@@ -11,7 +11,8 @@ export default class LandingSlideshow {
 	}
 	componentDidMount() {
 		this.slideshowContainer = new PIXI.Container()
-	 	this.slideshowWrapper = new PIXI.Container()
+		// this.slideshowContainer = AppStore.getContainer()
+	 	this.slideshowWrapper = AppStore.getContainer()
 	 	this.pxContainer.addChild(this.slideshowContainer)
 	 	this.slideshowContainer.addChild(this.slideshowWrapper)
 	 	this.counter = 0
@@ -21,16 +22,17 @@ export default class LandingSlideshow {
 	 	for (var i = 0; i < planets.length; i++) {
 	 		var s = {}
 	 		var id = planets[i]
-	 		var wrapperContainer = new PIXI.Container()
+	 		var wrapperContainer = AppStore.getContainer()
 	 		var maskRect = {
-	 			g: new PIXI.Graphics(),
+	 			g: AppStore.getGraphics(),
 	 			newW: 0,
 	 			width: 0,
 	 			x: 0
 	 		}
 	 		var imgUrl = AppStore.mainImageUrl(id, AppConstants.RESPONSIVE_IMAGE)
 	 		var texture = PIXI.Texture.fromImage(imgUrl)
-	 		var sprite = new PIXI.Sprite(texture)
+	 		var sprite = AppStore.getSprite()
+	 		sprite.texture = texture
 	 		sprite.params = {}
 	 		this.slideshowWrapper.addChild(wrapperContainer)
 	 		wrapperContainer.addChild(sprite)
@@ -168,5 +170,35 @@ export default class LandingSlideshow {
 	}
 	resize() {
 		this.applyValuesToSlides()
+	}
+	componentWillUnmount() {
+
+		var slides = this.slides
+	 	for (var i = 0; i < slides.length; i++) {
+	 		var s = slides[i]
+
+	 		s.maskRect.g.clear()
+	 		AppStore.releaseGraphics(s.maskRect.g)
+
+	 		s.sprite.texture.destroy(true)
+	 		AppStore.releaseSprite(s.sprite)
+
+	 		s.wrapperContainer.removeChildren()
+	 		AppStore.releaseContainer(s.wrapperContainer)
+	 	}
+
+	 	this.slides.length = 0
+
+	 	// TODO clear that and put it back to pool
+	 // 	delete this.slideshowContainer.scaleXY
+	 // 	delete this.slideshowContainer.baseY
+	 // 	this.slideshowContainer.scale.x = 1
+	 // 	this.slideshowContainer.scale.y = 1
+		this.slideshowContainer.removeChildren()
+		// AppStore.releaseContainer(this.slideshowContainer)
+
+		this.slideshowWrapper.removeChildren()
+		AppStore.releaseContainer(this.slideshowWrapper)
+		
 	}
 }

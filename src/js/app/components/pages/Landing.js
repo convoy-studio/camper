@@ -15,11 +15,12 @@ export default class Landing extends Page {
 		this.compass.componentDidMount()
 
 		this.onKeyPressed = this.onKeyPressed.bind(this)
-		$(document).keydown(this.onKeyPressed)
+		$(document).on('keydown', this.onKeyPressed)
 
 		super.componentDidMount()
 	}
 	onKeyPressed(e) {
+	    e.preventDefault();
 		switch(e.which) {
 	        case 37: // left
 	        	this.previous()
@@ -29,7 +30,6 @@ export default class Landing extends Page {
 	        break;
 	        default: return;
 	    }
-	    e.preventDefault();
 	}
 	didTransitionInComplete() {
 		super.didTransitionInComplete()
@@ -56,6 +56,12 @@ export default class Landing extends Page {
 		this.landingSlideshow.resize()
 		this.compass.resize()
 		super.resize()
+	}
+	componentWillUnmount() {
+		this.landingSlideshow.componentWillUnmount()
+		this.compass.componentWillUnmount()
+		$(document).off('keydown', this.onKeyPressed)
+		super.componentWillUnmount()
 	}
 }
 
