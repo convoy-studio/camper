@@ -7,9 +7,9 @@ export default class CompassRings {
 		this.container = parentContainer
 	}
 	componentDidMount() {
-		this.ringsContainer = new PIXI.Container()
-		this.titlesContainer = new PIXI.Container()
-		this.genderContainer = new PIXI.Container()
+		this.ringsContainer = AppStore.getContainer()
+		this.titlesContainer = AppStore.getContainer()
+		this.genderContainer = AppStore.getContainer()
 		this.container.addChild(this.ringsContainer)
 		this.container.addChild(this.titlesContainer)
 		this.container.addChild(this.genderContainer)
@@ -226,5 +226,13 @@ export default class CompassRings {
 		var windowH = AppStore.Window.h
 		this.radius = radius
 		this.drawRings()
+	}
+	componentWillUnmount() {
+		this.ringsContainer.removeChildren()
+		this.titlesContainer.removeChildren()
+		this.genderContainer.removeChildren()
+		AppStore.releaseContainer(this.ringsContainer)
+		AppStore.releaseContainer(this.titlesContainer)
+		AppStore.releaseContainer(this.genderContainer)
 	}
 }

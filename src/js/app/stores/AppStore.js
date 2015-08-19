@@ -211,6 +211,12 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     releaseSprite: function(item) {
         return AppStore.Pool.releaseSprite(item)
     },
+    getSpringGarden: function() {
+        return AppStore.Pool.getSpringGarden()
+    },
+    releaseSpringGarden: function(item) {
+        return AppStore.Pool.releaseSpringGarden(item)
+    },
     Pool: undefined,
     Mouse: undefined,
     PXContainer: undefined,

@@ -60,22 +60,24 @@ export default class Landing extends Page {
 	        default: return;
 	    }
 	}
-	didTransitionInComplete() {
+	updateCompassPlanet() {
 		var planetData = AppStore.productsDataById(this.landingSlideshow.currentId)
-		console.log(planetData)
-		this.compass.highlightPlanet(this.landingSlideshow.currentId)
+		this.compass.updateData(planetData)
+	}
+	didTransitionInComplete() {
 		super.didTransitionInComplete()
+		this.updateCompassPlanet()
 	}
 	didTransitionOutComplete() {
 		super.didTransitionOutComplete()
 	}
 	next() {
 		this.landingSlideshow.next()
-		this.compass.highlightPlanet(this.landingSlideshow.currentId)
+		this.updateCompassPlanet()
 	}
 	previous() {
 		this.landingSlideshow.previous()
-		this.compass.highlightPlanet(this.landingSlideshow.currentId)
+		this.updateCompassPlanet()
 	}
 	update() {
 		this.landingSlideshow.update()
@@ -107,6 +109,11 @@ export default class Landing extends Page {
 		var windowH = AppStore.Window.h
 		this.landingSlideshow.resize()
 		this.compass.resize()
+
+		this.compass.position(
+			windowW >> 1,
+			(windowH >> 1) - (windowH * 0.05)
+		)
 
 		this.arrowRight.position(
 			windowW - (AppConstants.PADDING_AROUND << 2),

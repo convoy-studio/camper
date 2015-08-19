@@ -22,6 +22,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.pxContainer.addChild(bunny)
 
 		this.compassesContainer = new CompassesContainer(this.pxContainer)
+		this.compassesContainer.id = this.id
 		this.compassesContainer.componentDidMount()
 
 		var XpClazz = this.getExperienceById(this.id)
@@ -41,6 +42,10 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 	}
 	didTransitionOutComplete() {
 		super.didTransitionOutComplete()
+	}
+	didTransitionInComplete() {
+		super.didTransitionInComplete()	
+		this.compassesContainer.didTransitionInComplete()
 	}
 	update() {
 		this.experience.update()

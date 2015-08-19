@@ -1,127 +1,70 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
-// import ExplosionEffect from 'ExplosionEffect'
 import SpringGarden from 'SpringGarden'
 import CompassRings from 'CompassRings'
 
 export default class Compass {
-	constructor(pxContainer) {
+	constructor(pxContainer, type) {
 		this.pxContainer = pxContainer
+		this.type = type || AppConstants.LANDING
 	}
 	componentDidMount() {
-
-		this.container = new PIXI.Container()
+		this.container = AppStore.getContainer()
 		this.pxContainer.addChild(this.container)
-
-		// var imgUrl = 'image/compass.png'
- 	// 	var texture = PIXI.Texture.fromImage(imgUrl)
- 	// 	this.sprite = new PIXI.Sprite(texture)
- 	// 	this.spriteSize = [997, 1019]
- 	// 	this.sprite.originalW = this.spriteSize[0]
- 	// 	this.sprite.originalH = this.spriteSize[1]
- 		// this.sprite.anchor.set(0.5, 0.5)
- 		// this.container.addChild(this.sprite)
- 		// var scale = 0.5
- 		// this.sprite.width = this.sprite.originalW * scale
- 		// this.sprite.height = this.sprite.originalH * scale
 
  		this.rings = new CompassRings(this.container)
 	 	this.rings.componentDidMount()
 
-	 	var planets = AppStore.planets()
-
- 		this.planets = []
-	 	for (var i = 0; i < planets.length; i++) {
-	 		var p = {}
-	 		var planetId = planets[i]
-	 		var planetData = AppStore.productsDataById(planetId)
-	 		p.products = []
-	 		for (var j = 0; j < planetData.length; j++) {
-	 			var product = planetData[j]
-	 			var springGarden = new SpringGarden(this.container, product.knots, product.color)
- 				springGarden.componentDidMount()
- 				p.products[j] = springGarden
-	 		};
-	 		p.id = planetId
-	 		this.planets[i] = p
-	 	}
- 	// 	this.explosionConfig = {
-		//     animation: 0,
-		//     wave: 0.1,
-		//     shake: 0.0,
-		//     screenEffect: 0.4,
-		//     sprite: this.sprite,
-		//     shoot: ()=> {
-		//         TweenMax.fromTo(this.explosionConfig, 4, {animation: 0}, {animation: 1, ease:Expo.easeOut});
-		//     },
-		//     hoverAnimation: 0
-		// }
- 	// 	this.explosionEffect = new ExplosionEffect(this.explosionConfig)
- 	// 	this.explosionEffect.componentDidMount()
-
-	    // setInterval(()=>{
-	    // 	this.explosionConfig.shoot()
-	    // }, 4000)
+	 	this.springGardens = []
 	}
-	highlightPlanet(id) {
-		for (var i = 0; i < this.planets.length; i++) {
-			var planet = this.planets[i]
-			var len = planet.products.length
-			if(planet.id == id) {
-				
-				for (var j = 0; j < len; j++) {
-					var garden = planet.products[j]
-					garden.open()
-				}
-				
-			}else{
-
-				for (var j = 0; j < len; j++) {
-					var garden = planet.products[j]
-					garden.close()
-				}
-
-			}
+	updateData(data) {
+		this.removePreviousSpringGardens()
+		this.springGardens = []
+		for (var i = 0; i < data.length; i++) {
+			var springGarden = AppStore.getSpringGarden()
+			var product = data[i]
+			springGarden.radius = this.radius
+			springGarden.componentDidMount(product.knots, product.color)
+			this.container.addChild(springGarden.container)
+			this.springGardens[i] = springGarden
+		}
+	}
+	removePreviousSpringGardens() {
+		for (var i = 0; i < this.springGardens.length; i++) {
+			var springGarden = this.springGardens[i]
+			this.container.removeChild(springGarden.container)
+			AppStore.releaseSpringGarden(springGarden)
 		}
 	}
 	update() {
-		// this.explosionEffect.update()
-	 	for (var i = 0; i < this.planets.length; i++) {
-			var planet = this.planets[i]
-			var len = planet.products.length
-			for (var j = 0; j < len; j++) {
-				var garden = planet.products[j]
-				garden.update()
-			}
+		if(this.springGardens.length < 1) return 
+	 	for (var i = 0; i < this.springGardens.length; i++) {
+			var springGarden = this.springGardens[i]
+			springGarden.update()
 		}
 	}
 	resize() {
-		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
-		var sizePercentage = AppConstants.COMPASS_SIZE_PERCENTAGE
-		// var radius = (AppStore.Orientation == AppConstants.LANDSCAPE) ? (windowW * sizePercentage) : (windowH * sizePercentage)
-		// this.explosionEffect.resize()
-		var radius = windowH * sizePercentage
-		this.rings.resize(radius)
+		var sizePercentage = (this.type == AppConstants.EXPERIENCE || this.type == AppConstants.CAMPAIGN) ? AppConstants.COMPASS_SMALL_SIZE_PERCENTAGE : AppConstants.COMPASS_SIZE_PERCENTAGE
+		this.radius = windowH * sizePercentage
+		this.rings.resize(this.radius)
 
-		for (var i = 0; i < this.planets.length; i++) {
-			var planet = this.planets[i]
-			var len = planet.products.length
-			for (var j = 0; j < len; j++) {
-				var garden = planet.products[j]
-				garden.resize(radius)
-			}
+		if(this.springGardens.length < 1) return 
+	 	for (var i = 0; i < this.springGardens.length; i++) {
+			var springGarden = this.springGardens[i]
+			springGarden.resize(this.radius)
 		}
-
-		this.container.x = (windowW >> 1)
-		this.container.y = (windowH >> 1) - (windowH * 0.05)
-
-		// this.sprite.x = (windowW >> 1) - (this.sprite.width >> 1)
-		// this.sprite.y = (windowH >> 1) - (this.sprite.height >> 1)
-		// this.sprite.x = (windowW >> 1)
-		// this.sprite.y = (windowH >> 1)
+	}
+	position(x, y) {
+		this.container.x = x
+		this.container.y = y
+		this.x = x
+		this.y = y
 	}
 	componentWillUnmount() {
-
+		this.container.removeChildren()
+		AppStore.releaseContainer(this.container)
+		this.removePreviousSpringGardens()
+		this.rings.componentWillUnmount()
 	}
 }
