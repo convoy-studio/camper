@@ -13,15 +13,15 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super(props)
 	}
 	componentDidMount() {
-		var bunnyUrl = this.getImageUrlById('bunny')
-		var texture = PIXI.Texture.fromImage(bunnyUrl)
-		var bunny = new PIXI.Sprite(texture)
+		// var bunnyUrl = this.getImageUrlById('bunny')
+		// var texture = PIXI.Texture.fromImage(bunnyUrl)
+		// var bunny = new PIXI.Sprite(texture)
 
 		this.g = new PIXI.Graphics()
 		this.pxContainer.addChild(this.g)
-		this.pxContainer.addChild(bunny)
+		// this.pxContainer.addChild(bunny)
 
-		this.compassesContainer = new CompassesContainer(this.pxContainer)
+		this.compassesContainer = new CompassesContainer(this.pxContainer, this.child)
 		this.compassesContainer.id = this.id
 		this.compassesContainer.componentDidMount()
 

@@ -16,6 +16,7 @@ export default class Compass {
 	 	this.rings.componentDidMount()
 
 	 	this.springGardens = []
+	 	this.getRadius()
 	}
 	updateData(data) {
 		this.removePreviousSpringGardens()
@@ -44,10 +45,13 @@ export default class Compass {
 			springGarden.update()
 		}
 	}
-	resize() {
+	getRadius() {
 		var windowH = AppStore.Window.h
 		var sizePercentage = (this.type == AppConstants.EXPERIENCE || this.type == AppConstants.CAMPAIGN) ? AppConstants.COMPASS_SMALL_SIZE_PERCENTAGE : AppConstants.COMPASS_SIZE_PERCENTAGE
 		this.radius = windowH * sizePercentage
+	}
+	resize() {
+		this.getRadius()
 		this.rings.resize(this.radius)
 
 		if(this.springGardens.length < 1) return 
@@ -61,6 +65,9 @@ export default class Compass {
 		this.container.y = y
 		this.x = x
 		this.y = y
+	}
+	positionElement(x, y) {
+
 	}
 	componentWillUnmount() {
 		this.container.removeChildren()

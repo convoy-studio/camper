@@ -10,13 +10,14 @@ export default class SmallCompass {
 		this.type = type || AppConstants.LANDING
 		this.bounce = -1
 	}
-	componentDidMount(data) {
+	componentDidMount(data, name, parentEl) {
+		this.parentEl = parentEl
 		this.container = AppStore.getContainer()
 		this.pxContainer.addChild(this.container)
 
 		this.bgCircle = AppStore.getGraphics()
 		this.container.addChild(this.bgCircle)
-		
+
 		var knotRadius = AppConstants.SMALL_KNOT_RADIUS
 		this.radius = 30
 		this.radiusLimit = (this.radius*0.8) - (knotRadius>>1)
@@ -24,13 +25,44 @@ export default class SmallCompass {
 		this.width = this.radius
 		this.height = this.radius
 
+		var compassName = name.toUpperCase()
+		this.element = this.parentEl.find('.compasses-texts-wrapper')
+		var containerEl = $('<div class="texts-container"></div>')
+		this.element.append(containerEl)
+		var titleTop = $('<div class="top-title"></div')
+		var titleBottom = $('<div class="bottom-title"></div')
+
+		this.circleRad = 90
+		var circlepath = 'M0,'+this.circleRad/2+'a'+this.circleRad/2+','+this.circleRad/2+' 0 1,0 '+this.circleRad+',0a'+this.circleRad/2+',-'+this.circleRad/2+' 0 1,0 -'+this.circleRad+',0'
+		var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <path id="path1" d="'+circlepath+'" > </path> </defs> <text fill="white" id="myText"> <textPath xlink:href="#path1"> <tspan dx="0px" dy="0px">' + compassName + '</tspan> </textPath> </text></svg>'
+		var titleTopSvg = $(svgStr)
+		var titleBottomSvg = $(svgStr)
+		titleTop.append(titleTopSvg)
+		titleBottom.append(titleBottomSvg)
+		containerEl.append(titleTop)
+		containerEl.append(titleBottom)
+		titleTopSvg.css({
+			width: this.circleRad,
+			height: this.circleRad
+		})
+		titleBottomSvg.css({
+			width: this.circleRad,
+			height: this.circleRad
+		})
+		TweenMax.set(titleBottomSvg, { rotation:'180deg' })
+		this.titles = {
+			container: containerEl,
+			titleTop: titleTop,
+			titleBottom: titleBottom
+		}
+
 		this.knots = []
 		for (var i = 0; i < data.length; i++) {
 			var d = data[i]
 			var knot = new Knot(this.container, knotRadius, gray).componentDidMount()
 			knot.mass = knotRadius
-			knot.vx = Math.random() * 0.4
-            knot.vy = Math.random() * 0.4
+			knot.vx = Math.random() * 0.8
+            knot.vy = Math.random() * 0.8
             knot.posVec = new PIXI.Point(0, 0)
             knot.posFVec = new PIXI.Point(0, 0)
             knot.velVec = new PIXI.Point(0, 0)
@@ -136,6 +168,14 @@ export default class SmallCompass {
 		this.container.y = y
 		this.x = x
 		this.y = y
+	}
+	positionElement(x, y) {
+		this.titles.container.css({
+			left: x - (this.circleRad>>1),
+			top: y - (this.circleRad>>1),
+			width: this.circleRad,
+			height: this.circleRad,
+		})
 	}
 	componentWillUnmount() {
 		for (var i = 0; i < this.knots.length; i++) {

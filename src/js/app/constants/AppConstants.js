@@ -16,6 +16,9 @@ export default {
 
 	SMALL_KNOT_RADIUS: 3,
 
+	OPEN: 'OPEN',
+	CLOSE: 'CLOSE',
+
 	LEFT: 'LEFT',
 	RIGHT: 'RIGHT',
 	TOP: 'TOP',

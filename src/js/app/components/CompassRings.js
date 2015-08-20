@@ -18,7 +18,7 @@ export default class CompassRings {
 		var ciclesLen = 6
 		for (var i = 0; i < ciclesLen; i++) {
 			var g = new PIXI.Graphics()
-			this.circles.push(g)
+			this.circles[i] = g
 			this.ringsContainer.addChild(g)
 		}
 

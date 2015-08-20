@@ -13,7 +13,7 @@ export default class BasePlanetPage extends Page {
 		super.didTransitionOutComplete()
 	}
 	componentWillUnmount() {
-		this.experience.componentWillUnmount()
+		if(this.experience != undefined) this.experience.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }

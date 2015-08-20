@@ -108,3 +108,19 @@ a {
         letter-spacing: 2px;
     }
 }
+#planet.page-wrapper {
+    .compasses-texts-wrapper {
+        position: absolute;
+        font-size: 12px;
+        letter-spacing: 2px;
+        & > div {
+            position: absolute;
+        }
+        .texts-container {
+            color: $white;
+            & > div {
+                position: absolute;
+            }
+        }
+    }
+}

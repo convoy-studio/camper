@@ -4,7 +4,8 @@ import AppConstants from 'AppConstants'
 import SmallCompass from 'SmallCompass'
 
 export default class CompassesContainer {
-	constructor(pxContainer) {
+	constructor(pxContainer, parentEl) {
+		this.parentEl = parentEl
 		this.pxContainer = pxContainer
 	}
 	componentDidMount() {
@@ -22,11 +23,13 @@ export default class CompassesContainer {
 			var planet = planets[i]
 			if(planet == this.id) {
 				this.compasses[i] = mainCompass
+				this.compasses[i].state = AppConstants.OPEN
 				this.openedCompassIndex = i
 			}else{
 				var smallCompass = new SmallCompass(this.container, AppConstants.EXPERIENCE)
 				var planetData = AppStore.productsDataById(planet)
-				smallCompass.componentDidMount(planetData)
+				smallCompass.state = AppConstants.CLOSE
+				smallCompass.componentDidMount(planetData, planet, this.parentEl)
 				this.compasses[i] = smallCompass
 			}
 		}
@@ -49,20 +52,32 @@ export default class CompassesContainer {
 		var biggestRadius = 0
 		for (var i = 0; i < compasses.length; i++) {
 			var compass = compasses[i]
-			var cx = i * 200
+			var size = (compass.radius << 1)
+			var previousCmp = compasses[i-1]
+			var nextCmp = compasses[i+1]
+			var cx = totalW + this.getCompassMargin(compass)
 			compass.resize()
 			biggestRadius = biggestRadius < compass.radius ? compass.radius : biggestRadius
 			compass.position(cx, 0)
-			totalW = cx
+			compass.posX = cx
+			totalW = cx + this.getCompassMargin(compass)
+		}
+
+		for (i = 0; i < compasses.length; i++) {
+			var compass = compasses[i]
+			compass.positionElement(compass.posX + (windowW >> 1) - (totalW>>1), (windowH) - biggestRadius - (windowH * 0.1))
 		}
 
 		this.container.position.x = (windowW >> 1) - (totalW >> 1)
 		this.container.position.y = (windowH) - biggestRadius - (windowH * 0.1)
 	}
+	getCompassMargin(compass) {
+		return (compass.state == AppConstants.OPEN) ? 160 : 100
+	}
 	componentWillUnmount() {
 		for (var i = 0; i < this.compasses.length; i++) {
 			this.compasses[i].componentWillUnmount()
-		};
+		}
 		this.container.removeChildren()
 		AppStore.releaseContainer(this.container)
 	}
