@@ -14,6 +14,8 @@ export default {
 
 	COMPASS_SMALL_SIZE_PERCENTAGE: 0.1,
 
+	SMALL_KNOT_RADIUS: 3,
+
 	LEFT: 'LEFT',
 	RIGHT: 'RIGHT',
 	TOP: 'TOP',

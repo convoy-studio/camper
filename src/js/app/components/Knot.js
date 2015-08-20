@@ -1,8 +1,9 @@
 import AppStore from 'AppStore'
 
 export default class Knot {
-	constructor(springContainer, r) {
+	constructor(springContainer, r, color) {
 		this.radius = r || 8
+		this.color = color || 0xffffff
 		this.springContainer = springContainer
 		this.vx = 0
 		this.vy = 0
@@ -27,8 +28,8 @@ export default class Knot {
 	}
 	draw() {
 		this.g.clear()
-		this.g.lineStyle(AppStore.getLineWidth(), 0xffffff, 1);
-		this.g.beginFill(0xffffff, 1);
+		this.g.lineStyle(AppStore.getLineWidth(), this.color, 1);
+		this.g.beginFill(this.color, 1);
 		this.g.drawCircle(0, 0, this.radius);
 		this.g.endFill()	
 	}
@@ -50,5 +51,6 @@ export default class Knot {
 	}
 	componentWillUnmount() {
 		this.g.clear()
+		this.g = null
 	}
 }

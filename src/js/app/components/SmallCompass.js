@@ -1,16 +1,132 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
+import Knot from 'Knot'
+import Utils from 'Utils'
+import Vec2 from 'Vec2'
 
 export default class SmallCompass {
 	constructor(pxContainer, type) {
 		this.pxContainer = pxContainer
 		this.type = type || AppConstants.LANDING
+		this.bounce = -1
 	}
-	componentDidMount() {
+	componentDidMount(data) {
 		this.container = AppStore.getContainer()
 		this.pxContainer.addChild(this.container)
+
+		this.bgCircle = AppStore.getGraphics()
+		this.container.addChild(this.bgCircle)
+		
+		var knotRadius = AppConstants.SMALL_KNOT_RADIUS
+		this.radius = 30
+		this.radiusLimit = (this.radius*0.8) - (knotRadius>>1)
+		var gray = 0x575756
+		this.width = this.radius
+		this.height = this.radius
+
+		this.knots = []
+		for (var i = 0; i < data.length; i++) {
+			var d = data[i]
+			var knot = new Knot(this.container, knotRadius, gray).componentDidMount()
+			knot.mass = knotRadius
+			knot.vx = Math.random() * 0.4
+            knot.vy = Math.random() * 0.4
+            knot.posVec = new PIXI.Point(0, 0)
+            knot.posFVec = new PIXI.Point(0, 0)
+            knot.velVec = new PIXI.Point(0, 0)
+            knot.velFVec = new PIXI.Point(0, 0)
+			knot.position(Utils.Rand(-this.radiusLimit, this.radiusLimit), Utils.Rand(-this.radiusLimit, this.radiusLimit))
+			this.knots[i] = knot
+		}
+		// draw a rectangle
+		this.bgCircle.clear()
+		this.bgCircle.beginFill(0xffffff)
+		this.bgCircle.drawCircle(0, 0, this.radius)
+		this.bgCircle.endFill()
+	}
+	checkWalls(knot) {
+		if(knot.x + knot.radius > this.radiusLimit) {
+	        knot.x = this.radiusLimit - knot.radius;
+	        knot.vx *= this.bounce;
+	    }else if(knot.x - knot.radius < -this.radiusLimit-knot.radius) {
+	        knot.x = -this.radiusLimit + knot.radius-knot.radius;
+	        knot.vx *= this.bounce;
+	    }
+	    if(knot.y + knot.radius > this.radiusLimit) {
+	        knot.y = this.radiusLimit - knot.radius;
+	        knot.vy *= this.bounce;
+	    }else if(knot.y - knot.radius < -this.radiusLimit) {
+	        knot.y = -this.radiusLimit + knot.radius;
+	        knot.vy *= this.bounce;
+	    }
+	}
+	checkCollision(knotA, knotB) {
+		var dx = knotB.x - knotA.x;
+	    var dy = knotB.y - knotA.y;
+	    var dist = Math.sqrt(dx*dx + dy*dy);
+	    if(dist < knotA.radius + knotB.radius) {
+	        var angle = Math.atan2(dy, dx)
+	        var sin = Math.sin(angle)
+	        var cos = Math.cos(angle)
+	        knotA.posVec.x = 0
+	        knotA.posVec.y = 0
+	        this.rotate(knotB.posVec, dx, dy, sin, cos, true)
+	        this.rotate(knotA.velVec, knotA.vx, knotA.vy, sin, cos, true)
+	        this.rotate(knotB.velVec, knotB.vx, knotB.vy, sin, cos, true)
+
+	        // collision reaction
+			var vxTotal = knotA.velVec.x - knotB.velVec.x
+			knotA.velVec.x = ((knotA.mass - knotB.mass) * knotA.velVec.x + 2 * knotB.mass * knotB.velVec.x) / (knotA.mass + knotB.mass)
+			knotB.velVec.x = vxTotal + knotA.velVec.x
+
+			// update position
+			knotA.posVec.x += knotA.velVec.x;
+			knotB.posVec.x += knotB.velVec.x;
+
+			// rotate positions back
+			this.rotate(knotA.posFVec, knotA.posVec.x, knotA.posVec.y, sin, cos, false)
+			this.rotate(knotB.posFVec, knotB.posVec.x, knotB.posVec.y, sin, cos, false)
+
+			// adjust positions to actual screen positions
+			knotB.x = knotA.x + knotB.posFVec.x;
+			knotB.y = knotA.y + knotB.posFVec.y;
+			knotA.x = knotA.x + knotA.posFVec.x;
+			knotA.y = knotA.y + knotA.posFVec.y;
+
+			// rotate velocities back
+			this.rotate(knotA.velFVec, knotA.velVec.x, knotA.velVec.y, sin, cos, false)
+			this.rotate(knotB.velFVec, knotB.velVec.x, knotB.velVec.y, sin, cos, false)
+
+			knotA.vx = knotA.velFVec.x;
+	        knotA.vy = knotA.velFVec.y;
+	        knotB.vx = knotB.velFVec.x;
+	        knotB.vy = knotB.velFVec.y;
+	    }
+	}
+	rotate(point, x, y, sin, cos, reverse) {
+		if(reverse) {
+			point.x = x * cos + y * sin;
+			point.y = y * cos - x * sin;
+		}else{
+			point.x = x * cos - y * sin;
+			point.y = y * cos + x * sin;
+		}
 	}
 	update() {
+		var knots = this.knots
+		var knotsNum = knots.length
+		for (var i = 0; i < knotsNum; i++) {
+			var knot = knots[i]
+			knot.position(knot.x + knot.vx, knot.y + knot.vy)
+			this.checkWalls(knot)
+		}
+		for (i = 0; i < knotsNum - 1; i++) {
+			var knotA = knots[i]
+			for (var j = i + 1; j < knotsNum; j++) {
+				var knotB = knots[j]
+				this.checkCollision(knotA, knotB)
+			}
+		}
 	}
 	resize() {
 		var windowH = AppStore.Window.h
@@ -22,6 +138,12 @@ export default class SmallCompass {
 		this.y = y
 	}
 	componentWillUnmount() {
+		for (var i = 0; i < this.knots.length; i++) {
+			this.knots[i].componentWillUnmount()
+		}
+		this.knots.length = 0
+		this.bgCircle.clear()
+		AppStore.releaseGraphics(this.bgCircle)
 		this.container.removeChildren()
 		AppStore.releaseContainer(this.container)
 	}
