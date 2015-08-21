@@ -14,7 +14,7 @@ var AppActions = {
         if(manifest.length < 1) {
             _proceedHasherChangeAction(pageId)
         }else{
-            Preloader.load(manifest, ()=>{
+            AppStore.Preloader.load(manifest, ()=>{
                 _proceedHasherChangeAction(pageId)
             })
         }

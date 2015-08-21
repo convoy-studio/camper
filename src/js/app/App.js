@@ -4,11 +4,15 @@ import AppTemplate from 'AppTemplate'
 import Router from 'Router'
 import GEvents from 'GlobalEvents'
 import Pool from 'Pool'
+import Preloader from 'Preloader'
 
 class App {
 	constructor() {
 	}
 	init() {
+
+		// Init Preloader
+		AppStore.Preloader = new Preloader()
 
 		// Init Pool
 		AppStore.Pool = new Pool()

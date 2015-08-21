@@ -28,7 +28,7 @@ class Router {
 	    var planetProductSection = crossroads.addRoute('/planet/{planetId}/{productId}', this._onPlanetProductURLHandler.bind(this), 2)
 	    planetProductSection.rules = {
 	    	planetId: planets,
-	    	productId : /^[0-2]/
+	    	productId : /^[0-5]/
 	    }
 	    var planetSection = crossroads.addRoute('/planet/{planetId}', this._onPlanetURLHandler.bind(this), 2)
 	    planetSection.rules = {

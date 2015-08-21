@@ -5,3 +5,4 @@ deploy
 preprod
 components/*
 npm-debug.log
+www/image

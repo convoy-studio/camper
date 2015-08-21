@@ -6,9 +6,7 @@ import $ from 'jquery'
 import TweenMax from 'gsap'
 import raf from 'raf'
 import pixi from 'pixi.js'
-import Preloader from 'Preloader'
 
-window.Preloader = new Preloader()
 window.jQuery = window.$ = $
 
 // Start App

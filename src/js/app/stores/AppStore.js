@@ -6,8 +6,6 @@ import data from 'GlobalData'
 import Router from 'Router'
 import Utils from 'Utils'
 
-function _pageRouteIdChanged(id) {
-}
 function _getPageContent() {
     var scope = _getPageId()
     var langContent = _getContentByLang(AppStore.lang())
@@ -178,6 +176,14 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         var data = AppStore.productsData()
         return data[id]
     },
+    getSpecificProductById: function(planetId, productId) {
+        var planetProducts = AppStore.productsDataById(planetId)
+        for (var i = 0; i < planetProducts.length; i++) {
+            if(productId == planetProducts[i].id) {
+                return planetProducts[i]
+            }
+        }
+    },
     Window: function() {
         return _windowWidthHeight()
     },
@@ -218,6 +224,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return AppStore.Pool.releaseSpringGarden(item)
     },
     Pool: undefined,
+    Preloader: undefined,
     Mouse: undefined,
     PXContainer: undefined,
     Orientation: AppConstants.LANDSCAPE,
@@ -225,8 +232,18 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         var action = payload.action
         switch(action.actionType) {
             case AppConstants.PAGE_HASHER_CHANGED:
-                _pageRouteIdChanged(action.item)
-                AppStore.emitChange(action.actionType)
+
+                // Try to catch the internal hash change for the 3 parts pages ex. /planet/wood/0
+                var newHasher = Router.getNewHash()
+                var oldHasher = Router.getOldHash()
+                var actionType = AppConstants.PAGE_HASHER_CHANGED
+                if(oldHasher != undefined) {
+                    if(newHasher.parts.length == 3 && oldHasher.parts.length == 3) {
+                        actionType = AppConstants.PAGE_HASHER_INTERNAL_CHANGE
+                    }
+                }
+
+                AppStore.emitChange(actionType)
                 break
             case AppConstants.WINDOW_RESIZE:
                 AppStore.Window.w = action.item.windowW

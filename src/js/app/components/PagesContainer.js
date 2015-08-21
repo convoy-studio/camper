@@ -17,6 +17,7 @@ class PagesContainer extends BasePager {
 	}
 	componentWillMount() {
 		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
+		AppStore.on(AppConstants.PAGE_HASHER_INTERNAL_CHANGE, this.didHasherInternalChange)
 		super.componentWillMount()
 	}
 	componentDidMount() {
@@ -24,7 +25,11 @@ class PagesContainer extends BasePager {
 	}
 	componentWillUnmount() {
 		AppStore.off(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
+		AppStore.off(AppConstants.PAGE_HASHER_INTERNAL_CHANGE, this.didHasherInternalChange)
 		super.componentWillUnmount()
+	}
+	didHasherInternalChange() {
+		this.currentComponent.internalHasherChanged()
 	}
 	didHasherChange() {
 		// Swallow hasher change if the change is fast as 1sec
