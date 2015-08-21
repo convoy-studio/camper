@@ -29,7 +29,7 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 
 		// draw a rectangle
 		this.g.clear()
-		this.g.beginFill(Math.random() * 0xffffff)
+		this.g.beginFill(Math.random() * 0x000000)
 		this.g.drawRect(0, 0, windowW, windowH)
 		this.g.endFill()
 

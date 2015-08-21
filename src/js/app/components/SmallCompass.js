@@ -3,6 +3,7 @@ import AppConstants from 'AppConstants'
 import Knot from 'Knot'
 import Utils from 'Utils'
 import Vec2 from 'Vec2'
+import Router from 'Router'
 
 export default class SmallCompass {
 	constructor(pxContainer, type) {
@@ -15,7 +16,7 @@ export default class SmallCompass {
 		this.container = AppStore.getContainer()
 		this.pxContainer.addChild(this.container)
 
-		this.bgCircle = AppStore.getGraphics()
+		this.bgCircle = new PIXI.Graphics()
 		this.container.addChild(this.bgCircle)
 
 		var knotRadius = AppConstants.SMALL_KNOT_RADIUS
@@ -27,13 +28,13 @@ export default class SmallCompass {
 
 		var compassName = name.toUpperCase()
 		this.element = this.parentEl.find('.compasses-texts-wrapper')
-		var containerEl = $('<div class="texts-container"></div>')
+		var containerEl = $('<div class="texts-container btn"></div>')
 		this.element.append(containerEl)
 		var titleTop = $('<div class="top-title"></div')
 		var titleBottom = $('<div class="bottom-title"></div')
 
 		this.circleRad = 90
-		var circlepath = 'M0,'+this.circleRad/2+'a'+this.circleRad/2+','+this.circleRad/2+' 0 1,0 '+this.circleRad+',0a'+this.circleRad/2+',-'+this.circleRad/2+' 0 1,0 -'+this.circleRad+',0'
+		var circlepath = 'M0,'+this.circleRad/2+'a'+this.circleRad/2+','+this.circleRad/2+' 0 1,0 '+this.circleRad+',0a'+this.circleRad/2+','+this.circleRad/2+' 0 1,0 -'+this.circleRad+',0'
 		var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <path id="path1" d="'+circlepath+'" > </path> </defs> <text fill="white" id="myText"> <textPath xlink:href="#path1"> <tspan dx="0px" dy="0px">' + compassName + '</tspan> </textPath> </text></svg>'
 		var titleTopSvg = $(svgStr)
 		var titleBottomSvg = $(svgStr)
@@ -49,12 +50,14 @@ export default class SmallCompass {
 			width: this.circleRad,
 			height: this.circleRad
 		})
-		TweenMax.set(titleBottomSvg, { rotation:'180deg' })
 		this.titles = {
 			container: containerEl,
 			titleTop: titleTop,
 			titleBottom: titleBottom
 		}
+
+		this.onClicked = this.onClicked.bind(this)
+		this.titles.container.on('click', this.onClicked)
 
 		this.knots = []
 		for (var i = 0; i < data.length; i++) {
@@ -70,11 +73,17 @@ export default class SmallCompass {
 			knot.position(Utils.Rand(-this.radiusLimit, this.radiusLimit), Utils.Rand(-this.radiusLimit, this.radiusLimit))
 			this.knots[i] = knot
 		}
+
 		// draw a rectangle
 		this.bgCircle.clear()
 		this.bgCircle.beginFill(0xffffff)
 		this.bgCircle.drawCircle(0, 0, this.radius)
 		this.bgCircle.endFill()
+	}
+	onClicked(e) {
+		e.preventDefault()
+		var url = "/planet/" + this.id
+		Router.setHash(url)
 	}
 	checkWalls(knot) {
 		if(knot.x + knot.radius > this.radiusLimit) {
@@ -144,6 +153,12 @@ export default class SmallCompass {
 			point.y = y * cos + x * sin;
 		}
 	}
+	didTransitionInComplete() {
+		// this.titles.container.addClass('active')
+	}
+	willTransitionOut() {
+		// this.titles.container.removeClass('active')	
+	}
 	update() {
 		var knots = this.knots
 		var knotsNum = knots.length
@@ -181,9 +196,10 @@ export default class SmallCompass {
 		for (var i = 0; i < this.knots.length; i++) {
 			this.knots[i].componentWillUnmount()
 		}
+		this.titles.container.off('click', this.onClicked)
 		this.knots.length = 0
 		this.bgCircle.clear()
-		AppStore.releaseGraphics(this.bgCircle)
+		this.bgCircle = null
 		this.container.removeChildren()
 		AppStore.releaseContainer(this.container)
 	}

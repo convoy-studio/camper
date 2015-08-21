@@ -10,6 +10,10 @@ export default class Page extends BasePage {
 		this.pxContainer = AppStore.getContainer()
 	}
 	componentDidMount() {
+
+		if(this.props.type == AppConstants.LANDING) this.parent.css('cursor', 'pointer')
+		else this.parent.css('cursor', 'auto')
+
 		setTimeout(()=>{AppActions.pxAddChild(this.pxContainer)}, 0)
 		super.componentDidMount()
 	}

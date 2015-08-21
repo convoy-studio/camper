@@ -26,8 +26,6 @@ export default class Landing extends Page {
 		this.onKeyPressed = this.onKeyPressed.bind(this)
 		$(document).on('keydown', this.onKeyPressed)
 
-		this.parent.css('cursor', 'pointer')
-
 		this.onStageClicked = this.onStageClicked.bind(this)
 		this.parent.on('click', this.onStageClicked)
 

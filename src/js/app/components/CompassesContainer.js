@@ -23,12 +23,14 @@ export default class CompassesContainer {
 			var planet = planets[i]
 			if(planet == this.id) {
 				this.compasses[i] = mainCompass
+				this.compasses[i].id = planet
 				this.compasses[i].state = AppConstants.OPEN
 				this.openedCompassIndex = i
 			}else{
 				var smallCompass = new SmallCompass(this.container, AppConstants.EXPERIENCE)
 				var planetData = AppStore.productsDataById(planet)
 				smallCompass.state = AppConstants.CLOSE
+				smallCompass.id = planet
 				smallCompass.componentDidMount(planetData, planet, this.parentEl)
 				this.compasses[i] = smallCompass
 			}
@@ -37,6 +39,15 @@ export default class CompassesContainer {
 	didTransitionInComplete() {
 		var planetData = AppStore.productsDataById(this.id)
 		this.compasses[this.openedCompassIndex].updateData(planetData)
+
+		for (var i = 0; i < this.compasses.length; i++) {
+			this.compasses[i].didTransitionInComplete()
+		};
+	}
+	willTransitionOut() {
+		for (var i = 0; i < this.compasses.length; i++) {
+			this.compasses[i].willTransitionOut()
+		};	
 	}
 	update() {
 		for (var i = 0; i < this.compasses.length; i++) {

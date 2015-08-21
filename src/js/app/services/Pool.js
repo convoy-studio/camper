@@ -39,7 +39,18 @@ export default class Pool {
 		this.pxContainers.release(item)
 	}
 	getGraphics() {
-		return this.graphics.get()
+		var g = this.graphics.get()
+		g.clear()
+		g.scale.x = 1
+		g.scale.y = 1
+		g.position.x = 0
+		g.position.y = 0
+		g.skew.x = 0
+		g.skew.y = 0
+		g.pivot.x = 0
+		g.pivot.y = 0
+		g.rotation = 0
+		return g
 	}
 	releaseGraphics(item) {
 		this.graphics.release(item)

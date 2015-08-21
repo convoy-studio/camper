@@ -47,6 +47,10 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.didTransitionInComplete()	
 		this.compassesContainer.didTransitionInComplete()
 	}
+	willTransitionOut() {
+		super.willTransitionOut()
+		this.compassesContainer.willTransitionOut()
+	}
 	update() {
 		this.experience.update()
 		this.compassesContainer.update()

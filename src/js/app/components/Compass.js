@@ -21,12 +21,15 @@ export default class Compass {
 	updateData(data) {
 		this.removePreviousSpringGardens()
 		this.springGardens = []
+		var springGardenWithFill = (this.type == AppConstants.EXPERIENCE) ? true : false
+		var springGardenIsInteractive = (this.type == AppConstants.EXPERIENCE) ? true : false
 		for (var i = 0; i < data.length; i++) {
 			var springGarden = AppStore.getSpringGarden()
 			var product = data[i]
+			springGarden.id = this.id
 			springGarden.radius = this.radius
 			springGarden.knotRadius = this.knotRadius
-			springGarden.componentDidMount(product.knots, product.color)
+			springGarden.componentDidMount(product, springGardenWithFill, springGardenIsInteractive)
 			this.container.addChild(springGarden.container)
 			this.springGardens[i] = springGarden
 		}
@@ -34,7 +37,7 @@ export default class Compass {
 	removePreviousSpringGardens() {
 		for (var i = 0; i < this.springGardens.length; i++) {
 			var springGarden = this.springGardens[i]
-			this.container.removeChild(springGarden.container)
+			springGarden.componentWillUnmount()
 			AppStore.releaseSpringGarden(springGarden)
 		}
 	}
@@ -49,6 +52,11 @@ export default class Compass {
 		var windowH = AppStore.Window.h
 		var sizePercentage = (this.type == AppConstants.EXPERIENCE || this.type == AppConstants.CAMPAIGN) ? AppConstants.COMPASS_SMALL_SIZE_PERCENTAGE : AppConstants.COMPASS_SIZE_PERCENTAGE
 		this.radius = windowH * sizePercentage
+	}
+	didTransitionInComplete() {
+
+	}
+	willTransitionOut() {
 	}
 	resize() {
 		this.getRadius()

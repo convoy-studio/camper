@@ -101,6 +101,7 @@ a {
     text-decoration: none;
 }
 #landing.page-wrapper {
+    @extend .full;
     .slideshow-title {
         font-size: 32px;
         position: absolute;
@@ -121,6 +122,17 @@ a {
             & > div {
                 position: absolute;
             }
+            .top-title {
+            }
+            .bottom-title {
+                @include rotate(180);
+            }
+            // @include opacity(0);
+            // @include anim(.1s, 0s, $easeInExpo, scale(1.3) translateZ(0), 50%, 50%, transform opacity);
+            // &.active {
+            //     @include opacity(1);
+            //     @include anim(.8s, 0s, $easeOutExpo, scale(1) translateZ(0), 50%, 50%, transform opacity);
+            // }
         }
     }
 }

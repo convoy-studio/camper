@@ -39,9 +39,7 @@ html {
     }
 }
 .page-wrapper {
-    @extend .full;
     position: fixed;
-    // padding: 0 $overallMargin;
     color: $white;
 }
 
