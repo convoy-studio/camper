@@ -4,76 +4,105 @@ import Utils from 'Utils'
 import AppStore from 'AppStore'
 
 export default class ArrowBtn {
-	constructor(parentContainer, direction) {
-		this.parentContainer = parentContainer
+	constructor(element, direction) {
+		this.element = element
 		this.direction = direction
-		this.isRollover = false
-
-		this.config = {
-			spring: 0,
-			friction: 0,
-			springLength: 0
-		}
-		this.config.spring = 0.1
-		this.config.friction = 0.8
-		this.config.springLength = 0
 	}
 	componentDidMount() {
-		this.container = new PIXI.Container()
-		this.parentContainer.addChild(this.container)
+		this.tlOver = AppStore.getTimeline()
+		this.tlOut = AppStore.getTimeline()
+		var knotsEl = this.element.find(".knot")
+		var linesEl = this.element.find(".line")
+		// TweenMax.to(knotsEl, 1, { scale:2, transformOrigin:'50% 50%' })
+
 		this.lineSize = AppStore.getLineWidth()
 		var radius = 3
 		var margin = 30
-		this.knotsLine = [
-			new Knot(this.container, radius).componentDidMount(),
-			new Knot(this.container, radius).componentDidMount(),
-			new Knot(this.container, radius).componentDidMount()
-		]
-		this.knotsTriangle = [
-			new Knot(this.container, radius).componentDidMount(),
-			new Knot(this.container, radius).componentDidMount()
-		]
 
-		// mouseout positions
-		this.knotsLine[0].position(-margin * 2, 0)
-		this.knotsLine[0].fromX = -margin * 2
-		this.knotsLine[1].position(-margin, 0)
-		this.knotsLine[1].fromX = -margin
-		this.knotsTriangle[0].position(-margin*0.6, -margin*0.7)
-		this.knotsTriangle[0].fromX = -margin*0.6
-		this.knotsTriangle[0].fromY = -margin*0.7
-		this.knotsTriangle[1].position(-margin*0.6, margin*0.7)
-		this.knotsTriangle[1].fromX = -margin*0.6
-		this.knotsTriangle[1].fromY = margin*0.7
+		for (var i = 0; i < knotsEl.length; i++) {
+			var knot = $(knotsEl[i])
+			knot.attr('r', radius)
+		};
+		for (var i = 0; i < linesEl.length; i++) {
+			var line = $(linesEl[i])
+			line.css('stroke-width', this.lineSize)
+		};
 
-		// mouseover positions
-		this.knotsLine[0].toX = this.knotsLine[0].x - (margin * 0.6)
-		this.knotsLine[1].toX = this.knotsLine[1].x - (margin * 0.2)
-		this.knotsLine[2].toX = this.knotsLine[2].x + (margin * 0.2)
+		var startX = 4
+		var startY = margin
+		var offsetUpDown = 0.6
+		$(knotsEl.get(0)).attr({
+			'cx': startX + 0,
+			'cy': startY + 0
+		})
+		$(knotsEl.get(1)).attr({
+			'cx': startX + margin,
+			'cy': startY + 0
+		})
+		$(knotsEl.get(2)).attr({
+			'cx': startX + (margin*2),
+			'cy': startY + 0
+		})
+		$(knotsEl.get(3)).attr({
+			'cx': startX + (margin * offsetUpDown),
+			'cy': startY - (margin * offsetUpDown)
+		})
+		$(knotsEl.get(4)).attr({
+			'cx': startX + (margin * offsetUpDown),
+			'cy': startY + (margin * offsetUpDown)
+		})
+		$(linesEl.get(0)).attr({
+			'x1': startX + 0,
+			'y1': startY + 0,
+			'x2': startX + margin,
+			'y2': startY + 0
+		})
+		$(linesEl.get(1)).attr({
+			'x1': startX + margin,
+			'y1': startY + 0,
+			'x2': startX + (margin*2),
+			'y2': startY + 0
+		})
+		$(linesEl.get(2)).attr({
+			'x1': startX + 0,
+			'y1': startY + 0,
+			'x2': startX + (margin * offsetUpDown),
+			'y2': startY - (margin * offsetUpDown)
+		})
+		$(linesEl.get(3)).attr({
+			'x1': startX + 0,
+			'y1': startY + 0,
+			'x2': startX + (margin * offsetUpDown),
+			'y2': startY + (margin * offsetUpDown)
+		})
 
-		this.knotsTriangle[0].toX = this.knotsTriangle[0].fromX
-		this.knotsTriangle[0].toY = this.knotsTriangle[0].fromY + (margin*0.1)
-
-		this.knotsTriangle[1].toX = this.knotsTriangle[1].fromX
-		this.knotsTriangle[1].toY = this.knotsTriangle[1].fromY - (margin*0.1)
-
-		this.g = new PIXI.Graphics()
-		this.container.addChild(this.g)
-		this.drawLines(this.g)
+		this.tlOver.to(knotsEl[0], 1, { x:-6, force3D:true, ease:Elastic.easeInOut }, 0)
+		this.tlOver.to(knotsEl[1], 1, { x:-6, force3D:true, ease:Elastic.easeInOut }, 0)
+		this.tlOver.to(knotsEl[2], 1, { x:-6, force3D:true, ease:Elastic.easeInOut }, 0)
+		// this.tlOver.to(knotsEl[3], 1, { x:6, force3D:true, ease:Elastic.easeInOut }, 0)
+		// this.tlOver.to(knotsEl[4], 1, { x:6, force3D:true, ease:Elastic.easeInOut }, 0)
+		
+		// this.tlOver.to(linesEl[0], 1, { scaleX:1.1, force3D:true, transformOrigin:'0% 100%', ease:Elastic.easeInOut }, 0)
 
 		switch(this.direction) {
 			case AppConstants.LEFT:
-				this.container.rotation = Utils.DegreesToRadians(180)
+				// this.container.rotation = Utils.DegreesToRadians(180)
 				break
 			case AppConstants.RIGHT:
 				break
 			case AppConstants.TOP:
-				this.container.rotation = Utils.DegreesToRadians(-90)
+				// this.container.rotation = Utils.DegreesToRadians(-90)
 				break
 			case AppConstants.BOTTOM:
-				this.container.rotation = Utils.DegreesToRadians(90)
+				// this.container.rotation = Utils.DegreesToRadians(90)
 				break
 		}
+
+		this.tlOver.pause(0)
+
+		this.rollover = this.rollover.bind(this)
+		this.element.on('mouseenter', this.rollover)
+		console.log(this.element)
 
 		this.width = margin * 3
 		this.height = margin * 2
@@ -83,10 +112,12 @@ export default class ArrowBtn {
 		this.container.y = y
 	}
 	rollout() {
-		this.updateStrings('fromX', 'fromY')
+		// this.updateStrings('fromX', 'fromY')
 	}
 	rollover() {
-		this.updateStrings('toX', 'toY')
+		console.log('over')
+		this.tlOver.play(0)
+		// this.updateStrings('toX', 'toY')
 	}
 	updateStrings(dirX, dirY) {
 		var spring = this.config.spring
@@ -121,12 +152,7 @@ export default class ArrowBtn {
 		g.lineTo(this.knotsLine[2].x, this.knotsLine[2].y)
 	}
 	componentWillUnmount() {
-		for (var i = 0; i < this.knotsLine.length; i++) {
-			this.knotsLine[i].componentWillUnmount()
-		}
-		for (var i = 0; i < this.knotsTriangle.length; i++) {
-			this.knotsTriangle[i].componentWillUnmount()
-		}
-		this.container.removeChildren()
+		AppStore.releaseTimeline(this.tlOver)
+		AppStore.releaseTimeline(this.tlOut)
 	}
 }

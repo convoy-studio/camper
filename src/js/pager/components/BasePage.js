@@ -10,6 +10,7 @@ export default class BasePage extends BaseComponent {
 		this.didTransitionOutComplete = this.didTransitionOutComplete.bind(this)
 	}
 	componentDidMount() {
+		this.child.addClass(this.props.type.toLowerCase())
 		this.resize()
 		this.setupAnimations()
 		setTimeout(() => this.props.isReady(this.props.hash), 0)

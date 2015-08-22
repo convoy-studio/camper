@@ -5,6 +5,7 @@ import Router from 'Router'
 // import Compass from 'Compass'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
+import ArrowBtn from 'ArrowBtn'
 
 export default class PlanetCampaignPage extends BasePlanetPage {
 	constructor(props) {
@@ -17,9 +18,6 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		this.currentProductContainerClass = 'product-container-b'
 	}
 	componentDidMount() {
-		this.g = new PIXI.Graphics()
-		this.pxContainer.addChild(this.g)
-
 		this.animations = {
 			oldContainerAnimation: undefined,
 			newContainerAnimation: undefined
@@ -42,6 +40,9 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 				videoWrapper: containerB.find('.video-wrapper')
 			}
 		}
+
+		this.previousBtn = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
+		this.previousBtn.componentDidMount()
 
 		// this.compass = new Compass(this.pxContainer, AppConstants.CAMPAIGN)
 		// this.compass.knotRadius = AppConstants.SMALL_KNOT_RADIUS
@@ -188,12 +189,6 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			height: windowH
 		}
 		this.child.css(childCss)
-
-		// draw a rectangle
-		this.g.clear()
-		this.g.beginFill(Math.random() * 0x000000)
-		this.g.drawRect(0, 0, windowW, windowH)
-		this.g.endFill()
 
 		super.resize()
 	}

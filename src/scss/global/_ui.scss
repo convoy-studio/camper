@@ -135,26 +135,47 @@ a {
             // }
         }
     }
-    .product-containers-wrapper {
-        overflow: hidden;
-        @extend .full;
-        position: absolute;
-        & > div {
+    &.campaign {
+        .interface {
             position: absolute;
+            z-index: 10;
         }
-        .product-container {
+        .previous-btn {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            background-color: red;
+            svg {
+                .knot {
+                    fill: $white;
+                }
+                .line {
+                    stroke: $white;
+                }
+                // position: absolute;
+            }
+        }
+        .product-containers-wrapper {
+            overflow: hidden;
             @extend .full;
-            @include opacity(0);
+            position: absolute;
             & > div {
-                @extend .full;
                 position: absolute;
             }
-            img {
-                width: 100%;
-                height: 100%;
-            }
-            .poster-wrapper {
-                background-color: $gray;
+            .product-container {
+                @extend .full;
+                @include opacity(0);
+                & > div {
+                    @extend .full;
+                    position: absolute;
+                }
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+                .poster-wrapper {
+                    background-color: $gray;
+                }
             }
         }
     }
