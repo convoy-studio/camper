@@ -135,4 +135,27 @@ a {
             // }
         }
     }
+    .product-containers-wrapper {
+        overflow: hidden;
+        @extend .full;
+        position: absolute;
+        & > div {
+            position: absolute;
+        }
+        .product-container {
+            @extend .full;
+            @include opacity(0);
+            & > div {
+                @extend .full;
+                position: absolute;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .poster-wrapper {
+                background-color: $gray;
+            }
+        }
+    }
 }

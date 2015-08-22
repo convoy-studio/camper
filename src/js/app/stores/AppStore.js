@@ -121,6 +121,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     generalInfosLangScope: function() {
         return _getGeneralInfos()
     },
+    getEmptyImgUrl: function() {
+        return AppStore.getEnvironment().static + '/image/empty.png'
+    },
     mainImageUrl: function(id, responsiveArray) {
         return AppStore.baseMediaPath() + '/image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
     },
