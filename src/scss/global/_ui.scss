@@ -140,19 +140,18 @@ a {
             position: absolute;
             z-index: 10;
         }
-        .previous-btn {
+        .dots-arrow-btn, .dots-rectangle-btn {
             position: absolute;
-            left: 100px;
-            top: 100px;
             background-color: red;
+            .btn-title {
+                font-size: $globalFontSize;
+                position: absolute;
+                text-transform: uppercase;
+            }
             svg {
-                .knot {
-                    fill: $white;
-                }
-                .line {
-                    stroke: $white;
-                }
-                // position: absolute;
+                @extend .full;
+                .knot { fill: $white;}
+                .line { stroke: $white; }
             }
         }
         .product-containers-wrapper {

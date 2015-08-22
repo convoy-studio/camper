@@ -17,20 +17,31 @@ export default class BasePage extends BaseComponent {
 	}
 	setupAnimations() {
 		var keyName = this.props.type.toLowerCase() + '-in'
-		this.tlIn = TransitionAnimations[keyName](this, {onComplete:this.didTransitionInComplete})
+		// this.tlIn = AppStore.getTimeline()
+		this.tlIn = new TimelineMax()
+		this.tlIn.eventCallback('onComplete', this.didTransitionInComplete)
+		TransitionAnimations[keyName](this, this.tlIn)
+		this.tlIn.pause(0)
 	}
 	willTransitionIn() {
 		this.tlIn.play(0)
 	}
 	willTransitionOut() {
 		var keyName = this.props.type.toLowerCase() + '-out'
-		this.tlOut = TransitionAnimations[keyName](this, {onComplete:this.didTransitionOutComplete})
+		// this.tlOut = AppStore.getTimeline()
+		this.tlOut = new TimelineMax()
+		this.tlOut.eventCallback('onComplete', this.didTransitionOutComplete)
+		TransitionAnimations[keyName](this, this.tlOut)
 		this.tlOut.play(0)
 	}
 	didTransitionInComplete() {
+		// console.log('didTransitionInComplete', this.id, this.props.type)
+		this.releaseTimelineIn()
 		setTimeout(() => this.props.didTransitionInComplete(), 0)
 	}
 	didTransitionOutComplete() {
+		// console.log('didTransitionOutComplete', this.id, this.props.type)
+		this.releaseTimelineOut()
 		setTimeout(() => this.props.didTransitionOutComplete(), 0)
 	}
 	resize() {
@@ -44,14 +55,22 @@ export default class BasePage extends BaseComponent {
 		}
 		this.didTransitionOutComplete()
 	}
-	componentWillUnmount() {
+	releaseTimelineIn() {
 		if(this.tlIn != undefined) {
 			this.tlIn.clear()
-			AppStore.releaseTimeline(this.tlIn)
+			// AppStore.releaseTimeline(this.tlIn)
+			this.tlIn = null
 		}
+	}
+	releaseTimelineOut() {
 		if(this.tlOut != undefined) {
 			this.tlOut.clear()
-			AppStore.releaseTimeline(this.tlOut)
+			// AppStore.releaseTimeline(this.tlOut)
+			this.tlIOut = null
 		}
+	}
+	componentWillUnmount() {
+		this.releaseTimelineIn()
+		this.releaseTimelineOut()
 	}
 }

@@ -22,7 +22,8 @@
 				"shop_men_url": "http://google.com",
 				"shop_women": "woman",
 				"shop_women_url": "http://google.com",
-				"planet": "planet"
+				"planet": "planet",
+				"buy_title": "buy"
 			},
 			"fr": {
 				"countries": {
@@ -42,7 +43,8 @@
 				"shop_men_url": "http://google.com",
 				"shop_women": "woman",
 				"shop_women_url": "http://google.com",
-				"planet": "planet"
+				"planet": "planet",
+				"buy_title": "buy"
 			},
 			"es": {
 				"countries": {
@@ -62,7 +64,8 @@
 				"shop_men_url": "http://google.com",
 				"shop_women": "woman",
 				"shop_women_url": "http://google.com",
-				"planet": "planet"
+				"planet": "planet",
+				"buy_title": "buy"
 			},
 			"it": {
 				"countries": {
@@ -82,7 +85,8 @@
 				"shop_men_url": "http://google.com",
 				"shop_women": "woman",
 				"shop_women_url": "http://google.com",
-				"planet": "planet"
+				"planet": "planet",
+				"buy_title": "buy"
 			},
 			"de": {
 				"countries": {
@@ -102,7 +106,8 @@
 				"shop_men_url": "http://google.com",
 				"shop_women": "woman",
 				"shop_women_url": "http://google.com",
-				"planet": "planet"
+				"planet": "planet",
+				"buy_title": "buy"
 			},
 			"pt": {
 				"countries": {
@@ -122,7 +127,8 @@
 				"shop_men_url": "http://google.com",
 				"shop_women": "woman",
 				"shop_women_url": "http://google.com",
-				"planet": "planet"
+				"planet": "planet",
+				"buy_title": "buy"
 			}
 		}
 	},

@@ -13,11 +13,9 @@ export default class ArrowBtn {
 		this.tlOut = AppStore.getTimeline()
 		var knotsEl = this.element.find(".knot")
 		var linesEl = this.element.find(".line")
-		// TweenMax.to(knotsEl, 1, { scale:2, transformOrigin:'50% 50%' })
-
-		this.lineSize = AppStore.getLineWidth()
 		var radius = 3
 		var margin = 30
+		this.lineSize = AppStore.getLineWidth()
 
 		for (var i = 0; i < knotsEl.length; i++) {
 			var knot = $(knotsEl[i])
@@ -28,7 +26,7 @@ export default class ArrowBtn {
 			line.css('stroke-width', this.lineSize)
 		};
 
-		var startX = 4
+		var startX = margin >> 1
 		var startY = margin
 		var offsetUpDown = 0.6
 		$(knotsEl.get(0)).attr({
@@ -76,83 +74,82 @@ export default class ArrowBtn {
 			'y2': startY + (margin * offsetUpDown)
 		})
 
-		this.tlOver.to(knotsEl[0], 1, { x:-6, force3D:true, ease:Elastic.easeInOut }, 0)
-		this.tlOver.to(knotsEl[1], 1, { x:-6, force3D:true, ease:Elastic.easeInOut }, 0)
-		this.tlOver.to(knotsEl[2], 1, { x:-6, force3D:true, ease:Elastic.easeInOut }, 0)
-		// this.tlOver.to(knotsEl[3], 1, { x:6, force3D:true, ease:Elastic.easeInOut }, 0)
-		// this.tlOver.to(knotsEl[4], 1, { x:6, force3D:true, ease:Elastic.easeInOut }, 0)
-		
-		// this.tlOver.to(linesEl[0], 1, { scaleX:1.1, force3D:true, transformOrigin:'0% 100%', ease:Elastic.easeInOut }, 0)
+		this.tlOver.to(knotsEl[0], 1, { x:-6, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOver.to(knotsEl[1], 1, { x:-6, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOver.to(knotsEl[2], 1, { x:-6, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOver.to(linesEl[0], 1, { scaleX:1.1, x:-6, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+		this.tlOver.to(linesEl[1], 1, { scaleX:1.1, x:-6, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+		this.tlOver.to(linesEl[2], 1, { x:-6, rotation:'10deg', force3D:true, transformOrigin:'0% 100%', ease:Elastic.easeOut }, 0)
+		this.tlOver.to(linesEl[3], 1, { x:-6, rotation:'-10deg', force3D:true, transformOrigin:'0% 0%', ease:Elastic.easeOut }, 0)
+		this.tlOver.to(knotsEl[3], 1, { x:-3, y:3, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOver.to(knotsEl[4], 1, { x:-3, y:-3, force3D:true, ease:Elastic.easeOut }, 0)
+
+		this.tlOut.to(knotsEl[0], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOut.to(knotsEl[1], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOut.to(knotsEl[2], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOut.to(linesEl[0], 1, { scaleX:1, x:0, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+		this.tlOut.to(linesEl[1], 1, { scaleX:1, x:0, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+		this.tlOut.to(linesEl[2], 1, { x:0, rotation:'0deg', force3D:true, transformOrigin:'0% 100%', ease:Elastic.easeOut }, 0)
+		this.tlOut.to(linesEl[3], 1, { x:0, rotation:'0deg', force3D:true, transformOrigin:'0% 0%', ease:Elastic.easeOut }, 0)
+		this.tlOut.to(knotsEl[3], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOut.to(knotsEl[4], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
 
 		switch(this.direction) {
 			case AppConstants.LEFT:
-				// this.container.rotation = Utils.DegreesToRadians(180)
 				break
 			case AppConstants.RIGHT:
+				TweenMax.set(this.element, { rotation:'180deg', transformOrigin: '50% 50%' })
 				break
 			case AppConstants.TOP:
-				// this.container.rotation = Utils.DegreesToRadians(-90)
+				TweenMax.set(this.element, { rotation:'90deg', transformOrigin: '50% 50%' })
 				break
 			case AppConstants.BOTTOM:
-				// this.container.rotation = Utils.DegreesToRadians(90)
+				TweenMax.set(this.element, { rotation:'-90deg', transformOrigin: '50% 50%' })
 				break
 		}
 
 		this.tlOver.pause(0)
+		this.tlOut.pause(0)
 
 		this.rollover = this.rollover.bind(this)
+		this.rollout = this.rollout.bind(this)
+		this.click = this.click.bind(this)
 		this.element.on('mouseenter', this.rollover)
-		console.log(this.element)
+		this.element.on('mouseleave', this.rollout)
+		this.element.on('click', this.click)
 
 		this.width = margin * 3
 		this.height = margin * 2
+		this.element.css({
+			width: this.width,
+			height: this.height
+		})
 	}
 	position(x, y) {
-		this.container.x = x
-		this.container.y = y
+		this.element.css({
+			left: x,
+			top: y
+		})
 	}
-	rollout() {
-		// this.updateStrings('fromX', 'fromY')
+	click(e) {
+		e.preventDefault()
+		this.btnClicked(this.direction)
 	}
-	rollover() {
-		console.log('over')
+	rollout(e) {
+		e.preventDefault()
+		this.tlOver.kill()
+		this.tlOut.play(0)
+	}
+	rollover(e) {
+		e.preventDefault()
+		this.tlOut.kill()
 		this.tlOver.play(0)
-		// this.updateStrings('toX', 'toY')
-	}
-	updateStrings(dirX, dirY) {
-		var spring = this.config.spring
-		var friction = this.config.friction
-		var springLength = this.config.springLength
-		var knotsLine = this.knotsLine
-		var knotsTriangle = this.knotsTriangle
-		for (var i = 0; i < knotsLine.length; i++) {
-			var knot = knotsLine[i]
-			Utils.SpringTo(knot, knot[dirX], knot[dirY], i, spring, friction, springLength)
-			knot.position(knot.x + knot.vx, knot.y + knot.vy)
-		}
-		for (i = 0; i < knotsTriangle.length; i++) {
-			var knot = knotsTriangle[i]
-			Utils.SpringTo(knot, knot[dirX], knot[dirY], i, spring, friction, springLength)
-			knot.position(knot.x + knot.vx, knot.y + knot.vy)
-		}
-		this.drawLines(this.g)
-	}
-	drawLines(g) {
-		g.clear()
-		g.lineStyle(this.lineSize, 0xffffff)
-
-		g.moveTo(this.knotsLine[0].x,this.knotsLine[0].y)
-		g.lineTo(this.knotsLine[1].x, this.knotsLine[1].y)
-		g.lineTo(this.knotsLine[2].x, this.knotsLine[2].y)
-
-		g.moveTo(this.knotsTriangle[0].x,this.knotsTriangle[0].y)
-		g.lineTo(this.knotsLine[2].x, this.knotsLine[2].y)
-
-		g.moveTo(this.knotsTriangle[1].x,this.knotsTriangle[1].y)
-		g.lineTo(this.knotsLine[2].x, this.knotsLine[2].y)
 	}
 	componentWillUnmount() {
 		AppStore.releaseTimeline(this.tlOver)
 		AppStore.releaseTimeline(this.tlOut)
+		this.element.off('mouseenter', this.rollover)
+		this.element.off('mouseleave', this.rollout)
+		this.element.off('click', this.click)
 	}
 }

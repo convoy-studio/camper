@@ -6,6 +6,7 @@ import Router from 'Router'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import ArrowBtn from 'ArrowBtn'
+import RectangleBtn from 'RectangleBtn'
 
 export default class PlanetCampaignPage extends BasePlanetPage {
 	constructor(props) {
@@ -23,6 +24,7 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			newContainerAnimation: undefined
 		}
 
+		var infos = AppStore.generalInfosLangScope()
 		var productContainersWrapper = this.child.find('.product-containers-wrapper')
 		var containerA = productContainersWrapper.find('.product-container-a')
 		var containerB = productContainersWrapper.find('.product-container-b')
@@ -41,8 +43,21 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			}
 		}
 
+		this.arrowClicked = this.arrowClicked.bind(this)
 		this.previousBtn = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
+		this.previousBtn.btnClicked = this.arrowClicked
 		this.previousBtn.componentDidMount()
+		this.nextBtn = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
+		this.nextBtn.btnClicked = this.arrowClicked
+		this.nextBtn.componentDidMount()
+
+		this.buyBtn = new RectangleBtn(this.child.find('.buy-btn'), infos.buy_title)
+		// this.buyBtn.btnClicked = this.arrowClicked
+		this.buyBtn.componentDidMount()
+
+		this.buyBtn.position(
+			100, 100
+		)
 
 		// this.compass = new Compass(this.pxContainer, AppConstants.CAMPAIGN)
 		// this.compass.knotRadius = AppConstants.SMALL_KNOT_RADIUS
@@ -54,6 +69,17 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		$(document).on('keydown', this.onKeyPressed)
 
 		super.componentDidMount()
+	}
+	arrowClicked(direction) {
+		switch(direction) {
+			case AppConstants.LEFT:
+				this.previous()
+				break
+			case AppConstants.RIGHT:
+				this.next()
+				break
+		}
+		this.updateHasher()
 	}
 	onKeyPressed(e) {
 		if(this.animationRunning) return
@@ -181,6 +207,16 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		// this.compass.position(
 		// 	windowW >> 1, windowH * 0.16
 		// )
+
+		this.previousBtn.position(
+			AppConstants.PADDING_AROUND,
+			(windowH >> 1) - (this.previousBtn.width >> 1)
+		)
+
+		this.nextBtn.position(
+			windowW - (this.previousBtn.width) - AppConstants.PADDING_AROUND,
+			(windowH >> 1) - (this.previousBtn.height >> 1)
+		)
 		
 		this.resizeMediaWrappers()
 		
@@ -195,5 +231,8 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 	componentWillUnmount() {
 		$(document).off('keydown', this.onKeyPressed)
 		// this.compass.componentWillUnmount()
+		this.previousBtn.componentWillUnmount()
+		this.nextBtn.componentWillUnmount()
+		super.componentWillUnmount()
 	}
 }

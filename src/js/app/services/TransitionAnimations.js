@@ -1,20 +1,12 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 
-function _getTimeline(args) {
-	var tl = AppStore.getTimeline()
-	tl.eventCallback("onComplete", args.onComplete)
-	return tl
-}
-
 var TransitionAnimations = {
 
 	// EXPERIENCE -------------------------------
-	'experience-in': function(scope, args) {
+	'experience-in': function(scope, timeline) {
 		var wrapper = scope.child
 		var types = AppStore.getTypeOfNewAndOldPage()
-		var timeline = _getTimeline(args)
-
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
@@ -35,13 +27,10 @@ var TransitionAnimations = {
 				break
 		}
 		timeline.pause(0)
-		return timeline
 	},
-	'experience-out': function(scope, args) {
+	'experience-out': function(scope, timeline) {
 		var wrapper = scope.child
 		var types = AppStore.getTypeOfNewAndOldPage()
-		var timeline = _getTimeline(args)
-
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
@@ -64,15 +53,12 @@ var TransitionAnimations = {
 				break
 		}
 		timeline.pause(0)
-		return timeline
 	},
 
 	// CAMPAIGN -------------------------------
-	'campaign-in': function(scope, args) {
+	'campaign-in': function(scope, timeline) {
 		var wrapper = scope.child
 		var types = AppStore.getTypeOfNewAndOldPage()
-		var timeline = _getTimeline(args)
-
 		var windowH = AppStore.Window.h
 
 		switch(types.oldType){
@@ -88,13 +74,10 @@ var TransitionAnimations = {
 				break
 		}
 		timeline.pause(0)
-		return timeline
 	},
-	'campaign-out': function(scope, args) {
+	'campaign-out': function(scope, timeline) {
 		var wrapper = scope.child
 		var types = AppStore.getTypeOfNewAndOldPage()
-		var timeline = _getTimeline(args)
-
 		var windowH = AppStore.Window.h
 
 		switch(types.newType){
@@ -110,15 +93,12 @@ var TransitionAnimations = {
 				break
 		}
 		timeline.pause(0)
-		return timeline
 	},
 
 	// LANDING -------------------------------
-	'landing-in': function(scope, args) {
+	'landing-in': function(scope, timeline) {
 		var wrapper = scope.child
 		var types = AppStore.getTypeOfNewAndOldPage()
-		var timeline = _getTimeline(args)
-
 		var windowH = AppStore.Window.h
 
 		switch(types.oldType){
@@ -136,13 +116,10 @@ var TransitionAnimations = {
 				break
 		}
 		timeline.pause(0)
-		return timeline
 	},
-	'landing-out': function(scope, args) {
+	'landing-out': function(scope, timeline) {
 		var wrapper = scope.child
 		var types = AppStore.getTypeOfNewAndOldPage()
-		var timeline = _getTimeline(args)
-
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
@@ -159,7 +136,6 @@ var TransitionAnimations = {
 				break
 		}
 		timeline.pause(0)
-		return timeline
 	}
 }
 
