@@ -109,6 +109,27 @@ a {
         letter-spacing: 2px;
     }
 }
+.interface {
+    position: absolute;
+    z-index: 10;
+}
+.dots-arrow-btn, .dots-rectangle-btn {
+    position: absolute;
+    // background-color: red;
+    .btn-title {
+        font-size: $globalFontSize;
+        position: absolute;
+        text-transform: uppercase;
+    }
+    svg {
+        @extend .full;
+        .knot { fill: $white;}
+        .line { stroke: $white; }
+    }
+}
+.dots-rectangle-btn {
+    @include simpleAnim(.6s, 0s, $easeOutExpo);
+}
 #planet.page-wrapper {
     .compasses-texts-wrapper {
         position: absolute;
@@ -136,27 +157,6 @@ a {
         }
     }
     &.campaign {
-        .interface {
-            position: absolute;
-            z-index: 10;
-        }
-        .dots-arrow-btn, .dots-rectangle-btn {
-            position: absolute;
-            // background-color: red;
-            .btn-title {
-                font-size: $globalFontSize;
-                position: absolute;
-                text-transform: uppercase;
-            }
-            svg {
-                @extend .full;
-                .knot { fill: $white;}
-                .line { stroke: $white; }
-            }
-        }
-        .dots-rectangle-btn {
-            @include simpleAnim(.6s, 0s, $easeOutExpo);
-        }
         .product-title-wrapper {
             position: absolute;
             text-transform: uppercase;

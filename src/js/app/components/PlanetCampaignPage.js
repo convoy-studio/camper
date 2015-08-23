@@ -190,15 +190,13 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 	}
 	assignAssetsToNewContainer() {
 		var productScope = AppStore.getSpecificProductById(this.id, this.productId)
-		var imgSrc = AppStore.getEnvironment().static + '/image/planets/' + this.id + '/' + productScope['visual-id'] + '-XL' + '.jpg'
+		var imgSrc = AppStore.getEnvironment().static + '/image/planets/' + this.id + '/' + productScope['id'] + '-XL' + '.jpg'
 		this.currentContainer.posterImg.attr('src', imgSrc)
 		this.productTitle.update(productScope.name)
 	}
 	assignVideoToNewContainer() {
 		var videoId = 136080598
-		var videoW = '100%'
-		var videoH = '100%'
-		var iframeStr = '<iframe src="https://player.vimeo.com/video/'+videoId+'?title=0&byline=0&portrait=0" width="'+videoW+'" height="'+videoH+'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		var iframeStr = '<iframe src="https://player.vimeo.com/video/'+videoId+'?title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
 		this.currentContainer.videoWrapper.html(iframeStr)
 		this.currentContainer.videoIsAdded = true
 	}
@@ -206,8 +204,9 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		var dir = (this.direction == AppConstants.LEFT) ? 1 : -1
+		var time = (this.previousContainer == undefined) ? 0 : 1
 		if(this.previousContainer != undefined) TweenMax.fromTo(this.previousContainer.el, 1, {x:0, opacity: 1}, { x:-windowW*dir, opacity: 1, force3D:true, ease:Expo.easeInOut })
-		TweenMax.fromTo(this.currentContainer.el, 1, {x:windowW*dir, opacity: 1}, { x:0, opacity: 1, force3D:true, ease:Expo.easeInOut })
+		TweenMax.fromTo(this.currentContainer.el, time, {x:windowW*dir, opacity: 1}, { x:0, opacity: 1, force3D:true, ease:Expo.easeInOut })
 
 		setTimeout(()=>{
 			this.updateTopButtonsPositions()
@@ -244,7 +243,6 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 	resizeMediaWrappers() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
-
 		var imageResize = Utils.ResizePositionProportionally(windowW * 0.6, windowH * 0.6, AppConstants.CAMPAIGN_IMAGE_SIZE[0], AppConstants.CAMPAIGN_IMAGE_SIZE[1])
 		var videoResize = Utils.ResizePositionProportionally(windowW * 0.6, windowH * 0.6, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 		this.posterImgCss = {
@@ -274,11 +272,11 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			(this.posterImgCss.top >> 1) - (this.productTitle.height * 0.4)
 		)
 		this.planetBtn.position(
-			this.productTitle.x - this.planetBtn.width - AppConstants.PADDING_AROUND,
+			this.productTitle.x - this.planetBtn.width - (AppConstants.PADDING_AROUND << 1),
 			this.productTitle.y
 		)
 		this.buyBtn.position(
-			this.productTitle.x + this.productTitle.width + AppConstants.PADDING_AROUND,
+			this.productTitle.x + this.productTitle.width + (AppConstants.PADDING_AROUND << 1),
 			this.productTitle.y
 		)
 	}
@@ -324,6 +322,7 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		this.nextBtn.componentWillUnmount()
 		this.downBtn.componentWillUnmount()
 		this.buyBtn.componentWillUnmount()
+		this.planetBtn.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }

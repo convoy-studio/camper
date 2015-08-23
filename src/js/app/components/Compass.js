@@ -37,6 +37,7 @@ export default class Compass {
 	removePreviousSpringGardens() {
 		for (var i = 0; i < this.springGardens.length; i++) {
 			var springGarden = this.springGardens[i]
+			springGarden.clear()
 			springGarden.componentWillUnmount()
 			AppStore.releaseSpringGarden(springGarden)
 		}

@@ -96,6 +96,13 @@ export default class SpringGarden {
 		this.config.spring = 0.03
 		this.config.friction = 0.92
 	}
+	clear() {
+		for (var i = 0; i < this.knots.length; i++) {
+			var knot = this.knots[i]
+			knot.clear()
+		}
+		this.areaPolygon.clear()
+	}
 	componentWillUnmount() {
 		if(this.isInteractive) {
 			this.areaPolygonContainer.buttonMode = false

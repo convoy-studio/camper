@@ -170,8 +170,8 @@ export default class LandingSlideshow {
 		for (var i = 0; i < this.slides.length; i++) {
 			var s = this.slides[i]
 			this.applyResponsiveImgToSlideDependsWindow(s)
-			var hightlightedSlideW = windowW * 0.7
-			var normalSlideW = windowW * 0.15
+			var hightlightedSlideW = windowW * 0.6
+			var normalSlideW = windowW * 0.2
 			var slideW = 0
 			if(s.highlight) slideW = hightlightedSlideW
 			else slideW = normalSlideW

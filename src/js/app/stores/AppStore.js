@@ -179,6 +179,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         var data = AppStore.productsData()
         return data[id]
     },
+    paletteColorsById: function(id) {
+        return data['colors'][id]
+    },
     getSpecificProductById: function(planetId, productId) {
         var planetProducts = AppStore.productsDataById(planetId)
         for (var i = 0; i < planetProducts.length; i++) {
@@ -241,7 +244,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
                 var oldHasher = Router.getOldHash()
                 var actionType = AppConstants.PAGE_HASHER_CHANGED
                 if(oldHasher != undefined) {
-                    if(newHasher.parts.length == 3 && oldHasher.parts.length == 3) {
+                    if(newHasher.parts.length == 3 && oldHasher.parts.length == 3 && newHasher.parts[1] == oldHasher.parts[1]) {
                         actionType = AppConstants.PAGE_HASHER_INTERNAL_CHANGE
                     }
                 }

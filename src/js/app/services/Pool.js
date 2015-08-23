@@ -10,14 +10,14 @@ export default class Pool {
 		var spritesNum = planets.length
 		var springGardensNum = 10
 
-		this.timelines = op.generate(TimelineMax, { count: 14 })
+		this.timelines = op.generate(TimelineMax, { count: 20 })
 		this.pxContainers = op.generate(PIXI.Container, { count: pxContainerNum })
 		this.graphics = op.generate(PIXI.Graphics, { count: graphicsNum })
 		this.sprites = op.generate(PIXI.Sprite, { count: spritesNum })
 		this.springGardens = op.generate(SpringGarden, { count: springGardensNum })
 	}
 	getTimeline() {
-		// console.log('get >>>>>>>>>>>>>>>', this.timelines)
+		// console.log('get >>>>>>>>>>>>>>>')
 		var tl = this.timelines.get()
 		tl.kill()
 		tl.clear()

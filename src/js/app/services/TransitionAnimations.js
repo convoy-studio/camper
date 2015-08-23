@@ -12,16 +12,16 @@ var TransitionAnimations = {
 
 		switch(types.oldType){
 			case AppConstants.LANDING:
-				timeline.fromTo(scope.pxContainer, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
 				timeline.fromTo(scope.pxContainer, 1, { x:windowW, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
 				timeline.fromTo(wrapper, 1, { x:windowW, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
-				timeline.fromTo(scope.pxContainer, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.NONE:
 				break
@@ -38,16 +38,16 @@ var TransitionAnimations = {
 		
 		switch(types.newType){
 			case AppConstants.LANDING:
-				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
 				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				timeline.fromTo(scope.pxContainer, 1, { x:0, ease:Expo.easeInOut }, { x:-windowH, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { x:0, ease:Expo.easeInOut }, { x:-windowH, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
-				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:-windowH, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:-windowH, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.NONE:
 				break
@@ -63,12 +63,12 @@ var TransitionAnimations = {
 
 		switch(types.oldType){
 			case AppConstants.LANDING:
-				timeline.fromTo(scope.pxContainer, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				timeline.fromTo(scope.pxContainer, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.NONE:
 				break
@@ -82,12 +82,12 @@ var TransitionAnimations = {
 
 		switch(types.newType){
 			case AppConstants.LANDING:
-				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.NONE:
 				break
@@ -105,12 +105,12 @@ var TransitionAnimations = {
 			case AppConstants.LANDING:
 				break
 			case AppConstants.EXPERIENCE:
-				timeline.fromTo(scope.pxContainer, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
-				timeline.fromTo(scope.pxContainer, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { y:-windowH, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(scope.pxContainer, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.NONE:
 				break
@@ -125,12 +125,12 @@ var TransitionAnimations = {
 
 		switch(types.newType){
 			case AppConstants.EXPERIENCE:
-				timeline.to(scope.pxContainer, 1, { y:-windowH, ease:Expo.easeInOut }, 0)
-				timeline.to(wrapper, 1, { y:-windowH, ease:Expo.easeInOut }, 0)
+				timeline.to(scope.pxContainer, 1, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
+				timeline.to(wrapper, 1, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
-				timeline.to(scope.pxContainer, 1, { y:-windowH, ease:Expo.easeInOut }, 0)
-				timeline.to(wrapper, 1, { y:-windowH, ease:Expo.easeInOut }, 0)
+				timeline.to(scope.pxContainer, 1, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
+				timeline.to(wrapper, 1, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.NONE:
 				break

@@ -164,13 +164,20 @@
 	"elements": ["fire", "earth", "metal", "water", "wood"],
 	"gender": ["male", "female", "animal"],
 
+	"colors": {
+		"ski": ["0x6181aa", "0xc3d9f1"],
+		"metal": ["0x0d0d0f", "0x595959"],
+		"alaska": ["0xb7cadb", "0x6f8698"],
+		"wood": ["0x502016", "0xc58547"],
+		"gemstone": ["0x363864", "0x477e94"]
+	},
+
 	"products-data": {
 		"ski": [
 			{
 				"id": 0,
-				"visual-id": "gemma-dog",
-				"name": "gemma",
-				"color": "0x75b7fc",
+				"name": "FISS",
+				"color": "0x343a5c",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -178,9 +185,8 @@
 				]
 			},{
 				"id": 1,
-				"visual-id": "gemma-hero",
-				"name": "gemma",
-				"color": "0xc3fb63",
+				"name": "FISS",
+				"color": "0x7b7b7d",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
@@ -188,22 +194,38 @@
 				]
 			},{
 				"id": 2,
-				"visual-id": "inuit-boy",
-				"name": "gemma",
-				"color": "0xc1fbad",
+				"name": "FISS",
+				"color": "0xe7e33c",
 				"knots": [
 					{"x":0.3, "y":-0.1},
 					{"x":0.6, "y":-0.4},
 					{"x":0.6, "y":-0.6}
+				]
+			},{
+				"id": 3,
+				"name": "FISS",
+				"color": "0xdb3076",
+				"knots": [
+					{"x":-0.3, "y":-0.1},
+					{"x":-0.6, "y":-0.4},
+					{"x":-0.6, "y":-0.6}
+				]
+			},{
+				"id": 4,
+				"name": "FISS",
+				"color": "0x4073da",
+				"knots": [
+					{"x":0.3, "y":0.1},
+					{"x":0.6, "y":0.4},
+					{"x":0.6, "y":0.6}
 				]
 			}
 		],
 		"metal": [
 			{
 				"id": 0,
-				"visual-id": "gemma-dog",
-				"name": "gemma",
-				"color": "0x75b7fc",
+				"name": "BELUGA",
+				"color": "0x0f0f11",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -211,32 +233,20 @@
 				]
 			},{
 				"id": 1,
-				"visual-id": "gemma-hero",
-				"name": "gemma2",
-				"color": "0xc3fb63",
+				"name": "HARDWOOD",
+				"color": "0xe82b18",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
 					{"x":-0.4, "y":0.7}
-				]
-			},{
-				"id": 2,
-				"visual-id": "inuit-boy",
-				"name": "gemma3",
-				"color": "0xc1fbad",
-				"knots": [
-					{"x":0.3, "y":-0.1},
-					{"x":0.6, "y":-0.4},
-					{"x":0.6, "y":-0.6}
 				]
 			}
 		],
 		"alaska": [
 			{
 				"id": 0,
-				"visual-id": "gemma-dog",
 				"name": "gemma",
-				"color": "0x75b7fc",
+				"color": "0xb6937d",
 				"knots": [
 					{"x":-0.2, "y":0.3},
 					{"x":-0.6, "y":0.4},
@@ -244,9 +254,8 @@
 				]
 			},{
 				"id": 1,
-				"visual-id": "gemma-hero",
-				"name": "gemma",
-				"color": "0xc3fb63",
+				"name": "pelotas",
+				"color": "0xc98e94",
 				"knots": [
 					{"x":0.3, "y":-0.6},
 					{"x":0.6, "y":0.4},
@@ -254,9 +263,8 @@
 				]
 			},{
 				"id": 2,
-				"visual-id": "inuit-boy",
-				"name": "gemma",
-				"color": "0xc1fbad",
+				"name": "ENDURO",
+				"color": "0x616a71",
 				"knots": [
 					{"x":-0.3, "y":0.1},
 					{"x":-0.6, "y":-0.1},
@@ -264,9 +272,8 @@
 				]
 			},{
 				"id": 3,
-				"visual-id": "inuit-girl",
-				"name": "gemma",
-				"color": "0xc1fbad",
+				"name": "ENDURO",
+				"color": "0x0e2e61",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":-0.1},
@@ -277,9 +284,8 @@
 		"wood": [
 			{
 				"id": 0,
-				"visual-id": "gemma-dog",
-				"name": "gemma",
-				"color": "0x75b7fc",
+				"name": "VINTAR",
+				"color": "0x5b2f24",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -287,32 +293,20 @@
 				]
 			},{
 				"id": 1,
-				"visual-id": "gemma-hero",
-				"name": "gemma",
-				"color": "0xc3fb63",
+				"name": "BELUGA",
+				"color": "0x88a2c7",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
 					{"x":-0.4, "y":0.7}
-				]
-			},{
-				"id": 2,
-				"visual-id": "inuit-boy",
-				"name": "gemma",
-				"color": "0xc1fbad",
-				"knots": [
-					{"x":0.3, "y":-0.1},
-					{"x":0.6, "y":-0.4},
-					{"x":0.6, "y":-0.6}
 				]
 			}
 		],
 		"gemstone": [
 			{
 				"id": 0,
-				"visual-id": "gemma-dog",
-				"name": "gemma",
-				"color": "0x75b7fc",
+				"name": "ENDURO",
+				"color": "0x3a3b6b",
 				"knots": [
 					{"x":-0.2, "y":0.3},
 					{"x":-0.6, "y":0.4},
@@ -320,9 +314,8 @@
 				]
 			},{
 				"id": 1,
-				"visual-id": "gemma-hero",
-				"name": "gemma",
-				"color": "0xc3fb63",
+				"name": "ENDURO",
+				"color": "0x62a8bb",
 				"knots": [
 					{"x":0.3, "y":-0.6},
 					{"x":0.6, "y":0.4},
@@ -330,9 +323,8 @@
 				]
 			},{
 				"id": 2,
-				"visual-id": "inuit-boy",
 				"name": "gemma",
-				"color": "0xc1fbad",
+				"color": "0x477e93",
 				"knots": [
 					{"x":-0.3, "y":0.1},
 					{"x":-0.6, "y":-0.3},

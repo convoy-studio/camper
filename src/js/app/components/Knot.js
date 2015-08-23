@@ -39,6 +39,9 @@ export default class Knot {
 		this.x = x
 		this.y = y
 	}
+	clear() {
+		this.g.clear()
+	}
 	scale(x, y) {
 		this.g.scale.x = x
 		this.g.scale.y = y

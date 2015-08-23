@@ -17,10 +17,12 @@ export default class Landing extends Page {
 		this.compass = new Compass(this.pxContainer)
 		this.compass.componentDidMount()
 
-		this.arrowLeft = new ArrowBtn(this.pxContainer, AppConstants.LEFT)
+		this.arrowClicked = this.arrowClicked.bind(this)
+		this.arrowLeft = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
+		this.arrowLeft.btnClicked = this.arrowClicked
 		this.arrowLeft.componentDidMount()
-
-		this.arrowRight = new ArrowBtn(this.pxContainer, AppConstants.RIGHT)
+		this.arrowRight = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
+		this.arrowRight.btnClicked = this.arrowClicked
 		this.arrowRight.componentDidMount()
 
 		this.onKeyPressed = this.onKeyPressed.bind(this)
@@ -30,6 +32,16 @@ export default class Landing extends Page {
 		this.parent.on('click', this.onStageClicked)
 
 		super.componentDidMount()
+	}
+	arrowClicked(direction) {
+		switch(direction) {
+			case AppConstants.LEFT:
+				this.previous()
+				break
+			case AppConstants.RIGHT:
+				this.next()
+				break
+		}
 	}
 	onStageClicked(e) {
 		e.preventDefault()
@@ -78,22 +90,23 @@ export default class Landing extends Page {
 		this.updateCompassPlanet()
 	}
 	update() {
+		var windowW = AppStore.Window.w
+		var mouseX = AppStore.Mouse.x
 		this.landingSlideshow.update()
 		this.compass.update()
 
-		var windowW = AppStore.Window.w
-		var mouseX = AppStore.Mouse.x
-		if(mouseX < windowW * 0.25) {
-			this.direction = AppConstants.LEFT
-			this.arrowLeft.rollover()
-		}else if(mouseX > windowW * 0.75) {
-			this.direction = AppConstants.RIGHT
-			this.arrowRight.rollover()
-		}else{
-			this.direction = AppConstants.NONE
-			this.arrowLeft.rollout()
-			this.arrowRight.rollout()
-		}
+		// if(mouseX < windowW * 0.25) {
+		// 	this.direction = AppConstants.LEFT
+		// 	// this.arrowLeft.rollover()
+		// }else if(mouseX > windowW * 0.75) {
+		// 	this.direction = AppConstants.RIGHT
+		// 	// this.arrowRight.rollover()
+		// }else{
+		// 	this.direction = AppConstants.NONE
+		// 	// this.arrowLeft.rollout()
+		// 	// this.arrowRight.rollout()
+		// }
+		this.direction = AppConstants.NONE
 
 		var area = windowW * 0.25
 		if(mouseX > ((windowW >> 1) - area) && mouseX < ((windowW >> 1) + area)) {
@@ -114,12 +127,12 @@ export default class Landing extends Page {
 		)
 
 		this.arrowRight.position(
-			windowW - (AppConstants.PADDING_AROUND << 2),
+			windowW - this.arrowRight.width - AppConstants.PADDING_AROUND,
 			windowH >> 1
 		)
 
 		this.arrowLeft.position(
-			(AppConstants.PADDING_AROUND << 2),
+			AppConstants.PADDING_AROUND,
 			windowH >> 1
 		)
 

@@ -49,11 +49,7 @@ export default class TitleSwitcher {
 		}, 0)
 	}
 	position(x, y) {
-		// this.element.css({
-		// 	left: x,
-		// 	top: y
-		// })
-		TweenMax.set(this.element, { x: x, y: y })
+		TweenMax.set(this.element, { x: x, y: y, force3D: true })
 		this.x = x
 		this.y = y
 	}
