@@ -108,6 +108,10 @@ a {
         text-align: center;
         letter-spacing: 2px;
     }
+    .area-btn {
+        position: absolute;
+        z-index: 2;
+    }
 }
 .interface {
     position: absolute;
@@ -202,7 +206,9 @@ a {
                     height: 100%;
                 }
                 .poster-wrapper, .video-wrapper {
-                    background-color: #1a1a1a;
+                }
+                .video-wrapper {
+                    background-color: $white;
                 }
             }
         }

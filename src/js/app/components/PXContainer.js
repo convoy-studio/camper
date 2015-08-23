@@ -1,9 +1,14 @@
 import AppStore from 'AppStore'
+import AppConstants from 'AppConstants'
 
 export default class PXContainer {
 	constructor() {
 	}
 	init(elementId) {
+
+		this.didHasherChange = this.didHasherChange.bind(this)
+		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
+
 		// this.renderer = new PIXI.CanvasRenderer(800, 600)
 		this.renderer = new PIXI.autoDetectRenderer(800, 600, { antialias: true })
 
@@ -26,5 +31,10 @@ export default class PXContainer {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.renderer.resize(windowW, windowH)
+	}
+	didHasherChange() {
+		var pageId = AppStore.getPageId()
+		var palette = AppStore.paletteColorsById(pageId)
+		if(palette != undefined) this.renderer.backgroundColor = palette[0]
 	}
 }

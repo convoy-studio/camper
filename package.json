@@ -70,7 +70,9 @@
     "object-assign": "^3.0.0",
     "objectpool": "0.0.2",
     "require-globify": "^1.2.1",
-    "to-slug-case": "^0.1.2"
+    "to-slug-case": "^0.1.2",
+    "wheel": "0.0.3",
+    "wheel-inertia": "0.0.2"
   },
   "repository": {
     "type": "git",

@@ -76,11 +76,13 @@ export default class CompassesContainer {
 
 		for (i = 0; i < compasses.length; i++) {
 			var compass = compasses[i]
-			compass.positionElement(compass.posX + (windowW >> 1) - (totalW>>1), (windowH) - biggestRadius - (windowH * 0.1))
+			compass.positionElement(compass.posX + (windowW >> 1) - (totalW>>1), (windowH) - biggestRadius - (windowH * 0.15))
 		}
 
 		this.container.position.x = (windowW >> 1) - (totalW >> 1)
-		this.container.position.y = (windowH) - biggestRadius - (windowH * 0.1)
+		this.container.position.y = (windowH) - biggestRadius - (windowH * 0.15)
+		this.y = this.container.position.y
+		this.height = biggestRadius
 	}
 	getCompassMargin(compass) {
 		return (compass.state == AppConstants.OPEN) ? 160 : 100

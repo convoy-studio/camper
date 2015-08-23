@@ -17,12 +17,9 @@ export default class Landing extends Page {
 		this.compass = new Compass(this.pxContainer)
 		this.compass.componentDidMount()
 
-		this.arrowClicked = this.arrowClicked.bind(this)
 		this.arrowLeft = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
-		this.arrowLeft.btnClicked = this.arrowClicked
 		this.arrowLeft.componentDidMount()
 		this.arrowRight = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
-		this.arrowRight.btnClicked = this.arrowClicked
 		this.arrowRight.componentDidMount()
 
 		this.onKeyPressed = this.onKeyPressed.bind(this)
@@ -31,15 +28,55 @@ export default class Landing extends Page {
 		this.onStageClicked = this.onStageClicked.bind(this)
 		this.parent.on('click', this.onStageClicked)
 
+		this.arrowClicked = this.arrowClicked.bind(this)
+		this.arrowMouseEnter = this.arrowMouseEnter.bind(this)
+		this.arrowMouseLeave = this.arrowMouseLeave.bind(this)
+
+		this.previousArea = this.child.find('.interface .previous-area')
+		this.nextArea = this.child.find('.interface .next-area')
+		this.previousArea.on('click', this.arrowClicked)
+		this.nextArea.on('click', this.arrowClicked)
+		this.previousArea.on('mouseenter', this.arrowMouseEnter)
+		this.nextArea.on('mouseenter', this.arrowMouseEnter)
+		this.previousArea.on('mouseleave', this.arrowMouseLeave)
+		this.nextArea.on('mouseleave', this.arrowMouseLeave)
+
 		super.componentDidMount()
 	}
-	arrowClicked(direction) {
+	arrowClicked(e) {
+		e.preventDefault()
+		var id = e.currentTarget.id
+		var direction = id.toUpperCase()
 		switch(direction) {
 			case AppConstants.LEFT:
 				this.previous()
 				break
 			case AppConstants.RIGHT:
 				this.next()
+				break
+		}
+	}
+	arrowMouseEnter(e) {
+		e.preventDefault()
+		var id = e.currentTarget.id
+		var direction = id.toUpperCase()
+		var arrow = this.getArrowByDirection(direction)
+		arrow.mouseOver()
+	}
+	arrowMouseLeave(e) {
+		e.preventDefault()
+		var id = e.currentTarget.id
+		var direction = id.toUpperCase()
+		var arrow = this.getArrowByDirection(direction)
+		arrow.mouseOut()
+	}
+	getArrowByDirection(direction) {
+		switch(direction) {
+			case AppConstants.LEFT:
+				return this.arrowLeft
+				break
+			case AppConstants.RIGHT:
+				return this.arrowRight
 				break
 		}
 	}
@@ -63,10 +100,10 @@ export default class Landing extends Page {
 		switch(e.which) {
 	        case 37: // left
 	        	this.previous()
-	        break;
+	        	break
 	        case 39: // right
 	        	this.next()
-	        break;
+	        	break
 	        default: return;
 	    }
 	}
@@ -127,14 +164,24 @@ export default class Landing extends Page {
 		)
 
 		this.arrowRight.position(
-			windowW - this.arrowRight.width - AppConstants.PADDING_AROUND,
+			windowW - ((windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE) >> 1),
 			windowH >> 1
 		)
 
 		this.arrowLeft.position(
-			AppConstants.PADDING_AROUND,
+			((windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE) >> 1) - this.arrowLeft.width,
 			windowH >> 1
 		)
+
+		this.previousArea.css({
+			width: windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE,
+			height: windowH
+		})
+		this.nextArea.css({
+			width: windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE,
+			height: windowH,
+			left: windowW - (windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE)
+		})
 
 		super.resize()
 	}
@@ -145,6 +192,14 @@ export default class Landing extends Page {
 		this.arrowRight.componentWillUnmount()
 		$(document).off('keydown', this.onKeyPressed)
 		this.parent.off('click', this.onStageClicked)
+
+		this.previousArea.off('click', this.arrowClicked)
+		this.nextArea.off('click', this.arrowClicked)
+		this.previousArea.off('mouseenter', this.arrowMouseEnter)
+		this.nextArea.off('mouseenter', this.arrowMouseEnter)
+		this.previousArea.off('mouseleave', this.arrowMouseLeave)
+		this.nextArea.off('mouseleave', this.arrowMouseLeave)
+
 		super.componentWillUnmount()
 	}
 }

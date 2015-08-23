@@ -116,7 +116,7 @@ export default class ArrowBtn {
 		this.click = this.click.bind(this)
 		this.element.on('mouseenter', this.rollover)
 		this.element.on('mouseleave', this.rollout)
-		this.element.on('click', this.click)
+		if(this.btnClicked != undefined) this.element.on('click', this.click)
 
 		this.width = margin * 3
 		this.height = margin * 2
@@ -137,13 +137,19 @@ export default class ArrowBtn {
 	}
 	rollout(e) {
 		e.preventDefault()
-		this.tlOver.kill()
-		this.tlOut.play(0)
+		this.mouseOut()	
 	}
 	rollover(e) {
 		e.preventDefault()
+		this.mouseOver()	
+	}
+	mouseOver() {
 		this.tlOut.kill()
 		this.tlOver.play(0)
+	}
+	mouseOut() {
+		this.tlOver.kill()
+		this.tlOut.play(0)
 	}
 	componentWillUnmount() {
 		AppStore.releaseTimeline(this.tlOver)

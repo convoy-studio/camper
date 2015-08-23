@@ -8,6 +8,9 @@ import Utils from 'Utils'
 import ArrowBtn from 'ArrowBtn'
 import RectangleBtn from 'RectangleBtn'
 import TitleSwitcher from 'TitleSwitcher'
+import {addWheelListener} from 'wheel'
+import {removeWheelListener} from 'wheel'
+import inertia from 'wheel-inertia'
 
 export default class PlanetCampaignPage extends BasePlanetPage {
 	constructor(props) {
@@ -78,10 +81,22 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		// this.compass.knotRadius = AppConstants.SMALL_KNOT_RADIUS
 		// this.compass.componentDidMount()
 
+		this.onWheel = this.onWheel.bind(this)
+		addWheelListener(this.child.get(0), this.onWheel)
+		inertia.addCallback(this.onInertia)
+
 		this.checkCurrentProductByUrl()
 		$(document).on('keydown', this.onKeyPressed)
 
 		super.componentDidMount()
+	}
+	onInertia(direction) {
+		this.onDownClicked()
+	}
+	onWheel(e) {
+		e.preventDefault()
+		var delta = e.wheelDelta
+		inertia.update(delta)
 	}
 	onPlanetClicked() {
 		var url = "/planet/" + this.id
@@ -317,6 +332,8 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 	componentWillUnmount() {
 		$(document).off('keydown', this.onKeyPressed)
 		clearTimeout(this.videoAssignTimeout)
+		removeWheelListener(this.child.get(0), this.onWheel)
+		inertia.addCallback(null)
 		// this.compass.componentWillUnmount()
 		this.previousBtn.componentWillUnmount()
 		this.nextBtn.componentWillUnmount()

@@ -2,6 +2,8 @@ import BasePlanetPage from 'BasePlanetPage'
 import AppActions from 'AppActions'
 import AppStore from 'AppStore'
 import CompassesContainer from 'CompassesContainer'
+import RectangleBtn from 'RectangleBtn'
+import Router from 'Router'
 import AlaskaXP from 'AlaskaXP'
 import SkiXP from 'SkiXP'
 import MetalXP from 'MetalXP'
@@ -13,13 +15,8 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super(props)
 	}
 	componentDidMount() {
-		// var bunnyUrl = this.getImageUrlById('bunny')
-		// var texture = PIXI.Texture.fromImage(bunnyUrl)
-		// var bunny = new PIXI.Sprite(texture)
 
-		this.g = new PIXI.Graphics()
-		this.pxContainer.addChild(this.g)
-		// this.pxContainer.addChild(bunny)
+		var infos = AppStore.generalInfosLangScope()
 
 		this.compassesContainer = new CompassesContainer(this.pxContainer, this.child)
 		this.compassesContainer.id = this.id
@@ -29,7 +26,15 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.experience = new XpClazz()
 		this.experience.componentDidMount()
 
+		this.goCampaignBtn = new RectangleBtn(this.child.find('.go-campaign-btn'), infos.campaign_title)
+		this.goCampaignBtn.btnClicked = this.onGoCampaignClicked
+		this.goCampaignBtn.componentDidMount()
+
 		super.componentDidMount()
+	}
+	onGoCampaignClicked() {
+		var url = "/planet/" + this.id + '/0'
+		Router.setHash(url)
 	}
 	getExperienceById(id) {
 		switch(id){
@@ -62,16 +67,19 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.experience.resize()
 		this.compassesContainer.resize()
 
-		// draw a rectangle
-		this.g.clear()
-		this.g.beginFill(Math.random() * 0xffffff)
-		this.g.drawRect(0, 0, windowW, windowH)
-		this.g.endFill()
+		setTimeout(()=>{
+			var compassContainerBottom = this.compassesContainer.y + this.compassesContainer.height
+			this.goCampaignBtn.position(
+				(windowW >> 1) - (this.goCampaignBtn.width >> 1),
+				compassContainerBottom + (this.goCampaignBtn.height >> 1)
+			)
+		}, 0)
 
 		super.resize()
 	}
 	componentWillUnmount() {
 		this.compassesContainer.componentWillUnmount()
+		this.goCampaignBtn.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }
