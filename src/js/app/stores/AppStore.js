@@ -244,6 +244,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     releaseSpringGarden: function(item) {
         return AppStore.Pool.releaseSpringGarden(item)
     },
+    Detector: {
+        isMobile: undefined
+    },
     Pool: undefined,
     Preloader: undefined,
     Mouse: undefined,
