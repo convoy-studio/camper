@@ -14,7 +14,7 @@ export default class ArrowBtn {
 		var knotsEl = this.element.find(".knot")
 		var linesEl = this.element.find(".line")
 		var radius = 3
-		var margin = 30
+		var margin = 22
 		this.lineSize = AppStore.getLineWidth()
 
 		for (var i = 0; i < knotsEl.length; i++) {
@@ -81,8 +81,8 @@ export default class ArrowBtn {
 		this.tlOver.to(linesEl[1], 1, { scaleX:1.1, x:-6, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
 		this.tlOver.to(linesEl[2], 1, { x:-6, rotation:'10deg', force3D:true, transformOrigin:'0% 100%', ease:Elastic.easeOut }, 0)
 		this.tlOver.to(linesEl[3], 1, { x:-6, rotation:'-10deg', force3D:true, transformOrigin:'0% 0%', ease:Elastic.easeOut }, 0)
-		this.tlOver.to(knotsEl[3], 1, { x:-3, y:3, force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOver.to(knotsEl[4], 1, { x:-3, y:-3, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOver.to(knotsEl[3], 1, { x:-3, y:2, force3D:true, ease:Elastic.easeOut }, 0)
+		this.tlOver.to(knotsEl[4], 1, { x:-3, y:-2, force3D:true, ease:Elastic.easeOut }, 0)
 
 		this.tlOut.to(knotsEl[0], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)
 		this.tlOut.to(knotsEl[1], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)

@@ -10,7 +10,7 @@ export default class Pool {
 		var spritesNum = planets.length
 		var springGardensNum = 10
 
-		this.timelines = op.generate(TimelineMax, { count: 10 })
+		this.timelines = op.generate(TimelineMax, { count: 14 })
 		this.pxContainers = op.generate(PIXI.Container, { count: pxContainerNum })
 		this.graphics = op.generate(PIXI.Graphics, { count: graphicsNum })
 		this.sprites = op.generate(PIXI.Sprite, { count: spritesNum })
@@ -19,11 +19,14 @@ export default class Pool {
 	getTimeline() {
 		// console.log('get >>>>>>>>>>>>>>>', this.timelines)
 		var tl = this.timelines.get()
+		tl.kill()
 		tl.clear()
 		return tl
 	}
 	releaseTimeline(item) {
 		// console.log('release <<<<<<<<<<<<<<', item)
+		item.kill()
+		item.clear()
 		this.timelines.release(item)
 	}
 	getContainer() {

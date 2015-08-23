@@ -142,7 +142,7 @@ a {
         }
         .dots-arrow-btn, .dots-rectangle-btn {
             position: absolute;
-            background-color: red;
+            // background-color: red;
             .btn-title {
                 font-size: $globalFontSize;
                 position: absolute;
@@ -152,6 +152,35 @@ a {
                 @extend .full;
                 .knot { fill: $white;}
                 .line { stroke: $white; }
+            }
+        }
+        .dots-rectangle-btn {
+            @include simpleAnim(.6s, 0s, $easeOutExpo);
+        }
+        .product-title-wrapper {
+            position: absolute;
+            text-transform: uppercase;
+            height: $globalFontSize;
+            overflow:hidden;
+            margin-top: 20px;
+            @include simpleAnim(.6s, 0s, $easeOutExpo);
+            & > div {
+                position: absolute;
+            }
+            .product-title {
+                @include anim(0s, 0s, $easeOutExpo, translateY(-$globalFontSize) translateZ(0), 0%, 0%, transform);
+                &.will-transition-in {
+                    @include anim(0s, 0s, $easeOutExpo, translateY(-$globalFontSize) translateZ(0), 0%, 0%, transform);
+                }
+                &.did-transition-in {
+                    @include anim(.6s, 0s, $easeOutExpo, translateY(0px) translateZ(0), 0%, 0%, transform);
+                }
+                &.will-transition-out {
+                    @include anim(0s, 0s, $easeOutExpo, translateY(0px) translateZ(0), 0%, 0%, transform);
+                }
+                &.did-transition-out {
+                    @include anim(.6s, 0s, $easeOutExpo, translateY($globalFontSize) translateZ(0), 0%, 0%, transform);
+                }
             }
         }
         .product-containers-wrapper {
@@ -172,8 +201,8 @@ a {
                     width: 100%;
                     height: 100%;
                 }
-                .poster-wrapper {
-                    background-color: $gray;
+                .poster-wrapper, .video-wrapper {
+                    background-color: #1a1a1a;
                 }
             }
         }
