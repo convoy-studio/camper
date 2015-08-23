@@ -151,6 +151,21 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     pageAssetsToLoad: function() {
         return _getPageAssetsToLoad()
     },
+    getExperienceAnimationDirection: function() {
+        var newHasher = Router.getNewHash()
+        var oldHasher = Router.getOldHash()
+        if(oldHasher == undefined) return AppConstants.RIGHT
+        var newId = newHasher.targetId
+        var oldId = oldHasher.targetId
+        var newIndex, oldIndex;
+        var planets = AppStore.planets()
+        for (var i = 0; i < planets.length; i++) {
+            var planet = planets[i]
+            if(planet == newId) newIndex = i
+            if(planet == oldId) oldIndex = i
+        }
+        return (newIndex > oldIndex) ? AppConstants.RIGHT :  AppConstants.LEFT
+    },
     responsiveImageWidth: function(responsiveArray) {
         var windowW = AppStore.Window.w
         return Utils.Closest(responsiveArray, windowW)

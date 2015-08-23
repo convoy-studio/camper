@@ -16,8 +16,9 @@ var TransitionAnimations = {
 				timeline.fromTo(wrapper, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				timeline.fromTo(scope.pxContainer, 1, { x:windowW, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { x:windowW, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
+				var direction = (AppStore.getExperienceAnimationDirection() == AppConstants.LEFT) ? -1 : 1
+				timeline.fromTo(scope.pxContainer, 1, { x:windowW*direction, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { x:windowW*direction, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
 				timeline.fromTo(scope.pxContainer, 1, { y:-windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
@@ -42,8 +43,9 @@ var TransitionAnimations = {
 				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				timeline.fromTo(scope.pxContainer, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW, ease:Expo.easeInOut }, 0)
-				timeline.fromTo(wrapper, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW, ease:Expo.easeInOut }, 0)
+				var direction = (AppStore.getExperienceAnimationDirection() == AppConstants.LEFT) ? -1 : 1
+				timeline.fromTo(scope.pxContainer, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW*direction, ease:Expo.easeInOut }, 0)
+				timeline.fromTo(wrapper, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW*direction, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.CAMPAIGN:
 				timeline.fromTo(scope.pxContainer, 1, { y:0, ease:Expo.easeInOut }, { y:-windowH << 2, ease:Expo.easeInOut }, 0)
