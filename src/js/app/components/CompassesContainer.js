@@ -18,6 +18,8 @@ export default class CompassesContainer {
 		mainCompass.knotRadius = AppConstants.SMALL_KNOT_RADIUS
 		mainCompass.componentDidMount()
 
+		var infos = AppStore.generalInfosLangScope()
+
 		var planets = AppStore.planets()
 		for (var i = 0; i < planets.length; i++) {
 			var planet = planets[i]
@@ -29,6 +31,7 @@ export default class CompassesContainer {
 			}else{
 				var smallCompass = new SmallCompass(this.container, AppConstants.EXPERIENCE)
 				var planetData = AppStore.productsDataById(planet)
+				planetData['planet-txt'] = infos.planet
 				smallCompass.state = AppConstants.CLOSE
 				smallCompass.id = planet
 				smallCompass.componentDidMount(planetData, planet, this.parentEl)
@@ -74,15 +77,23 @@ export default class CompassesContainer {
 			totalW = cx + this.getCompassMargin(compass)
 		}
 
-		for (i = 0; i < compasses.length; i++) {
-			var compass = compasses[i]
-			compass.positionElement(compass.posX + (windowW >> 1) - (totalW>>1), (windowH) - biggestRadius - (windowH * 0.15))
-		}
-
-		this.container.position.x = (windowW >> 1) - (totalW >> 1)
-		this.container.position.y = (windowH) - biggestRadius - (windowH * 0.15)
-		this.y = this.container.position.y
+		this.width = totalW
 		this.height = biggestRadius
+	}
+	position(x, y) {
+		var windowW = AppStore.Window.w
+		this.x = x
+		this.y = y
+		this.container.position.x = x
+		this.container.position.y = y
+		var compasses = this.compasses
+		for (var i = 0; i < compasses.length; i++) {
+			var compass = compasses[i]
+			compass.positionElement(
+				compass.posX + (windowW >> 1) - (this.width >> 1),
+				y
+			)
+		}
 	}
 	getCompassMargin(compass) {
 		return (compass.state == AppConstants.OPEN) ? 160 : 100

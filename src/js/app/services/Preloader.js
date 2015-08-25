@@ -1,6 +1,6 @@
 class Preloader  {
 	constructor() {
-		this.queue = new createjs.LoadQueue()
+		this.queue = new createjs.LoadQueue(true)
 		this.queue.on("complete", this.onManifestLoadCompleted, this)
 		this.currentLoadedCallback = undefined
 	}

@@ -146,7 +146,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return AppConstants.ENVIRONMENTS[ENV]
     },
     getLineWidth: function() {
-        return 3
+        return 2
     },
     pageAssetsToLoad: function() {
         return _getPageAssetsToLoad()

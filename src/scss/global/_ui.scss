@@ -103,7 +103,7 @@ a {
 #landing.page-wrapper {
     @extend .full;
     .slideshow-title {
-        font-size: 32px;
+        font-size: 60px;
         position: absolute;
         text-align: center;
         letter-spacing: 2px;
@@ -117,10 +117,15 @@ a {
     position: absolute;
     z-index: 10;
 }
+.interface.fixed {
+    position: fixed;
+    z-index: 11;
+}
 .dots-arrow-btn, .dots-rectangle-btn {
     position: absolute;
     // background-color: red;
     .btn-title {
+        white-space: nowrap;
         font-size: $globalFontSize;
         position: absolute;
         text-transform: uppercase;
@@ -172,6 +177,7 @@ a {
                 position: absolute;
             }
             .product-title {
+                white-space: nowrap;
                 @include anim(0s, 0s, $easeOutExpo, translateY(-$globalFontSize) translateZ(0), 0%, 0%, transform);
                 &.will-transition-in {
                     @include anim(0s, 0s, $easeOutExpo, translateY(-$globalFontSize) translateZ(0), 0%, 0%, transform);
@@ -188,7 +194,7 @@ a {
             }
         }
         .product-containers-wrapper {
-            overflow: hidden;
+            // overflow: hidden;
             @extend .full;
             position: absolute;
             & > div {

@@ -26,6 +26,8 @@ export default class Compass {
 		for (var i = 0; i < data.length; i++) {
 			var springGarden = AppStore.getSpringGarden()
 			var product = data[i]
+			var color = product.color
+			product.color = (this.type == AppConstants.LANDING) ? 0xffffff : product.color
 			springGarden.id = this.id
 			springGarden.radius = this.radius
 			springGarden.knotRadius = this.knotRadius

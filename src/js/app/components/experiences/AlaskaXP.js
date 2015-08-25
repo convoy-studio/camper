@@ -1,8 +1,8 @@
 import BaseXP from 'BaseXP'
 
 export default class AlaskaXP extends BaseXP {
-	constructor() {
-		super()
+	constructor(parentContainer) {
+		super(parentContainer)
 	}
 	componentDidMount() {
 		super.componentDidMount()

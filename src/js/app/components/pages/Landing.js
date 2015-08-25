@@ -90,7 +90,7 @@ export default class Landing extends Page {
 				this.next()
 				break
 			case AppConstants.TOP:
-				var url = "/planet/" + this.landingSlideshow.currentId
+				var url = "/planet/" + this.landingSlideshow.currentId + '/0'
 				Router.setHash(url)
 				break
 		}
@@ -131,20 +131,7 @@ export default class Landing extends Page {
 		var mouseX = AppStore.Mouse.x
 		this.landingSlideshow.update()
 		this.compass.update()
-
-		// if(mouseX < windowW * 0.25) {
-		// 	this.direction = AppConstants.LEFT
-		// 	// this.arrowLeft.rollover()
-		// }else if(mouseX > windowW * 0.75) {
-		// 	this.direction = AppConstants.RIGHT
-		// 	// this.arrowRight.rollover()
-		// }else{
-		// 	this.direction = AppConstants.NONE
-		// 	// this.arrowLeft.rollout()
-		// 	// this.arrowRight.rollout()
-		// }
 		this.direction = AppConstants.NONE
-
 		var area = windowW * 0.25
 		if(mouseX > ((windowW >> 1) - area) && mouseX < ((windowW >> 1) + area)) {
 			this.direction = AppConstants.TOP
@@ -160,7 +147,7 @@ export default class Landing extends Page {
 
 		this.compass.position(
 			windowW >> 1,
-			(windowH >> 1) - (windowH * 0.05)
+			(windowH >> 1) + (windowH * 0.03)
 		)
 
 		this.arrowRight.position(

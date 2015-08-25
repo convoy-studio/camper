@@ -28,6 +28,23 @@ export default class LandingSlideshow {
 	 		planetTitle: planetTitle,
 	 		planetName: planetName
 	 	}
+
+	 	this.configTween = {
+	 		spring: 0.03,
+			friction: 0.92
+	 	}
+
+	 	this.nameTween = {
+	 		x: 0,
+	 		y: 0,
+	 		vx: 0,
+	 		vy: 0,
+	 		toX: 0,
+	 		toY: 0,
+	 		rotation: 0,
+	 		toRotation: 0,
+	 		springLength: 0
+	 	}
 	 	
 	 	var planets = AppStore.planets()
 	 	this.slides = []
@@ -71,6 +88,11 @@ export default class LandingSlideshow {
 		var planetName = this.titleContainer.planetName
 	 	planetTitle.text(title)
 	 	planetName.text(name)
+	 	this.nameTween.springLength = 200
+	 	this.nameTween.toX = 0
+	 	this.nameTween.toY = 0
+	 	this.nameTween.x = 100
+	 	this.nameTween.y = 100
 	 }
 	drawCenteredMaskRect(graphics, x, y, w, h) {
 		graphics.clear()
@@ -148,6 +170,14 @@ export default class LandingSlideshow {
 		this.slideshowContainer.scale.x += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
 		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
 		// this.slideshowContainer.y = this.slideshowContainer.baseY + Math.sin(this.counter) * 4
+
+		Utils.SpringTo(this.nameTween, this.nameTween.toX, this.nameTween.toY, 1, this.configTween.spring, this.configTween.friction, this.nameTween.springLength)
+		this.nameTween.x += this.nameTween.vx
+		this.nameTween.y += this.nameTween.vy
+		// Utils.Style(this.titleContainer.planetName.get(0), 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, '+this.nameTween.x+'px, '+this.nameTween.y+'px, 0, 1)')
+		Utils.Style(this.titleContainer.planetName.get(0), 'matrix(1, 0, 0, 1, '+this.nameTween.x+', '+this.nameTween.y+')')
+		// console.log(this.nameTween.x)
+		// console.log(this.nameTween.x, this.nameTween.y, this.nameTween.toX)
 	}
 	positionSlideshowContainer() {
 		var windowW = AppStore.Window.w
@@ -194,9 +224,10 @@ export default class LandingSlideshow {
 		var windowH = AppStore.Window.h
 		clearTimeout(this.titleTimeout)
 		this.titleTimeout = setTimeout(()=>{
-			var topOffset = (windowH >> 1) + (windowH * AppConstants.COMPASS_SIZE_PERCENTAGE) - (this.titleContainer.parent.height() >> 1)
+			var compassSize = (windowH * AppConstants.COMPASS_SIZE_PERCENTAGE) << 1
+			var topOffset = (windowH >> 1) + (compassSize >> 1)
 			var titlesContainerCss = {
-				top: topOffset + ((windowH - topOffset) >> 1),
+				top: topOffset + ((windowH - topOffset) >> 1) - (this.titleContainer.parent.height() * 0.6),
 				left: (windowW >> 1) - (this.titleContainer.parent.width() >> 1),
 			}
 			this.titleContainer.parent.css(titlesContainerCss)

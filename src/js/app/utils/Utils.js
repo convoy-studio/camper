@@ -82,6 +82,13 @@ class Utils {
 		}
 	    return ans;
     }
+    static Style(div, style) {
+    	div.style.webkitTransform = style
+		div.style.mozTransform    = style
+		div.style.msTransform     = style
+		div.style.oTransform      = style
+		div.style.transform       = style
+    }
     static SpringTo(item, toX, toY, index, spring, friction, springLength) {
     	var dx = toX - item.x
     	var dy = toY - item.y

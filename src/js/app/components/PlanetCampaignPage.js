@@ -1,18 +1,15 @@
-import BasePlanetPage from 'BasePlanetPage'
+import BaseCampaignPage from 'BaseCampaignPage'
 import AppActions from 'AppActions'
 import AppStore from 'AppStore'
 import Router from 'Router'
-// import Compass from 'Compass'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import ArrowBtn from 'ArrowBtn'
 import RectangleBtn from 'RectangleBtn'
 import TitleSwitcher from 'TitleSwitcher'
-import {addWheelListener} from 'wheel'
-import {removeWheelListener} from 'wheel'
-import inertia from 'wheel-inertia'
+import CompassesContainer from 'CompassesContainer'
 
-export default class PlanetCampaignPage extends BasePlanetPage {
+export default class PlanetCampaignPage extends BaseCampaignPage {
 	constructor(props) {
 		props.data['empty-image'] = AppStore.getEmptyImgUrl()
 		super(props)
@@ -32,7 +29,7 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 
 		this.products = AppStore.productsDataById(this.id)
 
-		var infos = AppStore.generalInfosLangScope()
+		this.infos = AppStore.generalInfosLangScope()
 		var productContainersWrapper = this.child.find('.product-containers-wrapper')
 		var containerA = productContainersWrapper.find('.product-container-a')
 		var containerB = productContainersWrapper.find('.product-container-b')
@@ -62,44 +59,32 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		this.nextBtn = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
 		this.nextBtn.btnClicked = this.arrowClicked
 		this.nextBtn.componentDidMount()
-		this.downBtn = new ArrowBtn(this.child.find('.down-btn'), AppConstants.BOTTOM)
-		this.downBtn.btnClicked = this.onDownClicked
-		this.downBtn.componentDidMount()
+		// this.downBtn = new ArrowBtn(this.child.find('.down-btn'), AppConstants.BOTTOM)
+		// this.downBtn.btnClicked = this.onDownClicked
+		// this.downBtn.componentDidMount()
 
-		this.buyBtn = new RectangleBtn(this.child.find('.buy-btn'), infos.buy_title)
-		this.buyBtn.btnClicked = this.onBuyClicked
-		this.buyBtn.componentDidMount()
+		// this.buyBtn = new RectangleBtn(this.child.find('.buy-btn'), this.infos.buy_title)
+		// this.buyBtn.btnClicked = this.onBuyClicked
+		// this.buyBtn.componentDidMount()
 
-		this.planetBtn = new RectangleBtn(this.child.find('.planet-btn'), this.id)
-		this.planetBtn.btnClicked = this.onPlanetClicked
-		this.planetBtn.componentDidMount()
+		// this.planetBtn = new RectangleBtn(this.child.find('.planet-btn'), this.id)
+		// this.planetBtn.btnClicked = this.onPlanetClicked
+		// this.planetBtn.componentDidMount()
 
 		this.productTitle = new TitleSwitcher(this.child.find('.product-title-wrapper'))
 		this.productTitle.componentDidMount()
 
-		// this.compass = new Compass(this.pxContainer, AppConstants.CAMPAIGN)
-		// this.compass.knotRadius = AppConstants.SMALL_KNOT_RADIUS
-		// this.compass.componentDidMount()
-
-		this.onWheel = this.onWheel.bind(this)
-		addWheelListener(this.child.get(0), this.onWheel)
-		inertia.addCallback(this.onInertia)
+		this.compassesContainer = new CompassesContainer(this.pxScrollContainer, this.child.find(".interface.absolute"))
+		this.compassesContainer.id = this.id
+		this.compassesContainer.componentDidMount()
 
 		this.checkCurrentProductByUrl()
 		$(document).on('keydown', this.onKeyPressed)
 
 		super.componentDidMount()
 	}
-	onInertia(direction) {
-		this.onDownClicked()
-	}
-	onWheel(e) {
-		e.preventDefault()
-		var delta = e.wheelDelta
-		inertia.update(delta)
-	}
 	onPlanetClicked() {
-		var url = "/planet/" + this.id
+		var url = "/landing"
 		Router.setHash(url)
 	}
 	onDownClicked() {
@@ -202,16 +187,19 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		this.assignAssetsToNewContainer()
 		this.resizeMediaWrappers()
 		this.animateContainers()
+
+		this.updatePageHeight()
 	}
 	assignAssetsToNewContainer() {
 		var productScope = AppStore.getSpecificProductById(this.id, this.productId)
 		var imgSrc = AppStore.getEnvironment().static + '/image/planets/' + this.id + '/' + productScope['id'] + '-XL' + '.jpg'
 		this.currentContainer.posterImg.attr('src', imgSrc)
-		this.productTitle.update(productScope.name)
+		this.productTitle.update(this.infos.buy_title + ' ' + productScope.name)
 	}
 	assignVideoToNewContainer() {
-		var videoId = 136080598
-		var iframeStr = '<iframe src="https://player.vimeo.com/video/'+videoId+'?title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		var productScope = AppStore.getSpecificProductById(this.id, this.productId)
+		var videoId = productScope['video-id']
+		var iframeStr = '<iframe src="//fast.wistia.net/embed/iframe/'+videoId+'" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe>'
 		this.currentContainer.videoWrapper.html(iframeStr)
 		this.currentContainer.videoIsAdded = true
 	}
@@ -232,12 +220,10 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			this.animationRunning = false
 			this.removePreviousContainerAssets()
 		}, this.timeoutTime)
-		clearTimeout(this.videoAssignTimeout)
-		if(this.isInVideo) {
-			this.videoAssignTimeout = setTimeout(()=>{
-				this.assignVideoToNewContainer()
-			}, this.timeoutTime)
-		}
+
+		// setTimeout(()=>{
+		// 	this.assignVideoToNewContainer()
+		// }, this.timeoutTime + 500)
 	}
 	removePreviousContainerAssets() {
 		if(this.previousContainer == undefined) return
@@ -245,15 +231,19 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		this.currentContainer.videoIsAdded = false
 	}
 	didTransitionInComplete() {
-		// var planetData = AppStore.productsDataById(this.id)
-		// this.compass.updateData(planetData)
+		this.compassesContainer.didTransitionInComplete()
 		super.didTransitionInComplete()
 	}
 	didTransitionOutComplete() {
 		super.didTransitionOutComplete()
 	}
+	willTransitionOut() {
+		this.compassesContainer.willTransitionOut()
+		super.willTransitionOut()
+	}
 	update() {
-		// this.compass.update()
+		this.compassesContainer.update()
+		super.update()
 	}
 	resizeMediaWrappers() {
 		var windowW = AppStore.Window.w
@@ -269,7 +259,7 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		var videoCss = {
 			width: videoResize.width,
 			height: videoResize.height,
-			top: windowH + (windowH * 0.51) - (videoResize.height >> 1),
+			top: (this.compassPadding << 1) + windowH + this.posterImgCss.top,
 			left: (windowW >> 1) - (videoResize.width >> 1)	
 		}
 		if(this.isInVideo) TweenMax.set(this.currentContainer.el, { y:-windowH })
@@ -278,6 +268,10 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 		this.currentContainer.el.css('z-index', 2)
 		this.currentContainer.posterWrapper.css(this.posterImgCss)
 		this.currentContainer.videoWrapper.css(videoCss)
+
+		this.videoTotalHeight = (this.posterImgCss.top << 1) + videoCss.height
+		this.posterTotalHeight = (this.posterImgCss.top << 1) + this.posterImgCss.height
+
 	}
 	updateTopButtonsPositions() {
 		var windowW = AppStore.Window.w
@@ -286,26 +280,35 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			(windowW >> 1) - (this.productTitle.width >> 1),
 			(this.posterImgCss.top >> 1) - (this.productTitle.height * 0.4)
 		)
-		this.planetBtn.position(
-			this.productTitle.x - this.planetBtn.width - (AppConstants.PADDING_AROUND << 1),
-			this.productTitle.y
-		)
-		this.buyBtn.position(
-			this.productTitle.x + this.productTitle.width + (AppConstants.PADDING_AROUND << 1),
-			this.productTitle.y
+		// this.planetBtn.position(
+		// 	this.productTitle.x - this.planetBtn.width - (AppConstants.PADDING_AROUND << 1),
+		// 	this.productTitle.y
+		// )
+		// this.buyBtn.position(
+		// 	this.productTitle.x + this.productTitle.width + (AppConstants.PADDING_AROUND << 1),
+		// 	this.productTitle.y
+		// )
+	}
+	resizeCompassContainer() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		this.compassesContainer.resize()
+		this.compassPadding = windowH * 0.12
+		this.compassesContainer.position(
+			(windowW >> 1) - (this.compassesContainer.width >> 1),
+			(windowH) + this.compassPadding + 10
 		)
 	}
+	updatePageHeight() {
+		this.pageHeight = this.videoTotalHeight + this.posterTotalHeight + (this.compassPadding << 1)
+	} 
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		// this.compass.resize()
-		// this.compass.position(
-		// 	windowW >> 1, windowH * 0.16
-		// )
-
+		this.resizeCompassContainer()
 		this.resizeMediaWrappers()
-
+		this.updatePageHeight()
 		this.previousBtn.position(
 			(this.posterImgCss.left >> 1) - (this.previousBtn.width >> 1) - 4,
 			(windowH >> 1) - (this.previousBtn.width >> 1)
@@ -314,16 +317,16 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 			(this.posterImgCss.left + this.posterImgCss.width) + ((windowW - (this.posterImgCss.left + this.posterImgCss.width)) >> 1) - (this.nextBtn.width >> 1) + 4,
 			(windowH >> 1) - (this.previousBtn.height >> 1)
 		)
-		this.downBtn.position(
-			(windowW >> 1) - (this.downBtn.width >> 1),
-			this.posterImgCss.top + this.posterImgCss.height + ((windowH - (this.posterImgCss.top + this.posterImgCss.height)) >> 1) - (this.downBtn.height >> 1)
-		)
+		// this.downBtn.position(
+		// 	(windowW >> 1) - (this.downBtn.width >> 1),
+		// 	this.posterImgCss.top + this.posterImgCss.height + ((windowH - (this.posterImgCss.top + this.posterImgCss.height)) >> 1) - (this.downBtn.height >> 1)
+		// )
 
 		this.updateTopButtonsPositions()
 
 		var childCss = {
 			width: windowW,
-			height: windowH
+			// height: windowH
 		}
 		this.child.css(childCss)
 
@@ -332,14 +335,12 @@ export default class PlanetCampaignPage extends BasePlanetPage {
 	componentWillUnmount() {
 		$(document).off('keydown', this.onKeyPressed)
 		clearTimeout(this.videoAssignTimeout)
-		removeWheelListener(this.child.get(0), this.onWheel)
-		inertia.addCallback(null)
-		// this.compass.componentWillUnmount()
+		this.compassesContainer.componentWillUnmount()
 		this.previousBtn.componentWillUnmount()
 		this.nextBtn.componentWillUnmount()
-		this.downBtn.componentWillUnmount()
-		this.buyBtn.componentWillUnmount()
-		this.planetBtn.componentWillUnmount()
+		// this.downBtn.componentWillUnmount()
+		// this.buyBtn.componentWillUnmount()
+		// this.planetBtn.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }

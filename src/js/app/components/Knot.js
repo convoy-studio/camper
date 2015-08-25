@@ -2,7 +2,7 @@ import AppStore from 'AppStore'
 
 export default class Knot {
 	constructor(springContainer, r, color) {
-		this.radius = r || 8
+		this.radius = r || 3
 		this.color = color || 0xffffff
 		this.springContainer = springContainer
 		this.vx = 0
@@ -23,7 +23,7 @@ export default class Knot {
 		return this
 	}
 	changeSize(radius) {
-		this.radius = radius || 8
+		this.radius = radius || 3
 		this.draw()
 	}
 	draw() {

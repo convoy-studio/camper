@@ -14,7 +14,7 @@ export default class ArrowBtn {
 		var knotsEl = this.element.find(".knot")
 		var linesEl = this.element.find(".line")
 		var radius = 3
-		var margin = 22
+		var margin = 30
 		this.lineSize = AppStore.getLineWidth()
 
 		for (var i = 0; i < knotsEl.length; i++) {

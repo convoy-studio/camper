@@ -22,38 +22,29 @@ export default class SmallCompass {
 		var knotRadius = AppConstants.SMALL_KNOT_RADIUS
 		this.radius = 30
 		this.radiusLimit = (this.radius*0.8) - (knotRadius>>1)
-		var gray = 0x575756
 		this.width = this.radius
 		this.height = this.radius
 
-		var compassName = name.toUpperCase()
+		var compassName = data['planet-txt'].toUpperCase() + ' ' + name.toUpperCase()
 		this.element = this.parentEl.find('.compasses-texts-wrapper')
 		var containerEl = $('<div class="texts-container btn"></div>')
 		this.element.append(containerEl)
 		var titleTop = $('<div class="top-title"></div')
-		var titleBottom = $('<div class="bottom-title"></div')
 
 		this.circleRad = 90
 		var circlepath = 'M0,'+this.circleRad/2+'a'+this.circleRad/2+','+this.circleRad/2+' 0 1,0 '+this.circleRad+',0a'+this.circleRad/2+','+this.circleRad/2+' 0 1,0 -'+this.circleRad+',0'
 		var svgStr = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <path id="path1" d="'+circlepath+'" > </path> </defs> <text fill="white" id="myText"> <textPath xlink:href="#path1"> <tspan dx="0px" dy="0px">' + compassName + '</tspan> </textPath> </text></svg>'
 		var titleTopSvg = $(svgStr)
-		var titleBottomSvg = $(svgStr)
 		titleTop.append(titleTopSvg)
-		titleBottom.append(titleBottomSvg)
 		containerEl.append(titleTop)
-		containerEl.append(titleBottom)
 		titleTopSvg.css({
-			width: this.circleRad,
-			height: this.circleRad
-		})
-		titleBottomSvg.css({
 			width: this.circleRad,
 			height: this.circleRad
 		})
 		this.titles = {
 			container: containerEl,
-			titleTop: titleTop,
-			titleBottom: titleBottom
+			titleTop: titleTop.get(0),
+			rotation: 0,
 		}
 
 		this.onClicked = this.onClicked.bind(this)
@@ -62,7 +53,7 @@ export default class SmallCompass {
 		this.knots = []
 		for (var i = 0; i < data.length; i++) {
 			var d = data[i]
-			var knot = new Knot(this.container, knotRadius, gray).componentDidMount()
+			var knot = new Knot(this.container, knotRadius, 0xffffff).componentDidMount()
 			knot.mass = knotRadius
 			knot.vx = Math.random() * 0.8
             knot.vy = Math.random() * 0.8
@@ -74,11 +65,12 @@ export default class SmallCompass {
 			this.knots[i] = knot
 		}
 
+		var lineW = AppStore.getLineWidth()
 		// draw a rectangle
 		this.bgCircle.clear()
-		this.bgCircle.beginFill(0xffffff)
+		this.bgCircle.lineStyle(lineW, 0xffffff, 1)
+		this.bgCircle.beginFill(0xffffff, 0)
 		this.bgCircle.drawCircle(0, 0, this.radius)
-		this.bgCircle.endFill()
 	}
 	onClicked(e) {
 		e.preventDefault()
@@ -174,9 +166,14 @@ export default class SmallCompass {
 				this.checkCollision(knotA, knotB)
 			}
 		}
+		this.titles.rotation += 0.2
+		this.rotateEl(this.titles.titleTop, this.titles.rotation)
 	}
 	resize() {
 		var windowH = AppStore.Window.h
+	}
+	rotateEl(div, deg) {
+		Utils.Style(div, 'rotate('+deg+'deg)')
 	}
 	position(x, y) {
 		this.container.x = x

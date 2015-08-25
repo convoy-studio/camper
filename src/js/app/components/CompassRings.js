@@ -9,10 +9,8 @@ export default class CompassRings {
 	componentDidMount() {
 		this.ringsContainer = AppStore.getContainer()
 		this.titlesContainer = AppStore.getContainer()
-		this.genderContainer = AppStore.getContainer()
 		this.container.addChild(this.ringsContainer)
 		this.container.addChild(this.titlesContainer)
-		this.container.addChild(this.genderContainer)
 
 		this.circles = []
 		var ciclesLen = 6
@@ -23,13 +21,10 @@ export default class CompassRings {
 		}
 
 		this.titles = []
-		this.genders = []
 		var globalContent = AppStore.globalContent()
 		var elements = AppStore.elementsOfNature()
-		var allGender = AppStore.allGender()
 		var elementsTexts = globalContent.elements
-		var genderTexts = globalContent.gender
-		var fontSize = 30
+		var fontSize = 26
 
 		for (var i = 0; i < elements.length; i++) {
 			var elementId = elements[i]
@@ -44,18 +39,6 @@ export default class CompassRings {
 			})
 		}
 
-		for (var i = 0; i < allGender.length; i++) {
-			var genderId = allGender[i]
-			var genderTitle = genderTexts[genderId].toUpperCase()
-			var txt = new PIXI.Text(genderTitle, { font: fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
-			txt.anchor.x = 0.5
-			txt.anchor.y = 0.5
-			this.genderContainer.addChild(txt)
-			this.genders.push({
-				txt: txt,
-				degBegin: this.getDegreesBeginForGenderById(genderId),
-			})
-		}
 	}
 	getDegreesBeginForTitlesById(id) {
 		// be careful starts from center -90deg
@@ -65,14 +48,6 @@ export default class CompassRings {
 			case 'metal': return 15
 			case 'water': return 90
 			case 'wood': return 165
-		}
-	}
-	getDegreesBeginForGenderById(id) {
-		// be careful starts from center -90deg
-		switch(id) {
-			case 'male': return -150
-			case 'female': return -30
-			case 'animal': return 90
 		}
 	}
 	drawRings() {
@@ -88,14 +63,12 @@ export default class CompassRings {
 			g.clear()
 
 			// radius differences
-			if(i == 1) r = radiusMargin * 0.18
-			else if(i == 4) r = (lastR + radiusMargin) * 1.16
+			if(i == 1) r = radiusMargin * 0.16
 			else r = lastR + radiusMargin
 
 			// lines
 			if(i==3) {
 				this.drawAroundThreeGroupLines(lastR, r, g, lineW, color)
-				this.drawGenders(r, color)
 			}
 			if(i==6) {
 				this.drawAroundFourGroupLines(lastR, r, g, lineW, color)
@@ -194,7 +167,7 @@ export default class CompassRings {
 	}
 	drawTitles(r, color) {
 		var titles = this.titles
-		var offset = (this.radius / 270) * 44
+		var offset = (this.radius / 270) * -25
 		var scale = (this.radius / 270) * 1
 		var r = r + offset
 		for (var i = 0; i < titles.length; i++) {
@@ -207,21 +180,6 @@ export default class CompassRings {
 			title.txt.scale.y = scale
 		}
 	}
-	drawGenders(r, color) {
-		var genders = this.genders
-		var offset = (this.radius / 270) * 34
-		var scale = (this.radius / 270) * 1
-		var r = r + offset
-		for (var i = 0; i < genders.length; i++) {
-			var gender = genders[i]
-			var angle = Utils.DegreesToRadians(gender.degBegin)
-			gender.txt.rotation = angle + Utils.DegreesToRadians(90)
-			gender.txt.x = r * Math.cos(angle)
-			gender.txt.y = r * Math.sin(angle)
-			gender.txt.scale.x = scale
-			gender.txt.scale.y = scale
-		}
-	}
 	resize(radius) {
 		var windowH = AppStore.Window.h
 		this.radius = radius
@@ -230,9 +188,7 @@ export default class CompassRings {
 	componentWillUnmount() {
 		this.ringsContainer.removeChildren()
 		this.titlesContainer.removeChildren()
-		this.genderContainer.removeChildren()
 		AppStore.releaseContainer(this.ringsContainer)
 		AppStore.releaseContainer(this.titlesContainer)
-		AppStore.releaseContainer(this.genderContainer)
 	}
 }
