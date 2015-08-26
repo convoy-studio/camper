@@ -143,7 +143,7 @@ a {
     .compasses-texts-wrapper {
         position: absolute;
         font-size: 12px;
-        letter-spacing: 2px;
+        letter-spacing: 4px;
         & > div {
             position: absolute;
         }
@@ -166,6 +166,12 @@ a {
         }
     }
     &.campaign {
+        .slideshow-title {
+            font-size: 30px;
+            position: absolute;
+            text-align: center;
+            letter-spacing: 2px;
+        }
         .product-title-wrapper {
             position: absolute;
             text-transform: uppercase;

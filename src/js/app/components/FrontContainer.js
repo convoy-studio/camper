@@ -40,31 +40,61 @@ class FrontContainer extends BaseComponent {
 	componentDidMount() {
 		super.componentDidMount()
 		this.$socialWrapper = this.child.find('#social-wrapper')
+		this.$socialTitle = this.$socialWrapper.find('.social-title')
+		this.$socialIconsContainer = this.$socialWrapper.find('ul')
+		this.$socialBtns = this.$socialWrapper.find('li')
 		this.$legal = this.child.find('.legal')
 		this.$camperLab = this.child.find('.camper-lab')
 		this.$shop = this.child.find('.shop-wrapper')
 		this.$lang = this.child.find(".lang-wrapper")
 		this.$langCurrentTitle = this.$lang.find(".current-lang")
-		this.$countries = this.$lang.find(".countries-wrapper")
+		this.$countries = this.$lang.find(".submenu-wrapper")
+		this.$home = this.child.find('.home-btn')
 		this.countriesH = 0
 
-		this.onLangMouseEnter = this.onLangMouseEnter.bind(this)
-		this.onLangMouseLeave = this.onLangMouseLeave.bind(this)
-		this.$lang.on('mouseenter', this.onLangMouseEnter)
-		this.$lang.on('mouseleave', this.onLangMouseLeave)
+		this.onSubMenuMouseEnter = this.onSubMenuMouseEnter.bind(this)
+		this.onSubMenuMouseLeave = this.onSubMenuMouseLeave.bind(this)
+		this.$lang.on('mouseenter', this.onSubMenuMouseEnter)
+		this.$lang.on('mouseleave', this.onSubMenuMouseLeave)
+		this.$shop.on('mouseenter', this.onSubMenuMouseEnter)
+		this.$shop.on('mouseleave', this.onSubMenuMouseLeave)
+
+		this.onSocialMouseEnter = this.onSocialMouseEnter.bind(this)
+		this.onSocialMouseLeave = this.onSocialMouseLeave.bind(this)
+		this.$socialWrapper.on('mouseenter', this.onSocialMouseEnter)
+		this.$socialWrapper.on('mouseleave', this.onSocialMouseLeave)
+
+		this.socialTl = new TimelineMax()
+		this.socialTl.staggerFrom(this.$socialBtns, 1, { scale:0, y:10, force3D:true, opacity:0, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0.01, 0)
+		this.socialTl.from(this.$socialIconsContainer, 1, { y:30, ease:Elastic.easeOut }, 0)
+		this.socialTl.pause(0)
 
 		this.resize()
 		this.$lang.css('height', this.countriesTitleH)
 	}
-	onLangMouseEnter(e) {
+	onSocialMouseEnter(e) {
 		e.preventDefault()
-		this.$lang.addClass('hovered')
-		this.$lang.css('height', this.countriesH + this.countriesTitleH)
+		clearTimeout(this.socialBtnTimeout)
+		this.socialTl.timeScale(1).play()
 	}
-	onLangMouseLeave(e) {
+	onSocialMouseLeave(e) {
 		e.preventDefault()
-		this.$lang.removeClass('hovered')
-		this.$lang.css('height', this.countriesTitleH)
+		clearTimeout(this.socialBtnTimeout)
+		this.socialBtnTimeout = setTimeout(()=>{
+			this.socialTl.timeScale(1.8).reverse()
+		}, 400)
+	}
+	onSubMenuMouseEnter(e) {
+		e.preventDefault()
+		var $target = $(e.currentTarget)
+		$target.addClass('hovered')
+		$target.css('height', this.countriesH + this.countriesTitleH)
+	}
+	onSubMenuMouseLeave(e) {
+		e.preventDefault()
+		var $target = $(e.currentTarget)
+		$target.removeClass('hovered')
+		$target.css('height', this.countriesTitleH)
 	}
 	resize() {
 		if(!this.domIsReady) return
@@ -75,8 +105,12 @@ class FrontContainer extends BaseComponent {
 		this.countriesTitleH = this.$langCurrentTitle.height()
 
 		var socialCss = {
-			left: windowW - AppConstants.PADDING_AROUND - this.$socialWrapper.width(),
-			top: windowH - AppConstants.PADDING_AROUND - this.$socialWrapper.height(),
+			left: windowW - AppConstants.PADDING_AROUND - this.$socialTitle.width(),
+			top: windowH - AppConstants.PADDING_AROUND - this.$socialTitle.height(),
+		}
+		var socialIconsCss = {
+			left: (this.$socialTitle.width() >> 1) - (this.$socialIconsContainer.width() >> 1),
+			top: -this.$socialIconsContainer.height() - 20
 		}
 		var legalCss = {
 			left: AppConstants.PADDING_AROUND,
@@ -87,11 +121,15 @@ class FrontContainer extends BaseComponent {
 			top: AppConstants.PADDING_AROUND,
 		}
 		var shopCss = {
-			left: camperLabCss.left - this.$shop.width() - (AppConstants.PADDING_AROUND << 1),
-			top: AppConstants.PADDING_AROUND - 2,
+			left: camperLabCss.left - this.$shop.width() - (AppConstants.PADDING_AROUND),
+			top: AppConstants.PADDING_AROUND,
 		}
 		var langCss = {
-			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND << 1),
+			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND),
+			top: AppConstants.PADDING_AROUND,
+		}
+		var homeCss = {
+			left: langCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
 
@@ -100,6 +138,8 @@ class FrontContainer extends BaseComponent {
 		this.$camperLab.css(camperLabCss)
 		this.$shop.css(shopCss)
 		this.$lang.css(langCss)
+		this.$socialIconsContainer.css(socialIconsCss)
+		this.$home.css(homeCss)
 	}
 	componentWillUnmount() {
 		super.componentWillUnmount()

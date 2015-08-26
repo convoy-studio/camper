@@ -22,14 +22,23 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.timeoutTime = 900
 	}
 	componentDidMount() {
-		this.animations = {
-			oldContainerAnimation: undefined,
-			newContainerAnimation: undefined
-		}
-
-		this.products = AppStore.productsDataById(this.id)
+		this.updateProductData()
 
 		this.infos = AppStore.generalInfosLangScope()
+
+		// this.planetTitleTxt = this.infos.planet.toUpperCase()
+		var slideshowTitle = this.child.find('.slideshow-title')
+		var planetTitle = slideshowTitle.find('.planet-title')
+		var planetName = slideshowTitle.find('.planet-name')
+	 	this.titleContainer = {
+	 		parent: slideshowTitle,
+	 		planetTitle: planetTitle,
+	 		planetName: planetName
+	 	}
+
+	 	this.planetNameTween = TweenMax.fromTo(planetName, 0.5, {scaleX:1.4, scaleY:0, opacity:0}, { scale:1, opacity:1, force3D:true, ease:Elastic.easeOut })
+	 	this.planetNameTween.pause(0)
+
 		var productContainersWrapper = this.child.find('.product-containers-wrapper')
 		var containerA = productContainersWrapper.find('.product-container-a')
 		var containerB = productContainersWrapper.find('.product-container-b')
@@ -38,18 +47,17 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 				el: containerA,
 				posterWrapper: containerA.find('.poster-wrapper'),
 				posterImg: containerA.find('img'),
-				videoWrapper: containerA.find('.video-wrapper')
+				videoWrapper: containerA.find('.video-wrapper'),
 			},
 			'product-container-b': {
 				el: containerB,
 				posterWrapper: containerB.find('.poster-wrapper'),
 				posterImg: containerB.find('img'),
-				videoWrapper: containerB.find('.video-wrapper')
+				videoWrapper: containerB.find('.video-wrapper'),
 			}
 		}
 
 		this.arrowClicked = this.arrowClicked.bind(this)
-		this.onDownClicked = this.onDownClicked.bind(this)
 		this.onBuyClicked = this.onBuyClicked.bind(this)
 		this.onPlanetClicked = this.onPlanetClicked.bind(this)
 
@@ -59,9 +67,6 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.nextBtn = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
 		this.nextBtn.btnClicked = this.arrowClicked
 		this.nextBtn.componentDidMount()
-		// this.downBtn = new ArrowBtn(this.child.find('.down-btn'), AppConstants.BOTTOM)
-		// this.downBtn.btnClicked = this.onDownClicked
-		// this.downBtn.componentDidMount()
 
 		// this.buyBtn = new RectangleBtn(this.child.find('.buy-btn'), this.infos.buy_title)
 		// this.buyBtn.btnClicked = this.onBuyClicked
@@ -81,40 +86,49 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.checkCurrentProductByUrl()
 		$(document).on('keydown', this.onKeyPressed)
 
+		this.updateTitles(this.infos.planet.toUpperCase(), this.id.toUpperCase())
+
 		super.componentDidMount()
+	}
+	updateTitles(title, name) {
+		var planetTitle = this.titleContainer.planetTitle
+		var planetName = this.titleContainer.planetName
+	 	planetTitle.text(title)
+	 	planetName.text(name)
+	 	this.planetNameTween.play(0)
+	}
+	updateProductData() {
+		this.products = AppStore.productsDataById(this.id)
 	}
 	onPlanetClicked() {
 		var url = "/landing"
 		Router.setHash(url)
-	}
-	onDownClicked() {
-		if(this.animationRunning) return
-		this.animationRunning = true
-		var windowH = AppStore.Window.h
-		if(this.isInVideo) {
-			this.isInVideo = false
-			TweenMax.to(this.currentContainer.el, 1, { y:0, force3D: true, ease:Expo.easeInOut })
-			TweenMax.to(this.downBtn.element, 1, { rotation:'-90deg', force3D: true, ease:Expo.easeInOut })
-		}else{
-			this.isInVideo = true
-			TweenMax.to(this.currentContainer.el, 1, { y:-windowH, force3D: true, ease:Expo.easeInOut })
-			TweenMax.to(this.downBtn.element, 1, { rotation:'90deg', force3D: true, ease:Expo.easeInOut })
-		}
-		clearTimeout(this.videoAssignTimeout)
-		setTimeout(()=>{
-			this.animationRunning = false
-		}, this.timeoutTime)
-		if(this.currentContainer.videoIsAdded != true) {
-			this.videoAssignTimeout = setTimeout(()=>{
-				this.assignVideoToNewContainer()
-			}, this.timeoutTime)
-		}
 	}
 	onBuyClicked() {
 		console.log('buy')
 	}
 	arrowClicked(direction) {
 		if(this.animationRunning) return
+		this.switchSlideByDirection(direction)
+	}
+	onKeyPressed(e) {
+		if(this.animationRunning) return
+	    e.preventDefault()
+		switch(e.which) {
+	        case 37: // left
+	        	this.switchSlideByDirection(AppConstants.LEFT)
+	        	break;
+	        case 39: // right
+	        	this.switchSlideByDirection(AppConstants.RIGHT)
+	        	break;
+	        case 38: // up
+	        	break;
+	        case 40: // down
+	        	break;
+	        default: return;
+	    }
+	}
+	switchSlideByDirection(direction) {
 		switch(direction) {
 			case AppConstants.LEFT:
 				this.previous()
@@ -123,28 +137,19 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 				this.next()
 				break
 		}
+		if(this.currentIndex > this.products.length-1) {
+			var nextId = AppStore.getNextPlanet(this.id)
+			var nexturl = "/planet/" + nextId + '/0'
+			Router.setHash(nexturl)
+			return
+		}else if(this.currentIndex < 0) {
+			var previousId = AppStore.getPreviousPlanet(this.id)
+			var productsData = AppStore.productsDataById(previousId)
+			var previousurl = "/planet/" + previousId + '/' + (productsData.length-1).toString()
+			Router.setHash(previousurl)
+			return
+		}
 		this.updateHasher()
-	}
-	onKeyPressed(e) {
-		if(this.animationRunning) return
-	    e.preventDefault()
-		switch(e.which) {
-	        case 37: // left
-	        	this.previous()
-	        	this.updateHasher()
-	        	break;
-	        case 39: // right
-	        	this.next()
-	        	this.updateHasher()
-	        	break;
-	        case 38: // up
-	        	this.onDownClicked()
-	        	break;
-	        case 40: // down
-	        	this.onDownClicked()
-	        	break;
-	        default: return;
-	    }
 	}
 	updateHasher() {
 		var url = "/planet/" + this.id + '/' + this.currentIndex
@@ -153,12 +158,10 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 	next() {
 		this.direction = AppConstants.LEFT
 		this.currentIndex += 1
-		this.currentIndex = (this.currentIndex > this.products.length-1) ? 0 : this.currentIndex
 	}
 	previous() {
 		this.direction = AppConstants.RIGHT
 		this.currentIndex -= 1
-		this.currentIndex = (this.currentIndex < 0) ? this.products.length-1 : this.currentIndex
 	}
 	getCurrentIndexFromProductId(productId) {
 		for (var i = 0; i < this.products.length; i++) {
@@ -168,8 +171,18 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		}
 	}
 	internalHasherChanged() {
+		var newId = AppStore.getPageId()
+		if(newId != this.id) {
+			this.updateTitles(this.infos.planet.toUpperCase(), newId.toUpperCase())
+			this.positionTitlesContainer()
+		}
+		this.id = newId
+		this.props.data = AppStore.pageContent()
+		this.updateProductData()
 		this.fromInternalChange = true
 		this.checkCurrentProductByUrl()
+		this.compassesContainer.currentIndex = this.currentIndex
+		this.compassesContainer.changeData(this.id)
 	}
 	checkCurrentProductByUrl() {
 		var newHasher = Router.getNewHash()
@@ -210,20 +223,17 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		var time = (this.previousContainer == undefined) ? 0 : 1
 		if(this.previousContainer != undefined) TweenMax.fromTo(this.previousContainer.el, 1, {x:0, opacity: 1}, { x:-windowW*dir, opacity: 1, force3D:true, ease:Expo.easeInOut })
 		TweenMax.fromTo(this.currentContainer.el, time, {x:windowW*dir, opacity: 1}, { x:0, opacity: 1, force3D:true, ease:Expo.easeInOut })
-
 		setTimeout(()=>{
 			this.updateTopButtonsPositions()
 			this.productTitle.show()
 		}, 200)
-
 		setTimeout(()=>{
 			this.animationRunning = false
 			this.removePreviousContainerAssets()
 		}, this.timeoutTime)
-
-		// setTimeout(()=>{
-		// 	this.assignVideoToNewContainer()
-		// }, this.timeoutTime + 500)
+		setTimeout(()=>{
+			this.assignVideoToNewContainer()
+		}, this.timeoutTime + 200)
 	}
 	removePreviousContainerAssets() {
 		if(this.previousContainer == undefined) return
@@ -231,6 +241,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.currentContainer.videoIsAdded = false
 	}
 	didTransitionInComplete() {
+		this.compassesContainer.currentIndex = this.currentIndex
 		this.compassesContainer.didTransitionInComplete()
 		super.didTransitionInComplete()
 	}
@@ -271,14 +282,13 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 
 		this.videoTotalHeight = (this.posterImgCss.top << 1) + videoCss.height
 		this.posterTotalHeight = (this.posterImgCss.top << 1) + this.posterImgCss.height
-
 	}
 	updateTopButtonsPositions() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.productTitle.position(
 			(windowW >> 1) - (this.productTitle.width >> 1),
-			(this.posterImgCss.top >> 1) - (this.productTitle.height * 0.4)
+			(this.posterImgCss.top + this.posterImgCss.height) + ((windowH - (this.posterImgCss.top + this.posterImgCss.height)) >> 1) - (this.productTitle.height) - (this.productTitle.height >> 1)
 		)
 		// this.planetBtn.position(
 		// 	this.productTitle.x - this.planetBtn.width - (AppConstants.PADDING_AROUND << 1),
@@ -293,7 +303,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.compassesContainer.resize()
-		this.compassPadding = windowH * 0.12
+		this.compassPadding = 140
 		this.compassesContainer.position(
 			(windowW >> 1) - (this.compassesContainer.width >> 1),
 			(windowH) + this.compassPadding + 10
@@ -301,12 +311,27 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 	}
 	updatePageHeight() {
 		this.pageHeight = this.videoTotalHeight + this.posterTotalHeight + (this.compassPadding << 1)
-	} 
+	}
+	positionTitlesContainer() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		clearTimeout(this.titleTimeout)
+		this.titleTimeout = setTimeout(()=>{
+			var compassSize = (windowH * AppConstants.COMPASS_SIZE_PERCENTAGE) << 1
+			var topOffset = (windowH >> 1) + (compassSize >> 1)
+			var titlesContainerCss = {
+				top: (this.posterImgCss.top >> 1) - (this.titleContainer.parent.height() >> 1),
+				left: (windowW >> 1) - (this.titleContainer.parent.width() >> 1),
+			}
+			this.titleContainer.parent.css(titlesContainerCss)
+		}, 0)
+	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
 		this.resizeCompassContainer()
+		this.positionTitlesContainer()
 		this.resizeMediaWrappers()
 		this.updatePageHeight()
 		this.previousBtn.position(
@@ -317,16 +342,10 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 			(this.posterImgCss.left + this.posterImgCss.width) + ((windowW - (this.posterImgCss.left + this.posterImgCss.width)) >> 1) - (this.nextBtn.width >> 1) + 4,
 			(windowH >> 1) - (this.previousBtn.height >> 1)
 		)
-		// this.downBtn.position(
-		// 	(windowW >> 1) - (this.downBtn.width >> 1),
-		// 	this.posterImgCss.top + this.posterImgCss.height + ((windowH - (this.posterImgCss.top + this.posterImgCss.height)) >> 1) - (this.downBtn.height >> 1)
-		// )
-
 		this.updateTopButtonsPositions()
 
 		var childCss = {
 			width: windowW,
-			// height: windowH
 		}
 		this.child.css(childCss)
 
@@ -338,7 +357,6 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.compassesContainer.componentWillUnmount()
 		this.previousBtn.componentWillUnmount()
 		this.nextBtn.componentWillUnmount()
-		// this.downBtn.componentWillUnmount()
 		// this.buyBtn.componentWillUnmount()
 		// this.planetBtn.componentWillUnmount()
 		super.componentWillUnmount()

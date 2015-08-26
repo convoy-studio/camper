@@ -144,22 +144,18 @@ export default class Landing extends Page {
 		var windowH = AppStore.Window.h
 		this.landingSlideshow.resize()
 		this.compass.resize()
-
 		this.compass.position(
 			windowW >> 1,
 			(windowH >> 1) + (windowH * 0.03)
 		)
-
 		this.arrowRight.position(
 			windowW - ((windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE) >> 1),
 			windowH >> 1
 		)
-
 		this.arrowLeft.position(
 			((windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE) >> 1) - this.arrowLeft.width,
 			windowH >> 1
 		)
-
 		this.previousArea.css({
 			width: windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE,
 			height: windowH
@@ -169,7 +165,6 @@ export default class Landing extends Page {
 			height: windowH,
 			left: windowW - (windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE)
 		})
-
 		super.resize()
 	}
 	componentWillUnmount() {

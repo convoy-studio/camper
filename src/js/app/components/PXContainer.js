@@ -8,9 +8,14 @@ export default class PXContainer {
 
 		this.didHasherChange = this.didHasherChange.bind(this)
 		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
+		AppStore.on(AppConstants.PAGE_HASHER_INTERNAL_CHANGE, this.didHasherChange)
 
 		// this.renderer = new PIXI.CanvasRenderer(800, 600)
 		this.renderer = new PIXI.autoDetectRenderer(800, 600, { antialias: true })
+		this.oldColor = "0xffffff"
+		this.newColor = "0xffffff"
+
+		this.colorTween = {color:this.oldColor}
 
 		var el = $(elementId)
 		$(this.renderer.view).attr('id', 'px-container')
@@ -35,6 +40,13 @@ export default class PXContainer {
 	didHasherChange() {
 		var pageId = AppStore.getPageId()
 		var palette = AppStore.paletteColorsById(pageId)
+		this.oldColor = this.newColor
+		this.newColor = palette[0]
+		// console.log(this.oldColor, this.newColor)
+		// if(palette != undefined) TweenMax.to(this.renderer, 1, { colorProps: {backgroundColor:"red"}})
+		// if(palette != undefined) TweenMax.to(this.colorTween, 1, { colorProps: {color:this.newColor}, onUpdate: ()=>{
+		// 	console.log(this.colorTween.color)
+		// }})
 		if(palette != undefined) this.renderer.backgroundColor = palette[0]
 	}
 }

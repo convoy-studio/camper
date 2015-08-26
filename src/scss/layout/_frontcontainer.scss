@@ -24,13 +24,6 @@
 			& > div {
 				@include inline-block;
 			}
-			.separator {
-				width: 2px;
-				height: $globalFontSize;
-				background-color: $white;
-				position: relative;
-				top: 2px;
-			}
 			.shop-title {
 				margin-right: 0px;
 			}
@@ -40,26 +33,21 @@
 				}	
 			}
 		}
-		.lang-wrapper {
+		.lang-wrapper, .shop-wrapper {
 			text-align: center;
 			overflow: hidden;
 			li {
 				margin: 8px 0;
 			}
-			.countries-wrapper {
-			}
 			@for $i from 5 to -1 {
-				.country-#{$i} {
+				.sub-#{$i} {
 					@include opacity(0);
 					@include anim(.4s, $i*0.02s, $easeInExpo, scaleY(0.5) translateY(4px) translateZ(0), 0%, 100%, transform opacity);
 				}
 			}
 			&.hovered {
-				.countries-wrapper {
-				}
-
 				@for $i from 0 through 5 {
-					.country-#{$i} {
+					.sub-#{$i} {
 						@include opacity(1);
 						@include anim(.6s, $i*0.04s, $easeOutExpo, scaleY(1) translateY(0px) translateZ(0), 0%, 0%, transform opacity);
 					}
@@ -71,7 +59,11 @@
 		& > * {
 			position: absolute;
 		}
-		ul#social-wrapper{
+		#social-wrapper{
+			background-color: red;
+			& > * {
+				position: absolute;
+			}
 			$w: 34px;
 			li {
 				width: $w;

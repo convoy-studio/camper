@@ -11,7 +11,7 @@ export default class SmallCompass {
 		this.type = type || AppConstants.LANDING
 		this.bounce = -1
 	}
-	componentDidMount(data, name, parentEl) {
+	componentDidMount(data, name, parentEl, planetTxt) {
 		this.parentEl = parentEl
 		this.container = AppStore.getContainer()
 		this.pxContainer.addChild(this.container)
@@ -25,7 +25,7 @@ export default class SmallCompass {
 		this.width = this.radius
 		this.height = this.radius
 
-		var compassName = data['planet-txt'].toUpperCase() + ' ' + name.toUpperCase()
+		var compassName = planetTxt.toUpperCase() + ' ' + name.toUpperCase()
 		this.element = this.parentEl.find('.compasses-texts-wrapper')
 		var containerEl = $('<div class="texts-container btn"></div>')
 		this.element.append(containerEl)
@@ -43,6 +43,7 @@ export default class SmallCompass {
 		})
 		this.titles = {
 			container: containerEl,
+			$titleTop: titleTop,
 			titleTop: titleTop.get(0),
 			rotation: 0,
 		}
@@ -74,7 +75,7 @@ export default class SmallCompass {
 	}
 	onClicked(e) {
 		e.preventDefault()
-		var url = "/planet/" + this.id
+		var url = "/planet/" + this.id + "/0"
 		Router.setHash(url)
 	}
 	checkWalls(knot) {
@@ -180,6 +181,10 @@ export default class SmallCompass {
 		this.container.y = y
 		this.x = x
 		this.y = y
+	}
+	opacity(val) {
+		this.container.alpha = val
+		this.titles.$titleTop.css('opacity', val)
 	}
 	positionElement(x, y) {
 		this.titles.container.css({

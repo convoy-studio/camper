@@ -22,12 +22,14 @@ export default class Compass {
 		this.removePreviousSpringGardens()
 		this.springGardens = []
 		var springGardenWithFill = (this.type == AppConstants.EXPERIENCE) ? true : false
-		var springGardenIsInteractive = (this.type == AppConstants.EXPERIENCE) ? true : false
+		// var springGardenIsInteractive = (this.type == AppConstants.EXPERIENCE) ? true : false
+		var springGardenIsInteractive = false
 		for (var i = 0; i < data.length; i++) {
 			var springGarden = AppStore.getSpringGarden()
 			var product = data[i]
 			var color = product.color
-			product.color = (this.type == AppConstants.LANDING) ? 0xffffff : product.color
+			// product.color = (this.type == AppConstants.LANDING) ? 0xffffff : product.color
+			product.color = 0xffffff
 			springGarden.id = this.id
 			springGarden.radius = this.radius
 			springGarden.knotRadius = this.knotRadius
@@ -57,14 +59,17 @@ export default class Compass {
 		this.radius = windowH * sizePercentage
 	}
 	didTransitionInComplete() {
-
 	}
 	willTransitionOut() {
 	}
-	resize() {
+	updateRadius() {
 		this.getRadius()
 		this.rings.resize(this.radius)
-
+	}
+	resize() {
+		if(this.type == AppConstants.LANDING) {
+			this.updateRadius()
+		}
 		if(this.springGardens.length < 1) return 
 	 	for (var i = 0; i < this.springGardens.length; i++) {
 			var springGarden = this.springGardens[i]

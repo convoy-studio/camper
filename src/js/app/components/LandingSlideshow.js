@@ -12,8 +12,7 @@ export default class LandingSlideshow {
 	}
 	componentDidMount() {
 		var infos = AppStore.generalInfosLangScope()
-		this.slideshowContainer = new PIXI.Container()
-		// this.slideshowContainer = AppStore.getContainer()
+		this.slideshowContainer = AppStore.getContainer()
 	 	this.slideshowWrapper = AppStore.getContainer()
 	 	this.pxContainer.addChild(this.slideshowContainer)
 	 	this.slideshowContainer.addChild(this.slideshowWrapper)
@@ -29,23 +28,9 @@ export default class LandingSlideshow {
 	 		planetName: planetName
 	 	}
 
-	 	this.configTween = {
-	 		spring: 0.03,
-			friction: 0.92
-	 	}
+	 	this.planetNameTween = TweenMax.fromTo(planetName, 0.5, {scaleX:1.4, scaleY:0, opacity:0}, { scale:1, opacity:1, force3D:true, ease:Elastic.easeOut })
+	 	this.planetNameTween.pause(0)
 
-	 	this.nameTween = {
-	 		x: 0,
-	 		y: 0,
-	 		vx: 0,
-	 		vy: 0,
-	 		toX: 0,
-	 		toY: 0,
-	 		rotation: 0,
-	 		toRotation: 0,
-	 		springLength: 0
-	 	}
-	 	
 	 	var planets = AppStore.planets()
 	 	this.slides = []
 	 	for (var i = 0; i < planets.length; i++) {
@@ -88,12 +73,8 @@ export default class LandingSlideshow {
 		var planetName = this.titleContainer.planetName
 	 	planetTitle.text(title)
 	 	planetName.text(name)
-	 	this.nameTween.springLength = 200
-	 	this.nameTween.toX = 0
-	 	this.nameTween.toY = 0
-	 	this.nameTween.x = 100
-	 	this.nameTween.y = 100
-	 }
+	 	this.planetNameTween.play(0)
+	}
 	drawCenteredMaskRect(graphics, x, y, w, h) {
 		graphics.clear()
 		graphics.beginFill(0xffff00, 1)
@@ -169,15 +150,6 @@ export default class LandingSlideshow {
 		}
 		this.slideshowContainer.scale.x += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
 		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
-		// this.slideshowContainer.y = this.slideshowContainer.baseY + Math.sin(this.counter) * 4
-
-		Utils.SpringTo(this.nameTween, this.nameTween.toX, this.nameTween.toY, 1, this.configTween.spring, this.configTween.friction, this.nameTween.springLength)
-		this.nameTween.x += this.nameTween.vx
-		this.nameTween.y += this.nameTween.vy
-		// Utils.Style(this.titleContainer.planetName.get(0), 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, '+this.nameTween.x+'px, '+this.nameTween.y+'px, 0, 1)')
-		Utils.Style(this.titleContainer.planetName.get(0), 'matrix(1, 0, 0, 1, '+this.nameTween.x+', '+this.nameTween.y+')')
-		// console.log(this.nameTween.x)
-		// console.log(this.nameTween.x, this.nameTween.y, this.nameTween.toX)
 	}
 	positionSlideshowContainer() {
 		var windowW = AppStore.Window.w
@@ -254,14 +226,10 @@ export default class LandingSlideshow {
 	 	}
 
 	 	this.slides.length = 0
+	 	this.planetNameTween = null
 
-	 	// TODO clear that and put it back to pool
-	 // 	delete this.slideshowContainer.scaleXY
-	 // 	delete this.slideshowContainer.baseY
-	 // 	this.slideshowContainer.scale.x = 1
-	 // 	this.slideshowContainer.scale.y = 1
 		this.slideshowContainer.removeChildren()
-		// AppStore.releaseContainer(this.slideshowContainer)
+		AppStore.releaseContainer(this.slideshowContainer)
 
 		this.slideshowWrapper.removeChildren()
 		AppStore.releaseContainer(this.slideshowWrapper)

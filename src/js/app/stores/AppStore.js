@@ -181,6 +181,28 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     planets: function() {
         return data.planets
     },
+    getNextPlanet: function(id) {
+        var planets = AppStore.planets()
+        var nextPlanetId;
+        for (var i = 0; i < planets.length; i++) {
+            var planet = planets[i]
+            if(planet == id) {
+                nextPlanetId = planets[i+1] 
+            }
+        };
+        return (nextPlanetId == undefined) ? planets[0] : nextPlanetId
+    },
+    getPreviousPlanet: function(id) {
+        var planets = AppStore.planets()
+        var previousPlanetId;
+        for (var i = 0; i < planets.length; i++) {
+            var planet = planets[i]
+            if(planet == id) {
+                previousPlanetId = planets[i-1] 
+            }
+        };
+        return (previousPlanetId == undefined) ? planets[planets.length-1] : previousPlanetId
+    },
     elementsOfNature: function() {
         return data.elements
     },
@@ -262,7 +284,8 @@ var AppStore = assign({}, EventEmitter2.prototype, {
                 var oldHasher = Router.getOldHash()
                 var actionType = AppConstants.PAGE_HASHER_CHANGED
                 if(oldHasher != undefined) {
-                    if(newHasher.parts.length == 3 && oldHasher.parts.length == 3 && newHasher.parts[1] == oldHasher.parts[1]) {
+                    // if(newHasher.parts.length == 3 && oldHasher.parts.length == 3 && newHasher.parts[1] == oldHasher.parts[1]) {
+                    if(newHasher.parts.length == 3 && oldHasher.parts.length == 3) {
                         actionType = AppConstants.PAGE_HASHER_INTERNAL_CHANGE
                     }
                 }
