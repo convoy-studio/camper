@@ -28,9 +28,15 @@ export default class SpringGarden {
 			springLength: 0
 		}
 	}
-	componentDidMount(data, withFill, isInteractive) {
+	componentDidMount(data, withFill, isInteractive, type) {
 		this.params = data
+		type = type || AppConstants.LANDING
+		this.color = (type == AppConstants.LANDING) || this.params.highlight == false ? 0xffffff : this.params.color
 		this.withFill = withFill || false
+		if(this.params.highlight != undefined) {
+			this.color = this.params.highlight == false ? 0xffffff : this.color
+			this.withFill = this.params.highlight == false ? false : true
+		}
 		this.isInteractive = isInteractive || false
 		var knotsData = this.params.knots
 
@@ -62,11 +68,11 @@ export default class SpringGarden {
 	update() {
 		this.areaPolygon.clear()
 		if(this.withFill) {
-			this.areaPolygon.beginFill(this.params.color)
+			this.areaPolygon.beginFill(this.color)
 			this.areaPolygon.lineStyle(0)
 			this.areaPolygon.moveTo(this.knots[0].x, this.knots[0].y)
 		}else{
-			this.areaPolygon.lineStyle(this.lineW, this.params.color, 0.8)
+			this.areaPolygon.lineStyle(this.lineW, this.color, 0.8)
 		}
 		var len = this.knots.length
 		var spring = this.config.spring

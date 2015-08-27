@@ -28,8 +28,8 @@ export default class Pool {
 		this.timelines.release(item)
 	}
 	getContainer() {
-		// console.log('get >>>>>>>>>>>>>>>')
 		var container = this.pxContainers.get()
+		// console.log('get >>>>>>>>>>>>>>>', container)
 		container.scale.x = 1
 		container.scale.y = 1
 		container.position.x = 0
@@ -39,6 +39,7 @@ export default class Pool {
 		container.pivot.x = 0
 		container.pivot.y = 0
 		container.rotation = 0
+		container.alpha = 1
 		return container
 	}
 	releaseContainer(item) {

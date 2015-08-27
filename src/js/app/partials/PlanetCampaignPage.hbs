@@ -1,5 +1,13 @@
 <div class='page-wrapper'>
 	
+	<div id="scrollbar-view">
+		<div class="relative">
+			<div class="scroll-grab btn"></div>
+			<div class="scroll-bg btn"></div>
+		</div>
+	</div>
+
+
 	<div class="interface absolute">
 
 		<div class="slideshow-title">
@@ -8,62 +16,69 @@
 		</div>
 
 		<div class="compasses-texts-wrapper"></div>
-		<div class="down-btn dots-arrow-btn btn">
-			<svg>
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line"/>
-				<line class="line"/>
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line" />
-				<line class="line" />
-			</svg>
-		</div>
-		<div class="buy-btn dots-rectangle-btn btn">
-			<div class="btn-title"></div>
-			<svg>
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line"/>
-				<line class="line"/>
-				<line class="line" />
-				<line class="line" />
-			</svg>
-		</div>
-		<div class="planet-btn dots-rectangle-btn btn">
-			<div class="btn-title"></div>
-			<svg>
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line"/>
-				<line class="line"/>
-				<line class="line" />
-				<line class="line" />
-			</svg>
-		</div>
-		<div class="product-title-wrapper">
-			<div class="product-title title-a"></div>
-			<div class="product-title title-b"></div>
+		
+		<div class="buy-btn btn">
+			<div class="dots-rectangle-btn btn">
+				<div class="btn-title"></div>
+				<svg>
+					<circle class="knot" />
+					<circle class="knot" />
+					<circle class="knot" />
+					<circle class="knot" />
+					<line class="line"/>
+					<line class="line"/>
+					<line class="line" />
+					<line class="line" />
+				</svg>
+			</div>
+			<div class="product-title-wrapper">
+				<div class="product-title title-a"></div>
+				<div class="product-title title-b"></div>
+			</div>
 		</div>
 		<div class="product-containers-wrapper">
 			<div class="product-container product-container-a">
 				<div class="poster-wrapper">
+					<div class="spinner-img spinner-wrapper">
+						<svg width="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+							<path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#76f19a">
+								<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" begin="0s" dur="0.5s" fill="freeze" repeatCount="indefinite"></animateTransform>
+							</path>
+						</svg>
+					</div>
 					<img src="{{empty-image}}">
 				</div>
-				<div class="video-wrapper">
+				<div class="video-wrapper btn">
+					{{! <div class="play-btn">
+						<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 188.951 188.95" enable-background="new 0 0 188.951 188.95" xml:space="preserve">
+							<path fill="#FFFFFF" d="M186.451,94.476c0,50.797-41.18,91.975-91.975,91.975C43.679,186.45,2.5,145.272,2.5,94.476S43.679,2.5,94.476,2.5C145.271,2.5,186.451,43.679,186.451,94.476z"/>
+							<g><path fill="#010101" d="M74.271,140.484V52.597l63.568,43.945L74.271,140.484z M75.245,54.454v84.175l60.883-42.087L75.245,54.454z"/></g>
+						</svg>
+					</div> }}
+					<div class="video-container"></div>
 				</div>
 			</div>
 			<div class="product-container product-container-b">
 				<div class="poster-wrapper">
+					<div class="spinner-img spinner-wrapper">
+						<svg width="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+							<path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#76f19a">
+								<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" begin="0s" dur="0.5s" fill="freeze" repeatCount="indefinite"></animateTransform>
+							</path>
+						</svg>
+					</div>
 					<img src="{{empty-image}}">
 				</div>
-				<div class="video-wrapper">
+				<div class="video-wrapper btn">
+					{{! <div class="play-btn">
+						<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 188.951 188.95" enable-background="new 0 0 188.951 188.95" xml:space="preserve">
+							<path fill="#FFFFFF" d="M186.451,94.476c0,50.797-41.18,91.975-91.975,91.975C43.679,186.45,2.5,145.272,2.5,94.476S43.679,2.5,94.476,2.5C145.271,2.5,186.451,43.679,186.451,94.476z"/>
+							<g><path fill="#010101" d="M74.271,140.484V52.597l63.568,43.945L74.271,140.484z M75.245,54.454v84.175l60.883-42.087L75.245,54.454z"/></g>
+						</svg>
+					</div> }}
+					<div class="video-container"></div>
 				</div>
 			</div>
 		</div>

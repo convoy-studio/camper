@@ -193,7 +193,7 @@
 			},{
 				"id": 1,
 				"name": "FISS",
-				"color": "0x7b7b7d",
+				"color": "0xcff0fc",
 				"video-id": "0l1dswyr4x",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
@@ -223,7 +223,7 @@
 			},{
 				"id": 4,
 				"name": "FISS",
-				"color": "0x4073da",
+				"color": "0xf4ecda",
 				"video-id": "8fbp0pbww8",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -236,7 +236,7 @@
 			{
 				"id": 0,
 				"name": "BELUGA",
-				"color": "0x0f0f11",
+				"color": "0x818181",
 				"video-id": "gsun7amzq8",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -302,7 +302,7 @@
 			{
 				"id": 0,
 				"name": "VINTAR",
-				"color": "0x5b2f24",
+				"color": "0xd79b7a",
 				"video-id": "gldrv27k76",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -325,7 +325,7 @@
 			{
 				"id": 0,
 				"name": "ENDURO",
-				"color": "0x3a3b6b",
+				"color": "0x2892c1",
 				"video-id": "9qbhhpb89b",
 				"knots": [
 					{"x":-0.2, "y":0.3},
@@ -345,7 +345,7 @@
 			},{
 				"id": 2,
 				"name": "gemma",
-				"color": "0x477e93",
+				"color": "0x090b36",
 				"video-id": "ckgwzd3npu",
 				"knots": [
 					{"x":-0.3, "y":0.1},
@@ -584,47 +584,36 @@
 		"/planet/ski": {
 			"id": "ski",
 			"experience-assets": [
-				"bunny.png"
 			],
 			"campaign-assets": [
-				"bunny.png"
 			]
 		},
 		"/planet/metal": {
 			"id": "metal",
 			"experience-assets": [
-				"bunny.png"
 			],
 			"campaign-assets": [
-				"bunny.png"
 			]
 		},
 		"/planet/alaska": {
 			"id": "alaska",
 			"experience-assets": [
-				"bunny.png"
 			],
 			"campaign-assets": [
-				"bunny.png"
 			]
 		},
 		"/planet/wood": {
 			"id": "wood",
 			"experience-assets": [
-				"bunny.png"
 			],
 			"campaign-assets": [
-				"bunny.png"
 			]
 		},
 		"/planet/gemstone": {
 			"id": "gemstone",
 			"experience-assets": [
-				"bunny.png",
-				"noise-color.jpg"
 			],
 			"campaign-assets": [
-				"bunny.png"
 			]
 		}
 	}

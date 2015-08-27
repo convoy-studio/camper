@@ -31,7 +31,8 @@ html {
 }
 
 #pages-container {
-    position: relative;
+    position: absolute;
+    z-index: 10;
     @extend .full;
     & > div {
         @extend .full;
@@ -45,5 +46,6 @@ html {
 
 #px-container {
     position: absolute;
+    z-index: 5;
     @extend .top-left;
 }

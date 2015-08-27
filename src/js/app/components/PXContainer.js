@@ -40,8 +40,8 @@ export default class PXContainer {
 	didHasherChange() {
 		var pageId = AppStore.getPageId()
 		var palette = AppStore.paletteColorsById(pageId)
-		this.oldColor = this.newColor
-		this.newColor = palette[0]
+		// this.oldColor = this.newColor
+		// this.newColor = palette[0]
 		// console.log(this.oldColor, this.newColor)
 		// if(palette != undefined) TweenMax.to(this.renderer, 1, { colorProps: {backgroundColor:"red"}})
 		// if(palette != undefined) TweenMax.to(this.colorTween, 1, { colorProps: {color:this.newColor}, onUpdate: ()=>{

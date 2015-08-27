@@ -100,6 +100,30 @@ a {
     color: $white;
     text-decoration: none;
 }
+#scrollbar-view {
+    $scrollbarW: 12px; 
+    width: $scrollbarW;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    z-index: 999999;
+    .scroll-bg, .scroll-grab {
+        position: absolute;
+    }
+    .scroll-bg {
+        width: 100%;
+        height: 100%;
+        background-color: $white;
+        display: none;
+    }
+    .scroll-grab {
+        $gap: 2px;
+        width: $scrollbarW;
+        height: 100px;
+        background-color: $white;
+        z-index: 1;
+    }
+}
 #landing.page-wrapper {
     @extend .full;
     .slideshow-title {
@@ -121,7 +145,21 @@ a {
     position: fixed;
     z-index: 11;
 }
-.dots-arrow-btn, .dots-rectangle-btn {
+.play-btn {
+    $w: 100px;
+    width: $w;
+    left: 50%;
+    top: 50%;
+    margin-left: -$w/2;
+    margin-top: -$w/2;
+    @include opacity(0.9);
+    @include anim(.6s, 0s, $easeOutExpo, scale(1) translateZ(0), 50%, 50%, transform opacity);
+    &.hovered {
+        @include opacity(1);
+        @include anim(.6s, 0s, $easeOutExpo, scale(1.1) translateZ(0), 50%, 50%, transform opacity);
+    }
+}
+.dots-arrow-btn, .dots-rectangle-btn, .play-btn {
     position: absolute;
     // background-color: red;
     .btn-title {
@@ -134,7 +172,13 @@ a {
         @extend .full;
         .knot { fill: $white;}
         .line { stroke: $white; }
+        // .knot, .line {
+        //     @include simpleAnim(.6s, 0s, $easeOutExpo);        
+        // }
     }
+}
+.buy-btn {
+    position: absolute;
 }
 .dots-rectangle-btn {
     @include simpleAnim(.6s, 0s, $easeOutExpo);
@@ -165,6 +209,22 @@ a {
             // }
         }
     }
+     .spinner-wrapper {
+        $w: 80px;
+        position: absolute;
+        z-index: 2;
+        width: $w;
+        left: 50%;
+        top: 50%;
+        margin-left: -$w / 2;
+        margin-top: -$w / 2;
+        @include opacity(1);
+        @include anim(.0s, 0s, $easeInOutExpo, scale(1), 50%, 50%, transform opacity);
+        &.closed {
+            @include opacity(0);
+            @include anim(.6s, 0s, $easeInOutExpo, scale(1.1), 50%, 50%, transform opacity);
+        }
+    }
     &.campaign {
         .slideshow-title {
             font-size: 30px;
@@ -175,6 +235,7 @@ a {
         .product-title-wrapper {
             position: absolute;
             text-transform: uppercase;
+            width: 100%;
             height: $globalFontSize;
             overflow:hidden;
             margin-top: 20px;
@@ -217,10 +278,26 @@ a {
                     width: 100%;
                     height: 100%;
                 }
-                .poster-wrapper, .video-wrapper {
+                .poster-wrapper {
+                    img {
+                        @include opacity(0);
+                        @include anim(0s, 0s, $easeInOutExpo, scale(1.1), 50%, 50%, transform opacity);
+                        &.opened {
+                            @include opacity(1);
+                            @include anim(.6s, 0s, $easeInOutExpo, scale(1), 50%, 50%, transform opacity);
+                        }
+                    }
                 }
                 .video-wrapper {
-                    background-color: $white;
+                    .video-container{
+                        @extend .full;
+                        @include opacity(0);
+                        @include anim(0s, 0s, $easeInOutExpo, scale(1.1), 50%, 50%, transform opacity);
+                        &.opened {
+                            @include opacity(1);
+                            @include anim(.6s, 0s, $easeInOutExpo, scale(1), 50%, 50%, transform opacity);
+                        }
+                    }
                 }
             }
         }

@@ -89,6 +89,17 @@ class Utils {
 		div.style.oTransform      = style
 		div.style.transform       = style
     }
+    static Translate(div, x, y, z) {
+    	Utils.Style(div, 'translate3d('+x+'px,'+y+'px,'+z+'px)')
+    }
+    static UUID() {
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000)
+				.toString(16)
+				.substring(1);
+		}
+		return s4() + s4();
+	}
     static SpringTo(item, toX, toY, index, spring, friction, springLength) {
     	var dx = toX - item.x
     	var dy = toY - item.y

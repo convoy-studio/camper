@@ -4,9 +4,10 @@ import Utils from 'Utils'
 import AppStore from 'AppStore'
 
 export default class RectangleBtn {
-	constructor(element, titleTxt) {
+	constructor(element, titleTxt, rectW) {
 		this.element = element
 		this.titleTxt = titleTxt
+		this.rectW = rectW
 	}
 	componentDidMount() {
 		this.tlOver = AppStore.getTimeline()
@@ -20,11 +21,11 @@ export default class RectangleBtn {
 		var paddingX = 24
 		var paddingY = 20
 		this.lineSize = AppStore.getLineWidth()
-		titleEl.text(this.titleTxt)
+		if(this.titleTxt != undefined) titleEl.text(this.titleTxt)
 
 		setTimeout(()=>{
 
-			var titleW = titleEl.width()
+			var titleW = this.rectW
 			var titleH = AppConstants.GLOBAL_FONT_SIZE
 
 			for (var i = 0; i < knotsEl.length; i++) {
@@ -95,10 +96,10 @@ export default class RectangleBtn {
 			this.tlOver.to(knotsEl[1], 1, { x:3, y:-3, force3D:true, ease:Elastic.easeOut }, 0)
 			this.tlOver.to(knotsEl[2], 1, { x:-3, y:3, force3D:true, ease:Elastic.easeOut }, 0)
 			this.tlOver.to(knotsEl[3], 1, { x:3, y:3, force3D:true, ease:Elastic.easeOut }, 0)
-			this.tlOver.to(linesEl[0], 1, { scaleX:1.1, y:-3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-			this.tlOver.to(linesEl[1], 1, { scaleY:1.1, x:3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-			this.tlOver.to(linesEl[2], 1, { scaleX:1.1, y:3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-			this.tlOver.to(linesEl[3], 1, { scaleY:1.1, x:-3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+			this.tlOver.to(linesEl[0], 1, { scaleX:1.05, y:-3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+			this.tlOver.to(linesEl[1], 1, { scaleY:1.05, x:3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+			this.tlOver.to(linesEl[2], 1, { scaleX:1.05, y:3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+			this.tlOver.to(linesEl[3], 1, { scaleY:1.05, x:-3, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
 
 			this.tlOut.to(knotsEl[0], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
 			this.tlOut.to(knotsEl[1], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
@@ -112,38 +113,36 @@ export default class RectangleBtn {
 			this.tlOver.pause(0)
 			this.tlOut.pause(0)
 
-			this.rollover = this.rollover.bind(this)
-			this.rollout = this.rollout.bind(this)
-			this.click = this.click.bind(this)
-			this.element.on('mouseenter', this.rollover)
-			this.element.on('mouseleave', this.rollout)
-			this.element.on('click', this.click)
+			// this.rollover = this.rollover.bind(this)
+			// this.rollout = this.rollout.bind(this)
+			// this.click = this.click.bind(this)
+			// this.element.on('mouseenter', this.rollover)
+			// this.element.on('mouseleave', this.rollout)
+			// this.element.on('click', this.click)
 		}, 0)
 	}
 	position(x, y) {
-		TweenMax.set(this.element, { x: x, y: y, force3D: true })
+		Utils.Translate(this.element.get(0), x, y, 0)
 		this.x = x
 		this.y = y
 	}
 	click(e) {
 		e.preventDefault()
-		this.btnClicked()
+		if(this.btnClicked != undefined) this.btnClicked()
 	}
-	rollout(e) {
-		e.preventDefault()
+	rollout() {
 		this.tlOver.kill()
 		this.tlOut.play(0)
 	}
-	rollover(e) {
-		e.preventDefault()
+	rollover() {
 		this.tlOut.kill()
 		this.tlOver.play(0)
 	}
 	componentWillUnmount() {
 		AppStore.releaseTimeline(this.tlOver)
 		AppStore.releaseTimeline(this.tlOut)
-		this.element.off('mouseenter', this.rollover)
-		this.element.off('mouseleave', this.rollout)
-		this.element.off('click', this.click)
+		// this.element.off('mouseenter', this.rollover)
+		// this.element.off('mouseleave', this.rollout)
+		// this.element.off('click', this.click)
 	}
 }

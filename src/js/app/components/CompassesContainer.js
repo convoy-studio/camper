@@ -61,7 +61,15 @@ export default class CompassesContainer {
 	}
 	updateCompassProduct() {
 		var planetData = AppStore.productsDataById(this.id)
-		var productData = [planetData[this.currentIndex]]
+		var productData = planetData
+		for (var i = 0; i < productData.length; i++) {
+			var product = productData[i]
+			if(this.currentIndex == i) {
+				product.highlight = true
+			}else{
+				product.highlight = false
+			}
+		};
 		this.mainCompass.updateData(productData)
 	}
 	changeData(newId) {

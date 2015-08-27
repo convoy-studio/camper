@@ -122,10 +122,10 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return _getGeneralInfos()
     },
     getEmptyImgUrl: function() {
-        return AppStore.getEnvironment().static + '/image/empty.png'
+        return AppStore.getEnvironment().static + 'image/empty.png'
     },
     mainImageUrl: function(id, responsiveArray) {
-        return AppStore.baseMediaPath() + '/image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
+        return AppStore.baseMediaPath() + 'image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
     },
     baseMediaPath: function() {
         return AppStore.getEnvironment().static
@@ -177,6 +177,14 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         var scale = (responsiveWidth / baseW) * 1
         var responsiveHeight = baseH * scale
         return [ responsiveWidth, responsiveHeight ]
+    },
+    responsivePosterImage: function() {
+        var responsiveW = AppStore.responsiveImageWidth(AppConstants.RESPONSIVE_IMAGE)
+        switch(responsiveW) {
+            case AppConstants.RESPONSIVE_IMAGE[0]: return "L"
+            case AppConstants.RESPONSIVE_IMAGE[1]: return "M"
+            case AppConstants.RESPONSIVE_IMAGE[2]: return "S"
+        }
     },
     planets: function() {
         return data.planets
