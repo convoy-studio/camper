@@ -12,7 +12,7 @@ export default class Page extends BasePage {
 	componentDidMount() {
 
 		if(AppStore.Detector.isMobile) {
-			this.child.css('position', 'relative')
+			this.child.css('position', 'absolute')
 			$('html').css('overflow-y', 'auto')
 		}
 

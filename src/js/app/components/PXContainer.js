@@ -10,30 +10,32 @@ export default class PXContainer {
 		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
 		AppStore.on(AppConstants.PAGE_HASHER_INTERNAL_CHANGE, this.didHasherChange)
 
-		if(AppStore.Detector.isMobile) this.renderer = new PIXI.CanvasRenderer(1, 1, { antialias: true })
-		else this.renderer = new PIXI.autoDetectRenderer(1, 1, { antialias: true })
-		this.oldColor = "0xffffff"
-		this.newColor = "0xffffff"
-
-		this.colorTween = {color:this.oldColor}
-
-		var el = $(elementId)
-		$(this.renderer.view).attr('id', 'px-container')
-		el.append(this.renderer.view)
-
-
-		this.stage = new PIXI.Container()
+		if(AppStore.Detector.isMobile) {
+		} else {
+			this.renderer = new PIXI.autoDetectRenderer(1, 1, { antialias: true })
+			this.oldColor = "0xffffff"
+			this.newColor = "0xffffff"
+			this.colorTween = {color:this.oldColor}
+			var el = $(elementId)
+			$(this.renderer.view).attr('id', 'px-container')
+			el.append(this.renderer.view)
+			this.stage = new PIXI.Container()
+		}
 	}
 	add(child) {
+		if(AppStore.Detector.isMobile) return
 		this.stage.addChild(child)
 	}
 	remove(child) {
+		if(AppStore.Detector.isMobile) return
 		this.stage.removeChild(child)
 	}
 	update() {
+		if(AppStore.Detector.isMobile) return
 	    this.renderer.render(this.stage)
 	}
 	resize() {
+		if(AppStore.Detector.isMobile) return
 		var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
@@ -49,6 +51,13 @@ export default class PXContainer {
 		// if(palette != undefined) TweenMax.to(this.colorTween, 1, { colorProps: {color:this.newColor}, onUpdate: ()=>{
 		// 	console.log(this.colorTween.color)
 		// }})
-		if(palette != undefined) this.renderer.backgroundColor = palette[0]
+		if(AppStore.Detector.isMobile) {
+			if(palette != undefined) {
+				var c = palette[0]
+				$('html').css('background-color', c.replace('0x', '#'))
+			}
+		}else{
+			if(palette != undefined) this.renderer.backgroundColor = palette[0]
+		}
 	}
 }

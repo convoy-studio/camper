@@ -1,11 +1,16 @@
 <div class='page-wrapper'>
 	
-	<div id="scrollbar-view">
-		<div class="relative">
-			<div class="scroll-grab btn"></div>
-			<div class="scroll-bg btn"></div>
+	{{#if isMobile}}
+
+	{{else}}
+		<div id="scrollbar-view">
+			<div class="relative">
+				<div class="scroll-grab btn"></div>
+				<div class="scroll-bg btn"></div>
+			</div>
 		</div>
-	</div>
+	{{/if}}
+
 
 
 	<div class="interface absolute">

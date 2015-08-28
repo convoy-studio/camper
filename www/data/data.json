@@ -232,9 +232,9 @@
 				"color": "0xf4ecda",
 				"video-id": "8fbp0pbww8",
 				"knots": [
-					{"x":0.3, "y":0.1},
-					{"x":0.6, "y":0.4},
-					{"x":0.6, "y":0.6}
+					{"x":-0.1, "y":0.1},
+					{"x":-0.2, "y":0.4},
+					{"x":0.3, "y":0.5}
 				]
 			}
 		],
@@ -381,22 +381,16 @@
 				}
 			},
 			"landing": {
-				"main-title": "landing page"
 			},
 			"ski": {
-				"main-title": "ski page"
 			},
 			"metal": {
-				"main-title": "metal page"
 			},
 			"alaska": {
-				"main-title": "alaska page"
 			},
 			"wood": {
-				"main-title": "wood page"
 			},
 			"gemstone": {
-				"main-title": "gemstone page"
 			}
 		},
 		"fr": {
@@ -417,22 +411,16 @@
 				}
 			},
 			"landing": {
-				"main-title": "landing page fr"
 			},
 			"ski": {
-				"main-title": "ski page fr"
 			},
 			"metal": {
-				"main-title": "metal page fr"
 			},
 			"alaska": {
-				"main-title": "alaska page fr"
 			},
 			"wood": {
-				"main-title": "wood page fr"
 			},
 			"gemstone": {
-				"main-title": "gemstone page fr"
 			}
 		},
 		"es": {
@@ -453,22 +441,16 @@
 				}
 			},
 			"landing": {
-				"main-title": "landing page es"
 			},
 			"ski": {
-				"main-title": "ski page es"
 			},
 			"metal": {
-				"main-title": "metal page es"
 			},
 			"alaska": {
-				"main-title": "alaska page es"
 			},
 			"wood": {
-				"main-title": "wood page es"
 			},
 			"gemstone": {
-				"main-title": "gemstone page es"
 			}
 		},
 		"it": {
@@ -489,22 +471,16 @@
 				}
 			},
 			"landing": {
-				"main-title": "landing page it"
 			},
 			"ski": {
-				"main-title": "ski page it"
 			},
 			"metal": {
-				"main-title": "metal page it"
 			},
 			"alaska": {
-				"main-title": "alaska page it"
 			},
 			"wood": {
-				"main-title": "wood page it"
 			},
 			"gemstone": {
-				"main-title": "gemstone page it"
 			}
 		},
 		"de": {
@@ -525,22 +501,16 @@
 				}
 			},
 			"landing": {
-				"main-title": "landing page ge"
 			},
 			"ski": {
-				"main-title": "ski page ge"
 			},
 			"metal": {
-				"main-title": "metal page ge"
 			},
 			"alaska": {
-				"main-title": "alaska page ge"
 			},
 			"wood": {
-				"main-title": "wood page ge"
 			},
 			"gemstone": {
-				"main-title": "gemstone page ge"
 			}
 		},
 		"pt": {
@@ -561,22 +531,16 @@
 				}
 			},
 			"landing": {
-				"main-title": "landing page pt"
 			},
 			"ski": {
-				"main-title": "ski page pt"
 			},
 			"metal": {
-				"main-title": "metal page pt"
 			},
 			"alaska": {
-				"main-title": "alaska page pt"
 			},
 			"wood": {
-				"main-title": "wood page pt"
 			},
 			"gemstone": {
-				"main-title": "gemstone page pt"
 			}
 		}
 	},
