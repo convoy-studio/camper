@@ -1,38 +1,58 @@
 <div class='page-wrapper'>
-	<div class="slideshow-title">
-		<div class="planet-title"></div>
-		<div class="planet-name"></div>
-	</div>
-	<div class="interface">
 
-		<div id="left" class="previous-area area-btn"></div>
-		<div id="right" class="next-area area-btn"></div>
+	{{#if isMobile}}
+	
+		<ul class='planets-menu'>
+			{{#each mobileScope}}
+				<li id='{{id}}'>
+					<a href='{{url}}'>
+						<div class="img-wrapper">
+							<img src="{{imgsrc}}" alt="{{id}}">
+						</div>
+					</a>
+				</li>
+			{{/each}}
+		</ul>
 
-		<div class="previous-btn dots-arrow-btn">
-			<svg>
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line"/>
-				<line class="line"/>
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line" />
-				<line class="line" />
-			</svg>
+	{{else}}
+
+		<div class="slideshow-title">
+			<div class="planet-title"></div>
+			<div class="planet-name"></div>
 		</div>
-		<div class="next-btn dots-arrow-btn">
-			<svg>
-				<circle class="knot" />
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line"/>
-				<line class="line"/>
-				<circle class="knot" />
-				<circle class="knot" />
-				<line class="line" />
-				<line class="line" />
-			</svg>
+		<div class="interface">
+
+			<div id="left" class="previous-area area-btn"></div>
+			<div id="right" class="next-area area-btn"></div>
+
+			<div class="previous-btn dots-arrow-btn">
+				<svg>
+					<circle class="knot" />
+					<circle class="knot" />
+					<circle class="knot" />
+					<line class="line"/>
+					<line class="line"/>
+					<circle class="knot" />
+					<circle class="knot" />
+					<line class="line" />
+					<line class="line" />
+				</svg>
+			</div>
+			<div class="next-btn dots-arrow-btn">
+				<svg>
+					<circle class="knot" />
+					<circle class="knot" />
+					<circle class="knot" />
+					<line class="line"/>
+					<line class="line"/>
+					<circle class="knot" />
+					<circle class="knot" />
+					<line class="line" />
+					<line class="line" />
+				</svg>
+			</div>
 		</div>
-	</div>
+
+	{{/if}}
+
 </div>

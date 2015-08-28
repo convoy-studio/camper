@@ -11,6 +11,11 @@ export default class Page extends BasePage {
 	}
 	componentDidMount() {
 
+		if(AppStore.Detector.isMobile) {
+			this.child.css('position', 'relative')
+			$('html').css('overflow-y', 'auto')
+		}
+
 		if(this.props.type == AppConstants.LANDING) this.parent.css('cursor', 'pointer')
 		else this.parent.css('cursor', 'auto')
 

@@ -14,6 +14,17 @@ class FrontContainer extends BaseComponent {
 		scope.facebookUrl = generaInfos['facebook_url']
 		scope.twitterUrl = generaInfos['twitter_url']
 		scope.instagramUrl = generaInfos['instagram_url']
+		scope.isMobile = AppStore.Detector.isMobile
+
+		if(scope.isMobile) {
+			scope.mobileMenu = [
+				{ id:'home', name:scope.infos['home_txt'], url:'#!/landing' },
+				{ id:'shop-men', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_men'], url:scope.infos['shop_men_url'] },
+				{ id:'shop-women', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_women'], url:scope.infos['shop_women_url'] },
+				{ id:'lab', name:scope.infos['camper_lab'], url:scope.infos['camper_lab_url'] },
+				{ id:'legal', name:scope.infos['legal'], url:scope.infos['legal_url'] },
+			]
+		}
 
 		var countries = AppStore.countries()
 		var lang = AppStore.lang()
@@ -39,6 +50,18 @@ class FrontContainer extends BaseComponent {
 	}
 	componentDidMount() {
 		super.componentDidMount()
+
+		if(AppStore.Detector.isMobile) {
+			this.mobile = {
+				menuIsOpened: false,
+				el: this.child.find('.mobile-menu'),
+				burger: this.child.find('.burger'),
+				slidemenu: this.child.find('.menu-slider'),
+				mainMenu: this.child.find('ul.main-menu'),
+				socialMenu: this.child.find('ul.social-menu')
+			}
+		}
+
 		this.$socialWrapper = this.child.find('#social-wrapper')
 		this.$socialTitle = this.$socialWrapper.find('.social-title')
 		this.$socialIconsContainer = this.$socialWrapper.find('ul')
@@ -71,6 +94,34 @@ class FrontContainer extends BaseComponent {
 
 		this.resize()
 		this.$lang.css('height', this.countriesTitleH)
+
+		if(AppStore.Detector.isMobile) {
+			this.initMobile()
+		}
+	}
+	initMobile() {
+		this.onBurgerClicked = this.onBurgerClicked.bind(this)
+		this.mobile.burger.on('click', this.onBurgerClicked)
+
+		this.mobile.tl = new TimelineMax()
+		this.mobile.tl.from(this.mobile.slidemenu, 0.6, { scale:1.1, opacity:0, ease:Expo.easeInOut }, 0)
+		this.mobile.tl.pause(0)
+	}
+	onBurgerClicked(e) {
+		e.preventDefault()
+		if(this.mobile.menuIsOpened) {
+			clearTimeout(this.mobile.slideTimeout)
+			this.mobile.slideTimeout = setTimeout(()=>{
+				this.mobile.slidemenu.css('top', -3000)
+			}, 900)
+			this.mobile.tl.timeScale(1.4).reverse()
+			this.mobile.menuIsOpened = false
+		}else{
+			this.mobile.slidemenu.css('top', 0)
+			this.resizeMobile()
+			this.mobile.tl.timeScale(1).play()
+			this.mobile.menuIsOpened = true
+		}
 	}
 	onSocialMouseEnter(e) {
 		e.preventDefault()
@@ -140,6 +191,36 @@ class FrontContainer extends BaseComponent {
 		this.$lang.css(langCss)
 		this.$socialIconsContainer.css(socialIconsCss)
 		this.$home.css(homeCss)
+
+		if(AppStore.Detector.isMobile) {
+			this.resizeMobile()
+		}
+	}
+	resizeMobile() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		var burgerCss = {
+			left: windowW - this.mobile.burger.width() - AppConstants.PADDING_AROUND,
+			top: AppConstants.PADDING_AROUND
+		}
+		var slidemenuCss = {
+			width: windowW,
+			height: windowH
+		}
+		var mainMenuW = this.mobile.mainMenu.width()
+		var mainMenuH = this.mobile.mainMenu.height()
+		var mainMenuCss = {
+			top: (windowH >> 1) - (mainMenuH >> 1) - (mainMenuH * 0.1),
+			left: (windowW >> 1) - (mainMenuW >> 1)
+		}
+		var socialMenuCss = {
+			top: mainMenuCss.top + mainMenuH + 10,
+			left: (windowW >> 1) - (this.mobile.socialMenu.width() >> 1)
+		}
+		this.mobile.slidemenu.css(slidemenuCss)
+		this.mobile.burger.css(burgerCss)
+		this.mobile.mainMenu.css(mainMenuCss)
+		this.mobile.socialMenu.css(socialMenuCss)
 	}
 	componentWillUnmount() {
 		super.componentWillUnmount()

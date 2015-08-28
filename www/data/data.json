@@ -24,7 +24,8 @@
 				"shop_women_url": "http://google.com",
 				"planet": "planet",
 				"buy_title": "buy",
-				"campaign_title": "see campaign"
+				"campaign_title": "see campaign",
+				"home_txt": "HOME"
 			},
 			"fr": {
 				"countries": {
@@ -46,7 +47,8 @@
 				"shop_women_url": "http://google.com",
 				"planet": "planet",
 				"buy_title": "buy",
-				"campaign_title": "see campaign"
+				"campaign_title": "see campaign",
+				"home_txt": "HOME"
 			},
 			"es": {
 				"countries": {
@@ -68,7 +70,8 @@
 				"shop_women_url": "http://google.com",
 				"planet": "planet",
 				"buy_title": "buy",
-				"campaign_title": "see campaign"
+				"campaign_title": "see campaign",
+				"home_txt": "HOME"
 			},
 			"it": {
 				"countries": {
@@ -90,7 +93,8 @@
 				"shop_women_url": "http://google.com",
 				"planet": "planet",
 				"buy_title": "buy",
-				"campaign_title": "see campaign"
+				"campaign_title": "see campaign",
+				"home_txt": "HOME"
 			},
 			"de": {
 				"countries": {
@@ -112,7 +116,8 @@
 				"shop_women_url": "http://google.com",
 				"planet": "planet",
 				"buy_title": "buy",
-				"campaign_title": "see campaign"
+				"campaign_title": "see campaign",
+				"home_txt": "HOME"
 			},
 			"pt": {
 				"countries": {
@@ -134,7 +139,8 @@
 				"shop_women_url": "http://google.com",
 				"planet": "planet",
 				"buy_title": "buy",
-				"campaign_title": "see campaign"
+				"campaign_title": "see campaign",
+				"home_txt": "HOME"
 			}
 		}
 	},
@@ -572,7 +578,7 @@
 			"gemstone": {
 				"main-title": "gemstone page pt"
 			}
-		},
+		}
 	},
 
 	"default-route": "/landing",

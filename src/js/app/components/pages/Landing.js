@@ -8,38 +8,62 @@ import Router from 'Router'
 
 export default class Landing extends Page {
 	constructor(props) {
+		props.data.isMobile = AppStore.Detector.isMobile
+		if(props.data.isMobile) {
+			var mobileScope = []
+			var planets = AppStore.planets()
+			var infos = AppStore.generalInfosLangScope()
+			for (var i = 0; i < planets.length; i++) {
+				var planet = planets[i]
+				var g = {
+					id: planet,
+					planetTxt: infos.planet.toUpperCase(),
+					planetName: planet.toUpperCase(),
+					imgsrc: AppStore.mainImageUrl(planet, AppConstants.RESPONSIVE_IMAGE),
+					url: "#!/planet/" + planet + '/0'
+				}
+				mobileScope[i] = g
+			};
+			props.data.mobileScope = mobileScope
+		}
+
 		super(props)
 	}
 	componentDidMount() {
-		this.landingSlideshow = new LandingSlideshow(this.pxContainer, this.child)
-		this.landingSlideshow.componentDidMount()
 
-		this.compass = new Compass(this.pxContainer)
-		this.compass.componentDidMount()
+		if(AppStore.Detector.isMobile != true) {
 
-		this.arrowLeft = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
-		this.arrowLeft.componentDidMount()
-		this.arrowRight = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
-		this.arrowRight.componentDidMount()
+			this.landingSlideshow = new LandingSlideshow(this.pxContainer, this.child)
+			this.landingSlideshow.componentDidMount()
 
-		this.onKeyPressed = this.onKeyPressed.bind(this)
-		$(document).on('keydown', this.onKeyPressed)
+			this.compass = new Compass(this.pxContainer)
+			this.compass.componentDidMount()
 
-		this.onStageClicked = this.onStageClicked.bind(this)
-		this.parent.on('click', this.onStageClicked)
+			this.arrowLeft = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
+			this.arrowLeft.componentDidMount()
+			this.arrowRight = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
+			this.arrowRight.componentDidMount()
 
-		this.arrowClicked = this.arrowClicked.bind(this)
-		this.arrowMouseEnter = this.arrowMouseEnter.bind(this)
-		this.arrowMouseLeave = this.arrowMouseLeave.bind(this)
+			this.onKeyPressed = this.onKeyPressed.bind(this)
+			$(document).on('keydown', this.onKeyPressed)
 
-		this.previousArea = this.child.find('.interface .previous-area')
-		this.nextArea = this.child.find('.interface .next-area')
-		this.previousArea.on('click', this.arrowClicked)
-		this.nextArea.on('click', this.arrowClicked)
-		this.previousArea.on('mouseenter', this.arrowMouseEnter)
-		this.nextArea.on('mouseenter', this.arrowMouseEnter)
-		this.previousArea.on('mouseleave', this.arrowMouseLeave)
-		this.nextArea.on('mouseleave', this.arrowMouseLeave)
+			this.onStageClicked = this.onStageClicked.bind(this)
+			this.parent.on('click', this.onStageClicked)
+
+			this.arrowClicked = this.arrowClicked.bind(this)
+			this.arrowMouseEnter = this.arrowMouseEnter.bind(this)
+			this.arrowMouseLeave = this.arrowMouseLeave.bind(this)
+
+			this.previousArea = this.child.find('.interface .previous-area')
+			this.nextArea = this.child.find('.interface .next-area')
+			this.previousArea.on('click', this.arrowClicked)
+			this.nextArea.on('click', this.arrowClicked)
+			this.previousArea.on('mouseenter', this.arrowMouseEnter)
+			this.nextArea.on('mouseenter', this.arrowMouseEnter)
+			this.previousArea.on('mouseleave', this.arrowMouseLeave)
+			this.nextArea.on('mouseleave', this.arrowMouseLeave)
+
+		}
 
 		super.componentDidMount()
 	}
@@ -108,6 +132,9 @@ export default class Landing extends Page {
 	    }
 	}
 	updateCompassPlanet() {
+
+		if(AppStore.Detector.isMobile) return 
+		
 		var planetData = AppStore.productsDataById(this.landingSlideshow.currentId)
 		this.compass.updateData(planetData)
 	}
@@ -127,6 +154,9 @@ export default class Landing extends Page {
 		this.updateCompassPlanet()
 	}
 	update() {
+		
+		if(AppStore.Detector.isMobile) return 
+
 		var windowW = AppStore.Window.w
 		var mouseX = AppStore.Mouse.x
 		this.landingSlideshow.update()
@@ -140,6 +170,10 @@ export default class Landing extends Page {
 		super.update()
 	}
 	resize() {
+		super.resize()
+
+		if(AppStore.Detector.isMobile) return 
+
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.landingSlideshow.resize()
@@ -165,9 +199,12 @@ export default class Landing extends Page {
 			height: windowH,
 			left: windowW - (windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE)
 		})
-		super.resize()
 	}
 	componentWillUnmount() {
+		super.componentWillUnmount()
+
+		if(AppStore.Detector.isMobile) return 
+
 		this.landingSlideshow.componentWillUnmount()
 		this.compass.componentWillUnmount()
 		this.arrowLeft.componentWillUnmount()
@@ -181,8 +218,6 @@ export default class Landing extends Page {
 		this.nextArea.off('mouseenter', this.arrowMouseEnter)
 		this.previousArea.off('mouseleave', this.arrowMouseLeave)
 		this.nextArea.off('mouseleave', this.arrowMouseLeave)
-
-		super.componentWillUnmount()
 	}
 }
 

@@ -18,6 +18,7 @@ class App {
 		}
 
 		AppStore.Detector.isMobile = mobilecheck()
+		AppStore.Detector.isMobile = true
 		// console.log(AppStore.Detector)
 
 		// Init Preloader

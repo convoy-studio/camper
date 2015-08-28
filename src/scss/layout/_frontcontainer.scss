@@ -7,18 +7,68 @@
 		color: $white;
 		white-space: nowrap;
 	}
-	header {
-		& > * {
-			position: absolute;
-		}
-		.logo {
-			$w: 140px;
+	#mobile-menu {
+		position: relative;
+		.burger {
+			z-index: 99999;
+			$w: 44px;
 			width: $w;
-			left: $PADDING_AROUND;
-			top: $PADDING_AROUND;
+			position: absolute;
 			svg > * {
 				fill: $white;
 			}
+		}
+		.logo {
+			z-index: 99999;
+		}
+		.menu-slider {
+			background-color: rgba(0, 0, 0, 0.8);
+			text-align: center;
+			position: absolute;
+			top: -3000px;
+			.main-menu {
+				position: relative;
+				li {
+					padding: 10px 0;
+					a {
+						font-size: $globalFontSize * 1.2;	
+					}
+				}
+			}
+			.social-menu {
+				position: absolute;
+				li {
+					$w: 34px;
+					width: $w;
+					height: $w;
+					margin: 16px 0;
+					@include inline-block;
+					&:last-child {
+						margin-bottom: 0;
+					}
+					svg > * {
+						fill: $white;
+					}
+				}
+			}
+		}
+	}
+	.logo {
+		position: absolute;
+		$w: 140px;
+		width: $w;
+		@include screen(0px, $MQ_MEDIUM) {
+	        width: $w * 0.8;
+	    }
+		left: $PADDING_AROUND;
+		top: $PADDING_AROUND;
+		svg > * {
+			fill: $white;
+		}
+	}
+	header {
+		& > * {
+			position: absolute;
 		}
 		.shop-wrapper {
 			& > div {
@@ -60,7 +110,6 @@
 			position: absolute;
 		}
 		#social-wrapper{
-			background-color: red;
 			& > * {
 				position: absolute;
 			}

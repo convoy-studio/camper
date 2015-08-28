@@ -10,8 +10,8 @@ export default class PXContainer {
 		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
 		AppStore.on(AppConstants.PAGE_HASHER_INTERNAL_CHANGE, this.didHasherChange)
 
-		// this.renderer = new PIXI.CanvasRenderer(800, 600)
-		this.renderer = new PIXI.autoDetectRenderer(800, 600, { antialias: true })
+		if(AppStore.Detector.isMobile) this.renderer = new PIXI.CanvasRenderer(1, 1, { antialias: true })
+		else this.renderer = new PIXI.autoDetectRenderer(1, 1, { antialias: true })
 		this.oldColor = "0xffffff"
 		this.newColor = "0xffffff"
 
@@ -20,6 +20,7 @@ export default class PXContainer {
 		var el = $(elementId)
 		$(this.renderer.view).attr('id', 'px-container')
 		el.append(this.renderer.view)
+
 
 		this.stage = new PIXI.Container()
 	}
@@ -33,9 +34,10 @@ export default class PXContainer {
 	    this.renderer.render(this.stage)
 	}
 	resize() {
+		var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
-		this.renderer.resize(windowW, windowH)
+		this.renderer.resize(windowW * scale, windowH * scale)
 	}
 	didHasherChange() {
 		var pageId = AppStore.getPageId()
