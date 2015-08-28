@@ -26,23 +26,6 @@ class FrontContainer extends BaseComponent {
 			]
 		}
 
-		var countries = AppStore.countries()
-		var lang = AppStore.lang()
-		var currentLang;
-		var restCountries = []
-		var fullnameCountries = scope.infos.countries
-		for (var i = 0; i < countries.length; i++) {
-			var country = countries[i]
-			if(country.lang == lang) {
-				currentLang = fullnameCountries[country.id]
-			}else{
-				country.name = fullnameCountries[country.id]
-				restCountries.push(country)
-			}
-		}
-		scope.countries = restCountries
-		scope.current_lang = currentLang
-
 		super.render('FrontContainer', parent, template, scope)
 	}
 	componentWillMount() {
@@ -69,16 +52,11 @@ class FrontContainer extends BaseComponent {
 		this.$legal = this.child.find('.legal')
 		this.$camperLab = this.child.find('.camper-lab')
 		this.$shop = this.child.find('.shop-wrapper')
-		this.$lang = this.child.find(".lang-wrapper")
-		this.$langCurrentTitle = this.$lang.find(".current-lang")
-		this.$countries = this.$lang.find(".submenu-wrapper")
 		this.$home = this.child.find('.home-btn')
 		this.countriesH = 0
 
 		this.onSubMenuMouseEnter = this.onSubMenuMouseEnter.bind(this)
 		this.onSubMenuMouseLeave = this.onSubMenuMouseLeave.bind(this)
-		this.$lang.on('mouseenter', this.onSubMenuMouseEnter)
-		this.$lang.on('mouseleave', this.onSubMenuMouseLeave)
 		this.$shop.on('mouseenter', this.onSubMenuMouseEnter)
 		this.$shop.on('mouseleave', this.onSubMenuMouseLeave)
 
@@ -93,7 +71,6 @@ class FrontContainer extends BaseComponent {
 		this.socialTl.pause(0)
 
 		this.resize()
-		this.$lang.css('height', this.countriesTitleH)
 
 		if(AppStore.Detector.isMobile) {
 			this.initMobile()
@@ -139,21 +116,19 @@ class FrontContainer extends BaseComponent {
 		e.preventDefault()
 		var $target = $(e.currentTarget)
 		$target.addClass('hovered')
-		$target.css('height', this.countriesH + this.countriesTitleH)
 	}
 	onSubMenuMouseLeave(e) {
 		e.preventDefault()
 		var $target = $(e.currentTarget)
 		$target.removeClass('hovered')
-		$target.css('height', this.countriesTitleH)
 	}
 	resize() {
 		if(!this.domIsReady) return
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		this.countriesH = this.$countries.height() + 20
-		this.countriesTitleH = this.$langCurrentTitle.height()
+		this.countriesH = 60
+		this.countriesTitleH = 20
 
 		var socialCss = {
 			left: windowW - AppConstants.PADDING_AROUND - this.$socialTitle.width(),
@@ -175,12 +150,8 @@ class FrontContainer extends BaseComponent {
 			left: camperLabCss.left - this.$shop.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
-		var langCss = {
-			left: shopCss.left - this.$langCurrentTitle.width() - (AppConstants.PADDING_AROUND),
-			top: AppConstants.PADDING_AROUND,
-		}
 		var homeCss = {
-			left: langCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
+			left: shopCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
 
@@ -188,7 +159,6 @@ class FrontContainer extends BaseComponent {
 		this.$legal.css(legalCss)
 		this.$camperLab.css(camperLabCss)
 		this.$shop.css(shopCss)
-		this.$lang.css(langCss)
 		this.$socialIconsContainer.css(socialIconsCss)
 		this.$home.css(homeCss)
 
