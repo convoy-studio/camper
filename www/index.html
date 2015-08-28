@@ -54,9 +54,13 @@
 </div>
 <div id="temp"><div class="relative"></div></div>
 <div id="app-container"></div>
+<!-- //////////////////////////////////////////////////// -->
+<!-- if the variable of the ENV = 'PREPROD' the url of the files is relative (localhost use) -->
+<!-- if you want the files have as base of the url your JS_url_static then you do ENV = 'PROD', so it will target to you static server (production use) -->
 <script type="text/javascript" language="javascript">
     var ENV = 'PREPROD';
 </script>
+<!-- /////////////////////////////////////////////////// -->
 
 <link rel="stylesheet" href="css/styles.css">
 <script src="lib/browser-polyfill.min.js"></script>

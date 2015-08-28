@@ -80,6 +80,12 @@ export default class Compass {
 		this.x = x
 		this.y = y
 	}
+	scale(x, y) {
+		this.container.scale.x = x
+		this.container.scale.y = y
+		this.scaleX = x
+		this.scaleY = y	
+	}
 	positionElement(x, y) {
 
 	}

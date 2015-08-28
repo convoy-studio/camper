@@ -21,7 +21,6 @@ export default class SpringGarden {
 			var knot = new Knot(this.container).componentDidMount()
 			this.knots[i] = knot
 		}
-
 		this.config = {
 			spring: 0,
 			friction: 0,
@@ -35,7 +34,7 @@ export default class SpringGarden {
 		this.withFill = withFill || false
 		if(this.params.highlight != undefined) {
 			this.color = this.params.highlight == false ? 0xffffff : this.color
-			this.withFill = this.params.highlight == false ? false : true
+			this.withFill = this.params.highlight
 		}
 		this.isInteractive = isInteractive || false
 		var knotsData = this.params.knots
@@ -107,6 +106,7 @@ export default class SpringGarden {
 			var knot = this.knots[i]
 			knot.clear()
 		}
+		this.withFill = false
 		this.areaPolygon.clear()
 	}
 	componentWillUnmount() {

@@ -39,7 +39,7 @@ export default {
 			static: ''
 		},
 		PROD: {
-			"static": JS_url_static
+			"static": JS_url_static + '/'
 		}
 	},
 

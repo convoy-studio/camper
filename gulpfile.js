@@ -59,12 +59,13 @@ var watch = argv._.length ? argv._[0] === 'watch' : true;
 var production = deploy
 var browserSync = require("browser-sync")
 browserSync.create('My Server')
+console.log(!production)
 var bundler = browserify({
     entries: 'src/js/Main.js',
     extensions: ['.js'],
     cache: {},
     packageCache: {},
-    fullPaths: true,
+    fullPaths: !production,
     debug: !production
 })
 

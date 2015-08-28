@@ -149,7 +149,8 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		Router.setHash(url)
 	}
 	onBuyClicked() {
-		console.log('buy')
+		// console.log('buy')
+		// window.location.href = 
 	}
 	arrowClicked(direction) {
 		if(this.animationRunning) return

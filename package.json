@@ -67,6 +67,7 @@
     "is": "^3.0.1",
     "jquery": "^1.11.3",
     "lodash": "^3.10.1",
+    "mobile-detect": "^1.2.1",
     "object-assign": "^3.0.0",
     "objectpool": "0.0.2",
     "require-globify": "^1.2.1",

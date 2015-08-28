@@ -47,25 +47,45 @@ export default class Landing extends Page {
 			this.onKeyPressed = this.onKeyPressed.bind(this)
 			$(document).on('keydown', this.onKeyPressed)
 
-			this.onStageClicked = this.onStageClicked.bind(this)
-			this.parent.on('click', this.onStageClicked)
-
 			this.arrowClicked = this.arrowClicked.bind(this)
 			this.arrowMouseEnter = this.arrowMouseEnter.bind(this)
 			this.arrowMouseLeave = this.arrowMouseLeave.bind(this)
+			this.middleAreaMouseEnter = this.middleAreaMouseEnter.bind(this)
+			this.middleAreaMouseLeave = this.middleAreaMouseLeave.bind(this)
+			this.middleAreaClick = this.middleAreaClick.bind(this)
 
 			this.previousArea = this.child.find('.interface .previous-area')
 			this.nextArea = this.child.find('.interface .next-area')
+			this.middleArea = this.child.find('.interface .middle-area')
 			this.previousArea.on('click', this.arrowClicked)
 			this.nextArea.on('click', this.arrowClicked)
 			this.previousArea.on('mouseenter', this.arrowMouseEnter)
 			this.nextArea.on('mouseenter', this.arrowMouseEnter)
+			this.middleArea.on('mouseenter', this.middleAreaMouseEnter)
 			this.previousArea.on('mouseleave', this.arrowMouseLeave)
 			this.nextArea.on('mouseleave', this.arrowMouseLeave)
+			this.middleArea.on('mouseleave', this.middleAreaMouseLeave)
 
+			this.middleArea.on('click', this.middleAreaClick)
+
+			this.tweenCompass = TweenMax.to(this.compass.container.scale, 0.6, { x:1.1, y:1.1, ease:Back.easeInOut })
+			this.tweenCompass.pause(0)
 		}
 
 		super.componentDidMount()
+	}
+	middleAreaMouseEnter(e) {
+		e.preventDefault()
+		this.tweenCompass.timeScale(1).play()
+	}
+	middleAreaMouseLeave(e) {
+		e.preventDefault()
+		this.tweenCompass.timeScale(1.4).reverse()
+	}
+	middleAreaClick(e) {
+		e.preventDefault()
+		var url = "/planet/" + this.landingSlideshow.currentId + '/0'
+		Router.setHash(url)
 	}
 	arrowClicked(e) {
 		e.preventDefault()
@@ -104,21 +124,6 @@ export default class Landing extends Page {
 				break
 		}
 	}
-	onStageClicked(e) {
-		e.preventDefault()
-		switch(this.direction) {
-			case AppConstants.LEFT:
-				this.previous()
-				break
-			case AppConstants.RIGHT:
-				this.next()
-				break
-			case AppConstants.TOP:
-				var url = "/planet/" + this.landingSlideshow.currentId + '/0'
-				Router.setHash(url)
-				break
-		}
-	}
 	onKeyPressed(e) {
 	    e.preventDefault()
 		switch(e.which) {
@@ -132,7 +137,6 @@ export default class Landing extends Page {
 	    }
 	}
 	updateCompassPlanet() {
-
 		if(AppStore.Detector.isMobile) return 
 		
 		var planetData = AppStore.productsDataById(this.landingSlideshow.currentId)
@@ -157,15 +161,15 @@ export default class Landing extends Page {
 		
 		if(AppStore.Detector.isMobile) return 
 
-		var windowW = AppStore.Window.w
-		var mouseX = AppStore.Mouse.x
+		// var windowW = AppStore.Window.w
+		// var mouseX = AppStore.Mouse.x
 		this.landingSlideshow.update()
 		this.compass.update()
-		this.direction = AppConstants.NONE
-		var area = windowW * 0.25
-		if(mouseX > ((windowW >> 1) - area) && mouseX < ((windowW >> 1) + area)) {
-			this.direction = AppConstants.TOP
-		}
+		// this.direction = AppConstants.NONE
+		// var area = windowW * 0.25
+		// if(mouseX > ((windowW >> 1) - area) && mouseX < ((windowW >> 1) + area)) {
+		// 	this.direction = AppConstants.TOP
+		// }
 
 		super.update()
 	}
@@ -199,6 +203,11 @@ export default class Landing extends Page {
 			height: windowH,
 			left: windowW - (windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE)
 		})
+		this.middleArea.css({
+			left: windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE,
+			width: windowW - ((windowW * AppConstants.LANDING_NORMAL_SLIDE_PERCENTAGE) << 1),
+			height: windowH
+		})
 	}
 	componentWillUnmount() {
 		super.componentWillUnmount()
@@ -210,7 +219,6 @@ export default class Landing extends Page {
 		this.arrowLeft.componentWillUnmount()
 		this.arrowRight.componentWillUnmount()
 		$(document).off('keydown', this.onKeyPressed)
-		this.parent.off('click', this.onStageClicked)
 
 		this.previousArea.off('click', this.arrowClicked)
 		this.nextArea.off('click', this.arrowClicked)
@@ -218,6 +226,10 @@ export default class Landing extends Page {
 		this.nextArea.off('mouseenter', this.arrowMouseEnter)
 		this.previousArea.off('mouseleave', this.arrowMouseLeave)
 		this.nextArea.off('mouseleave', this.arrowMouseLeave)
+
+		this.middleArea.off('mouseenter', this.middleAreaMouseEnter)
+		this.middleArea.off('mouseleave', this.middleAreaMouseLeave)
+		this.middleArea.off('click', this.middleAreaClick)
 	}
 }
 
