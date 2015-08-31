@@ -127,6 +127,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     mainImageUrl: function(id, responsiveArray) {
         return AppStore.baseMediaPath() + 'image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
     },
+    mainImageMapUrl: function(id, responsiveArray) {
+        return AppStore.baseMediaPath() + 'image/planets/' + id + '/main-map-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'
+    },
     baseMediaPath: function() {
         return AppStore.getEnvironment().static
     },
@@ -167,7 +170,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return (newIndex > oldIndex) ? AppConstants.RIGHT :  AppConstants.LEFT
     },
     responsiveImageWidth: function(responsiveArray) {
-        var windowW = AppStore.Window.w
+        var windowW = (AppStore.Window.w == undefined) ? window.innerWidth : AppStore.Window.w
         // var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
         var scale = 1
         return Utils.Closest(responsiveArray, windowW * scale)

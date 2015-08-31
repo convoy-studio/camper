@@ -101,7 +101,7 @@ a {
     text-decoration: none;
 }
 #scrollbar-view {
-    $scrollbarW: 12px; 
+    $scrollbarW: 14px; 
     width: $scrollbarW;
     height: 100%;
     position: fixed;
@@ -183,6 +183,48 @@ a {
 .dots-rectangle-btn {
     @include simpleAnim(.6s, 0s, $easeOutExpo);
 }
+#main-loader {
+    position: absolute;
+    @extend .full;
+    z-index: 999999;
+    .background {
+        position: absolute;
+        @extend .full;
+    }
+    .spinner-wrapper {
+        @include opacity(0);
+    }
+    .logo {
+        @include opacity(0);
+        position: absolute;
+        z-index: 2;
+        $w: 200px;
+        width: $w;
+        left: 50%;
+        top: 44%;
+        margin-top: -$w/2;
+        margin-left: -$w/2;
+        svg > * {
+            fill: $white;
+        }
+    }
+}
+.spinner-wrapper {
+    $w: 80px;
+    position: absolute;
+    z-index: 2;
+    width: $w;
+    left: 50%;
+    top: 50%;
+    margin-left: -$w / 2;
+    margin-top: -$w / 2;
+    @include opacity(1);
+    @include anim(.0s, 0s, $easeInOutExpo, scale(1), 50%, 50%, transform opacity);
+    &.closed {
+        @include opacity(0);
+        @include anim(.6s, 0s, $easeInOutExpo, scale(1.1), 50%, 50%, transform opacity);
+    }
+}
 #planet.page-wrapper {
     .compasses-texts-wrapper {
         position: absolute;
@@ -207,22 +249,6 @@ a {
             //     @include opacity(1);
             //     @include anim(.8s, 0s, $easeOutExpo, scale(1) translateZ(0), 50%, 50%, transform opacity);
             // }
-        }
-    }
-     .spinner-wrapper {
-        $w: 80px;
-        position: absolute;
-        z-index: 2;
-        width: $w;
-        left: 50%;
-        top: 50%;
-        margin-left: -$w / 2;
-        margin-top: -$w / 2;
-        @include opacity(1);
-        @include anim(.0s, 0s, $easeInOutExpo, scale(1), 50%, 50%, transform opacity);
-        &.closed {
-            @include opacity(0);
-            @include anim(.6s, 0s, $easeInOutExpo, scale(1.1), 50%, 50%, transform opacity);
         }
     }
     &.campaign {

@@ -19,7 +19,13 @@ class BaseComponent {
 		this.child = (template == undefined) ? $('<div></div>') : $(template(object))
 		if(this.child.attr('id') == undefined) this.child.attr('id', slug(childId))
 		this.child.ready(this.componentDidMount)
+
+		// setTimeout(()=>{
+		// 	this.componentDidMount()
+		// }, 0)
+
 		this.parent.append(this.child)
+		// console.log(this.parent, this.child)
 	}
 	remove() {
 		this.componentWillUnmount()

@@ -33,9 +33,13 @@ class AppTemplate extends BaseComponent {
 
 		GlobalEvents.resize()
 
+		setTimeout(()=>{
+			this.onReady()
+		}, 0)
+	}
+	onReady() {
+		this.isReady()
 		this.animate()
-
-		setTimeout(()=>{this.isReady()}, 0)
 	}
 	componentWillUnmount() {
 		super.componentWillUnmount()

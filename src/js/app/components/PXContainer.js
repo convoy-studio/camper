@@ -36,7 +36,8 @@ export default class PXContainer {
 	}
 	resize() {
 		if(AppStore.Detector.isMobile) return
-		var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
+		// var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
+		var scale = 1
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.renderer.resize(windowW * scale, windowH * scale)

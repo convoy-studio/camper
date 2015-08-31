@@ -3,6 +3,7 @@ import AppStore from 'AppStore'
 import Vec2 from 'Vec2'
 import Utils from 'Utils'
 import BezierEasing from 'bezier-easing'
+const glslify = require('glslify')
 
 export default class LandingSlideshow {
 	constructor(pxContainer, parentEl) {
@@ -11,6 +12,7 @@ export default class LandingSlideshow {
 		this.currentId = 'alaska'
 	}
 	componentDidMount() {
+		this.updateIsRunning = false
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
 	 	this.slideshowWrapper = AppStore.getContainer()
@@ -31,6 +33,8 @@ export default class LandingSlideshow {
 	 	this.planetNameTween = TweenMax.fromTo(planetName, 0.5, {scaleX:1.4, scaleY:0, opacity:0}, { scale:1, opacity:1, force3D:true, ease:Elastic.easeOut })
 	 	this.planetNameTween.pause(0)
 
+	 	var displacementFrag = glslify('./shaders/displacement.glsl')
+
 	 	var planets = AppStore.planets()
 	 	this.slides = []
 	 	for (var i = 0; i < planets.length; i++) {
@@ -44,10 +48,14 @@ export default class LandingSlideshow {
 	 			x: 0
 	 		}
 	 		var imgUrl = AppStore.mainImageUrl(id, AppConstants.RESPONSIVE_IMAGE)
+	 		var imgMapUrl = AppStore.mainImageMapUrl(id, AppConstants.RESPONSIVE_IMAGE)
 	 		var texture = PIXI.Texture.fromImage(imgUrl)
+	 		// var displacementTexture = PIXI.Texture.fromImage(imgMapUrl)
+	 		// s.displacementSprite = PIXI.Sprite.fromImage(imgMapUrl)
 	 		var sprite = AppStore.getSprite()
 	 		sprite.texture = texture
 	 		sprite.params = {}
+
 	 		this.slideshowWrapper.addChild(wrapperContainer)
 	 		wrapperContainer.addChild(sprite)
 	 		wrapperContainer.addChild(maskRect.g)
@@ -65,8 +73,9 @@ export default class LandingSlideshow {
 	 		this.slides[i] = s
 	 	}
 
-	 	this.maskEasing = BezierEasing(.21,1.47,.52,1)
+	 	this.maskEasing = BezierEasing(.84,.13,0,1.03)
 	 	this.chooseSlideToHighlight()
+	 	this.resetUpdateTimeout()
 	}
 	updateTitles(title, name) {
 		var planetTitle = this.titleContainer.planetTitle
@@ -87,6 +96,7 @@ export default class LandingSlideshow {
 		this.elementThatMovedInSlidesArray = firstElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()
+		this.resetUpdateTimeout()
 	}
 	previous() {
 		var lastElement = this.slides.pop()
@@ -94,6 +104,14 @@ export default class LandingSlideshow {
 		this.elementThatMovedInSlidesArray = lastElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()
+		this.resetUpdateTimeout()
+	}
+	resetUpdateTimeout() {
+		this.updateIsRunning = true
+		clearTimeout(this.updateTimeout)
+		this.updateTimeout = setTimeout(()=>{
+			this.updateIsRunning = false
+		}, 1400)
 	}
 	chooseSlideToHighlight() {
 		var totalLen = this.slides.length-1
@@ -131,22 +149,22 @@ export default class LandingSlideshow {
 		s.sprite.scale.y = resizeVars.scale
 		s.sprite.width = resizeVars.width
 		s.sprite.height = resizeVars.height
-		s.sprite.x = resizeVars.left
+		s.sprite.toX = resizeVars.left
 		s.sprite.y = resizeVars.top
 	}
 	update() {
+		if(this.updateIsRunning != true) return
 		var slides = this.slides
 		this.counter += 0.012
 		for (var i = 0; i < slides.length; i++) {
 			var s = slides[i]
-			s.maskRect.valueScale += (0.4 - s.maskRect.valueScale) * 0.05
+			s.maskRect.valueScale += (1 - s.maskRect.valueScale) * 0.2
 			var ease = this.maskEasing.get(s.maskRect.valueScale)
-			s.wrapperContainer.x += (s.newPosition.x - s.wrapperContainer.x) * ease
-			s.maskRect.width = s.maskRect.newW * ease
+			s.wrapperContainer.x += (s.newPosition.x - s.wrapperContainer.x) * 0.2
+			s.maskRect.width += (s.maskRect.newW - s.maskRect.width) * 0.2
 			var maskRectX = (1 - ease) * s.maskRect.newX
+			s.sprite.x += (s.sprite.toX - s.sprite.x) * 0.2
 			this.drawCenteredMaskRect(s.maskRect.g, maskRectX, 0, s.maskRect.width, s.maskRect.height)
-			s.sprite.skew.x = Math.cos(this.counter) * 0.020
-			s.sprite.skew.y = Math.sin(this.counter) * 0.020
 		}
 		this.slideshowContainer.scale.x += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
 		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
@@ -161,8 +179,8 @@ export default class LandingSlideshow {
 		this.slideshowContainer.x = (windowW >> 1)
 		this.slideshowContainer.y = (windowH >> 1)
 		this.slideshowContainer.baseY = this.slideshowContainer.y
-		this.slideshowContainer.scale.x = 1.3
-		this.slideshowContainer.scale.y = 1.3
+		this.slideshowContainer.scale.x = 1.4
+		this.slideshowContainer.scale.y = 1.4
 		this.slideshowContainer.scaleXY = 1.05
 	}
 	applyValuesToSlides() {

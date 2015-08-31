@@ -21,9 +21,6 @@ export default class Compass {
 	updateData(data) {
 		this.removePreviousSpringGardens()
 		this.springGardens = []
-		var springGardenWithFill = (this.type == AppConstants.EXPERIENCE) ? true : false
-		// var springGardenIsInteractive = (this.type == AppConstants.EXPERIENCE) ? true : false
-		var springGardenIsInteractive = false
 		for (var i = 0; i < data.length; i++) {
 			var springGarden = AppStore.getSpringGarden()
 			var product = data[i]
@@ -31,7 +28,7 @@ export default class Compass {
 			springGarden.id = this.id
 			springGarden.radius = this.radius
 			springGarden.knotRadius = this.knotRadius
-			springGarden.componentDidMount(product, springGardenWithFill, springGardenIsInteractive, this.type)
+			springGarden.componentDidMount(product, this.type)
 			this.container.addChild(springGarden.container)
 			this.springGardens[i] = springGarden
 		}

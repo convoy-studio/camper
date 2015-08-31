@@ -27,28 +27,15 @@ export default class SpringGarden {
 			springLength: 0
 		}
 	}
-	componentDidMount(data, withFill, isInteractive, type) {
+	componentDidMount(data, type) {
 		this.params = data
 		type = type || AppConstants.LANDING
 		this.color = (type == AppConstants.LANDING) || this.params.highlight == false ? 0xffffff : this.params.color
-		this.withFill = withFill || false
-		if(this.params.highlight != undefined) {
+		this.color = this.params.color
+		if(this.params.highlight != undefined && type != AppConstants.LANDING) {
 			this.color = this.params.highlight == false ? 0xffffff : this.color
-			this.withFill = this.params.highlight
 		}
-		this.isInteractive = isInteractive || false
 		var knotsData = this.params.knots
-
-		this.onClicked = this.onClicked.bind(this)
-		if(this.isInteractive) {
-			this.areaPolygonContainer.buttonMode = true
-			this.areaPolygonContainer.interactive = true
-			this.areaPolygonContainer.on('click', this.onClicked)
-		}else{
-			this.areaPolygonContainer.buttonMode = false
-			this.areaPolygonContainer.interactive = false
-		}
-
 		for (var i = 0; i < this.knots.length; i++) {
 			var newKnotScale = knotsData[i]
 			var knot = this.knots[i]
@@ -60,19 +47,9 @@ export default class SpringGarden {
 		this.config.springLength = 200
 		this.assignOpenedConfig()
 	}
-	onClicked() {
-		var url = "/planet/" + this.id + '/' + this.params.id
-		Router.setHash(url)
-	}
 	update() {
 		this.areaPolygon.clear()
-		if(this.withFill) {
-			this.areaPolygon.beginFill(this.color)
-			this.areaPolygon.lineStyle(0)
-			this.areaPolygon.moveTo(this.knots[0].x, this.knots[0].y)
-		}else{
-			this.areaPolygon.lineStyle(this.lineW, this.color, 0.8)
-		}
+		this.areaPolygon.lineStyle(this.lineW, this.color, 0.8)
 		var len = this.knots.length
 		var spring = this.config.spring
 		var friction = this.config.friction
@@ -84,15 +61,8 @@ export default class SpringGarden {
 			Utils.SpringTo(knot, knot.toX, knot.toY, i, spring, friction, this.config.springLength)
 			knot.position(knot.x + knot.vx, knot.y + knot.vy)
 
-			if(this.withFill) {
-				this.areaPolygon.lineTo(knot.x, knot.y)
-			}else{
-				this.areaPolygon.moveTo(previousKnot.x, previousKnot.y)
-				this.areaPolygon.lineTo(knot.x, knot.y)
-			}
-		}
-		if(this.withFill) {
-			this.areaPolygon.endFill()
+			this.areaPolygon.moveTo(previousKnot.x, previousKnot.y)
+			this.areaPolygon.lineTo(knot.x, knot.y)
 		}
 		this.config.springLength -= (this.config.springLength) * 0.1
 		this.container.rotation -= (this.container.rotation) * 0.1
@@ -106,15 +76,9 @@ export default class SpringGarden {
 			var knot = this.knots[i]
 			knot.clear()
 		}
-		this.withFill = false
 		this.areaPolygon.clear()
 	}
 	componentWillUnmount() {
-		if(this.isInteractive) {
-			this.areaPolygonContainer.buttonMode = false
-			this.areaPolygonContainer.interactive = false
-			this.areaPolygonContainer.off('click', this.onClicked)
-		}
 	}
 	resize(radius) {
 		var windowW = AppStore.Window.w

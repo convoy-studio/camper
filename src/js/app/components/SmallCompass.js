@@ -167,8 +167,8 @@ export default class SmallCompass {
 				this.checkCollision(knotA, knotB)
 			}
 		}
-		this.titles.rotation += 0.2
-		this.rotateEl(this.titles.titleTop, this.titles.rotation)
+		// this.titles.rotation += 0.2
+		// this.rotateEl(this.titles.titleTop, this.titles.rotation)
 	}
 	resize() {
 		var windowH = AppStore.Window.h

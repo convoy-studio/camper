@@ -34,8 +34,6 @@ export default class Pool {
 		container.scale.y = 1
 		container.position.x = 0
 		container.position.y = 0
-		container.skew.x = 0
-		container.skew.y = 0
 		container.pivot.x = 0
 		container.pivot.y = 0
 		container.rotation = 0
@@ -53,8 +51,6 @@ export default class Pool {
 		g.scale.y = 1
 		g.position.x = 0
 		g.position.y = 0
-		g.skew.x = 0
-		g.skew.y = 0
 		g.pivot.x = 0
 		g.pivot.y = 0
 		g.rotation = 0

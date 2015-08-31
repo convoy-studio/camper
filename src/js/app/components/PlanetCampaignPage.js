@@ -19,7 +19,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.currentIndex = 0
 		this.direction = AppConstants.LEFT
 		this.currentProductContainerClass = 'product-container-b'
-		this.timeoutTime = 900
+		this.timeoutTime = 1000
 	}
 	componentDidMount() {
 		this.updateProductData()
@@ -77,6 +77,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.arrowClicked = this.arrowClicked.bind(this)
 		this.onBuyClicked = this.onBuyClicked.bind(this)
 		this.onPlanetClicked = this.onPlanetClicked.bind(this)
+		this.bottomClicked = this.bottomClicked.bind(this)
 
 		this.previousBtn = new ArrowBtn(this.child.find('.previous-btn'), AppConstants.LEFT)
 		this.previousBtn.btnClicked = this.arrowClicked
@@ -84,6 +85,10 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.nextBtn = new ArrowBtn(this.child.find('.next-btn'), AppConstants.RIGHT)
 		this.nextBtn.btnClicked = this.arrowClicked
 		this.nextBtn.componentDidMount()
+
+		this.downBtn = new ArrowBtn(this.child.find('.down-btn'), AppConstants.BOTTOM)
+		this.downBtn.btnClicked = this.bottomClicked
+		this.downBtn.componentDidMount()
 
 		this.buyBtn = new TitleSwitcher(this.child.find('.buy-btn'), this.child.find('.dots-rectangle-btn'), this.infos['buy_title'])
 		this.buyBtn.onClick = this.onBuyClicked
@@ -155,6 +160,9 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 	arrowClicked(direction) {
 		if(this.animationRunning) return
 		this.switchSlideByDirection(direction)
+	}
+	bottomClicked() {
+		this.scrollTargetChanged(this.pageHeight)
 	}
 	onKeyPressed(e) {
 		if(this.animationRunning) return
@@ -256,8 +264,8 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.addVideoEvents()
 		
 		this.assignAssetsToNewContainer()
-		this.resizeMediaWrappers()
 		this.resizeVideoWrapper()
+		this.resizePosterWrappers()
 		this.animateContainers()
 
 		this.updatePageHeight()
@@ -286,7 +294,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		var productScope = AppStore.getSpecificProductById(this.id, this.productId)
 		var videoId = productScope['video-id']
 		var frameUUID = Utils.UUID()
-		var iframeStr = '<iframe src="//fast.wistia.net/embed/iframe/'+videoId+'" id="'+frameUUID+'" allowtransparency="false" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe>'
+		var iframeStr = '<iframe src="//fast.wistia.net/embed/iframe/'+videoId+'" id="'+frameUUID+'" allowtransparency="false" frameborder="0" scrolling="yes" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe>'
 		var iframe = $(iframeStr)
 		this.currentContainer.video.uuid = frameUUID
 		this.currentContainer.video.container.html(iframe)
@@ -316,10 +324,8 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		setTimeout(()=>{
 			this.animationRunning = false
 			this.removePreviousContainerAssets()
-		}, this.timeoutTime)
-		setTimeout(()=>{
 			this.assignVideoToNewContainer()
-		}, this.timeoutTime + 500)
+		}, this.timeoutTime)
 	}
 	removePreviousContainerAssets() {
 		if(this.previousContainer == undefined) return
@@ -346,7 +352,28 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		if(!AppStore.Detector.isMobile) this.compassesContainer.update()
 		super.update()
 	}
-	resizeMediaWrappers() {
+	resizeVideoWrapper() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+
+		var orientation = (AppStore.Detector.isMobile) ? AppConstants.LANDSCAPE : undefined
+		var scale = (AppStore.Detector.isMobile) ? 1 : 0.6
+
+		var videoResize = Utils.ResizePositionProportionally(windowW * scale, windowH * scale, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H, orientation)
+		
+		var videoTop = (windowH * 0.51) - (videoResize.height >> 1)
+		videoTop = (AppStore.Detector.isMobile) ? 220 : videoTop
+
+		this.videoCss = {
+			width: videoResize.width,
+			height: videoResize.height,
+			top: videoTop,
+			left: (windowW >> 1) - (videoResize.width >> 1)	
+		}
+		this.currentContainer.video.el.css(this.videoCss)
+		this.videoTotalHeight = (this.videoCss.top << 1) + this.videoCss.height
+	}
+	resizePosterWrappers() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
@@ -355,8 +382,8 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 
 		var imageResize = Utils.ResizePositionProportionally(windowW * scale, windowH * scale, AppConstants.CAMPAIGN_IMAGE_SIZE[0], AppConstants.CAMPAIGN_IMAGE_SIZE[1], orientation)
 		
-		var posterTop = (windowH * 0.51) - (imageResize.height >> 1)
-		posterTop = (AppStore.Detector.isMobile) ? 220 : posterTop
+		var posterTop = (this.compassPadding << 1) + windowH + this.videoCss.top
+		posterTop = (AppStore.Detector.isMobile) ? this.videoCss.top + this.videoCss.height + 136 : posterTop
 		
 		this.posterImgCss = {
 			width: imageResize.width,
@@ -369,37 +396,26 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.currentContainer.el.css('z-index', 2)
 		this.currentContainer.posterWrapper.css(this.posterImgCss)
 
-		this.posterTotalHeight = (this.posterImgCss.top << 1) + this.posterImgCss.height
-	}
-	resizeVideoWrapper() {
-		var windowW = AppStore.Window.w
-		var windowH = AppStore.Window.h
-
-		var orientation = (AppStore.Detector.isMobile) ? AppConstants.LANDSCAPE : undefined
-		var scale = (AppStore.Detector.isMobile) ? 1 : 0.6
-
-		var videoResize = Utils.ResizePositionProportionally(windowW * scale, windowH * scale, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H, orientation)
-		
-		var videoTop = (this.compassPadding << 1) + windowH + this.posterImgCss.top
-		videoTop = (AppStore.Detector.isMobile) ? this.buyBtn.y + this.buyBtn.height + 100 : videoTop
-
-		var videoCss = {
-			width: videoResize.width,
-			height: videoResize.height,
-			top: videoTop,
-			left: (windowW >> 1) - (videoResize.width >> 1)	
-		}
-		this.currentContainer.video.el.css(videoCss)
-		this.videoTotalHeight = (this.posterImgCss.top << 1) + videoCss.height
+		this.posterTotalHeight = (this.videoCss.top << 1) + this.posterImgCss.height
 	}
 	updateTopButtonsPositions() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
-		var topPos = (this.posterImgCss.top + this.posterImgCss.height) + ((windowH - (this.posterImgCss.top + this.posterImgCss.height)) >> 1) - (this.buyBtn.height) - (this.buyBtn.height >> 1)
-		topPos = (AppStore.Detector.isMobile) ? this.posterImgCss.top + this.posterImgCss.height + 60 : topPos
+		
+		var buyTopPos = (this.posterImgCss.top + this.posterImgCss.height) + ((this.pageHeight - ((this.posterImgCss.top) + this.posterImgCss.height)) >> 1) - (this.buyBtn.height) - (this.buyBtn.height >> 1) - (this.buyBtn.height * 0.4)
+		buyTopPos = (AppStore.Detector.isMobile) ? this.videoCss.top + this.videoCss.height + 40 : buyTopPos
+		
 		this.buyBtn.position(
 			(windowW >> 1) - (this.buyBtn.width >> 1),
-			topPos
+			buyTopPos
+		)
+
+		var downTopPos = (this.videoCss.top + this.videoCss.height) + ((windowH - ((this.videoCss.top) + this.videoCss.height)) >> 1) - (this.downBtn.height >> 1)
+		downTopPos = (AppStore.Detector.isMobile) ? this.videoCss.top + this.videoCss.height + 40 : downTopPos
+
+		this.downBtn.position(
+			(windowW >> 1) - (this.downBtn.width >> 1),
+			downTopPos
 		)
 	}
 	resizeCompassContainer() {
@@ -422,7 +438,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.titleTimeout = setTimeout(()=>{
 			var compassSize = (windowH * AppConstants.COMPASS_SIZE_PERCENTAGE) << 1
 			var topOffset = (windowH >> 1) + (compassSize >> 1)
-			var topPos = (this.posterImgCss.top >> 1) - (this.titleContainer.parent.height() >> 1)
+			var topPos = (this.videoCss.top >> 1) - (this.titleContainer.parent.height() >> 1)
 			topPos += (AppStore.Detector.isMobile) ? 30 : 0
 			var titlesContainerCss = {
 				top: topPos,
@@ -438,13 +454,13 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 
 		if(!AppStore.Detector.isMobile) this.resizeCompassContainer()
 		this.positionTitlesContainer()
-		this.resizeMediaWrappers()
-		this.updateTopButtonsPositions()
 		this.resizeVideoWrapper()
+		this.resizePosterWrappers()
 		this.updatePageHeight()
+		this.updateTopButtonsPositions()
 
-		var previousXPos = (AppStore.Detector.isMobile) ? 0 : (this.posterImgCss.left >> 1) - (this.previousBtn.width >> 1) - 4
-		var nextXPos = (AppStore.Detector.isMobile) ? windowW - this.previousBtn.width : (this.posterImgCss.left + this.posterImgCss.width) + ((windowW - (this.posterImgCss.left + this.posterImgCss.width)) >> 1) - (this.nextBtn.width >> 1) + 4
+		var previousXPos = (AppStore.Detector.isMobile) ? 0 : (this.videoCss.left >> 1) - (this.previousBtn.width >> 1) - 4
+		var nextXPos = (AppStore.Detector.isMobile) ? windowW - this.previousBtn.width : (this.videoCss.left + this.videoCss.width) + ((windowW - (this.videoCss.left + this.videoCss.width)) >> 1) - (this.nextBtn.width >> 1) + 4
 
 		this.previousBtn.position(
 			previousXPos,
@@ -469,6 +485,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.previousBtn.componentWillUnmount()
 		this.nextBtn.componentWillUnmount()
 		this.buyBtn.componentWillUnmount()
+		this.downBtn.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }
