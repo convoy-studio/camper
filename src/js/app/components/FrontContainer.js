@@ -22,7 +22,6 @@ class FrontContainer extends BaseComponent {
 				{ id:'shop-men', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_men'], url:scope.infos['shop_men_url'] },
 				{ id:'shop-women', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_women'], url:scope.infos['shop_women_url'] },
 				{ id:'lab', name:scope.infos['camper_lab'], url:scope.infos['camper_lab_url'] },
-				{ id:'legal', name:scope.infos['legal'], url:scope.infos['legal_url'] },
 			]
 		}
 
@@ -49,7 +48,6 @@ class FrontContainer extends BaseComponent {
 		this.$socialTitle = this.$socialWrapper.find('.social-title')
 		this.$socialIconsContainer = this.$socialWrapper.find('ul')
 		this.$socialBtns = this.$socialWrapper.find('li')
-		this.$legal = this.child.find('.legal')
 		this.$camperLab = this.child.find('.camper-lab')
 		this.$shop = this.child.find('.shop-wrapper')
 		this.$home = this.child.find('.home-btn')
@@ -138,10 +136,6 @@ class FrontContainer extends BaseComponent {
 			left: (this.$socialTitle.width() >> 1) - (this.$socialIconsContainer.width() >> 1),
 			top: -this.$socialIconsContainer.height() - 20
 		}
-		var legalCss = {
-			left: AppConstants.PADDING_AROUND,
-			top: windowH - AppConstants.PADDING_AROUND - this.$legal.height(),	
-		}
 		var camperLabCss = {
 			left: windowW - AppConstants.PADDING_AROUND - this.$camperLab.width(),
 			top: AppConstants.PADDING_AROUND,
@@ -156,7 +150,6 @@ class FrontContainer extends BaseComponent {
 		}
 
 		this.$socialWrapper.css(socialCss)
-		this.$legal.css(legalCss)
 		this.$camperLab.css(camperLabCss)
 		this.$shop.css(shopCss)
 		this.$socialIconsContainer.css(socialIconsCss)

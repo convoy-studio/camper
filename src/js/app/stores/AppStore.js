@@ -168,7 +168,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     responsiveImageWidth: function(responsiveArray) {
         var windowW = AppStore.Window.w
-        return Utils.Closest(responsiveArray, windowW)
+        // var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
+        var scale = 1
+        return Utils.Closest(responsiveArray, windowW * scale)
     },
     responsiveImageSize: function(responsiveArray, baseWidth, baseHeight) {
         var baseW = baseWidth || AppConstants.MEDIA_GLOBAL_W
