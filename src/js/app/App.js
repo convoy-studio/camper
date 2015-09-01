@@ -13,8 +13,6 @@ class App {
 		this.onMainAssetsLoaded = this.onMainAssetsLoaded.bind(this)
 	}
 	init() {
-
-
 			var md = new MobileDetect(window.navigator.userAgent)
 
 			AppStore.Detector.isMobile = (md.mobile() || md.tablet()) ? true : false
@@ -42,7 +40,7 @@ class App {
 
 			this.tlOut.to($spinner, 1, { scale:1.2, y:10, opacity:0, force3D:true, ease:Expo.easeInOut }, 0)
 			this.tlOut.to($logo, 1, { scale:1.2, y:-10, opacity:0, force3D:true, ease:Expo.easeInOut }, 0)
-			this.tlOut.to($background, 1, { opacity:0, force3D:true, ease:Expo.easeInOut })
+			this.tlOut.to($background, 1, { opacity:0, force3D:true, ease:Expo.easeInOut }, 0.6)
 			this.tlOut.pause(0)
 
 			// Init global events
@@ -71,12 +69,14 @@ class App {
 	onMainAssetsLoaded() {
 		setTimeout(()=>{
 			this.tlOut.play()
+			// Start routing
+			this.router.beginRouting()
 			setTimeout(()=>{
-				// Start routing
-				this.router.beginRouting()
 				this.$mainLoader.remove()
-			}, 1000)
-		}, 2000)
+				AppStore.releaseTimeline(this.tlIn)
+				AppStore.releaseTimeline(this.tlOut)
+			}, 1600)
+		}, 500)
 	}
 }
 

@@ -17,19 +17,20 @@ export default class Pool {
 		this.springGardens = op.generate(SpringGarden, { count: springGardensNum })
 	}
 	getTimeline() {
+		// console.log('get >>>>>>>>>>>>>>>')
 		var tl = this.timelines.get()
 		tl.kill()
 		tl.clear()
 		return tl
 	}
 	releaseTimeline(item) {
+		// console.log('release <<<<<<<<<<<<<<', item)
 		item.kill()
 		item.clear()
 		this.timelines.release(item)
 	}
 	getContainer() {
 		var container = this.pxContainers.get()
-		// console.log('get >>>>>>>>>>>>>>>', container)
 		container.scale.x = 1
 		container.scale.y = 1
 		container.position.x = 0
@@ -41,7 +42,6 @@ export default class Pool {
 		return container
 	}
 	releaseContainer(item) {
-		// console.log('release <<<<<<<<<<<<<<', item)
 		this.pxContainers.release(item)
 	}
 	getGraphics() {

@@ -1,177 +1,79 @@
 {
 	"infos": {
-		"twitter_url": "http://twitter.com",
-		"facebook_url": "http://facebook.com",
-		"instagram_url": "http://instagram.com",
+		"twitter_url": "https://twitter.com/camper",
+		"facebook_url": "https://www.facebook.com/Camper",
+		"instagram_url": "https://instagram.com/camper/",
+		"lab_url": "http://www.camper.com/lab",
 		"lang": {
 			"en": {
-				"countries": {
-					"GBR": "english",
-					"FRA": "french",
-					"ESP": "spanish",
-					"ITA": "italian",
-					"DEU": "german",
-					"PRT": "portugese"
-				},
-				"legal": "legal",
-				"legal_url": "http://google.com",
-				"camper_lab": "camper lab",
-				"camper_lab_url": "http://google.com",
-				"shop_title": "shop",
-				"shop_men": "man",
-				"shop_men_url": "http://google.com",
-				"shop_women": "woman",
-				"shop_women_url": "http://google.com",
-				"planet": "planet",
-				"buy_title": "buy",
-				"campaign_title": "see campaign",
+				"camper_lab": "Camper Lab",
+				"shop_title": "Shop",
+				"shop_men": "Men",
+				"shop_women": "Women",
+				"planet": "Planet",
+				"buy_title": "Buy",
+				"campaign_title": "See campaign",
+				"legal": "Legal",
 				"home_txt": "HOME"
 			},
 			"fr": {
-				"countries": {
-					"GBR": "english",
-					"FRA": "french",
-					"ESP": "spanish",
-					"ITA": "italian",
-					"DEU": "german",
-					"PRT": "portugese"
-				},
-				"legal": "legal",
-				"legal_url": "http://google.com",
-				"camper_lab": "camper lab",
-				"camper_lab_url": "http://google.com",
-				"shop_title": "shop",
-				"shop_men": "man",
-				"shop_men_url": "http://google.com",
-				"shop_women": "woman",
-				"shop_women_url": "http://google.com",
-				"planet": "planet",
-				"buy_title": "buy",
-				"campaign_title": "see campaign",
+				"camper_lab": "Camper Lab",
+				"shop_title": "Acheter",
+				"shop_men": "homme",
+				"shop_women": "femme",
+				"planet": "Planète",
+				"buy_title": "Acheter",
+				"campaign_title": "Voir la campagne",
+				"legal": "Légal",
 				"home_txt": "HOME"
 			},
 			"es": {
-				"countries": {
-					"GBR": "english",
-					"FRA": "french",
-					"ESP": "spanish",
-					"ITA": "italian",
-					"DEU": "german",
-					"PRT": "portugese"
-				},
-				"legal": "legal",
-				"legal_url": "http://google.com",
-				"camper_lab": "camper lab",
-				"camper_lab_url": "http://google.com",
-				"shop_title": "shop",
-				"shop_men": "man",
-				"shop_men_url": "http://google.com",
-				"shop_women": "woman",
-				"shop_women_url": "http://google.com",
-				"planet": "planet",
-				"buy_title": "buy",
-				"campaign_title": "see campaign",
+				"camper_lab": "Camper Lab",
+				"shop_title": "Comprar",
+				"shop_men": "hombre",
+				"shop_women": "mujer",
+				"planet": "Planeta",
+				"buy_title": "Comprar",
+				"campaign_title": "Ver campaña",
+				"legal": "Información legal",
 				"home_txt": "HOME"
 			},
 			"it": {
-				"countries": {
-					"GBR": "english",
-					"FRA": "french",
-					"ESP": "spanish",
-					"ITA": "italian",
-					"DEU": "german",
-					"PRT": "portugese"
-				},
-				"legal": "legal",
-				"legal_url": "http://google.com",
-				"camper_lab": "camper lab",
-				"camper_lab_url": "http://google.com",
-				"shop_title": "shop",
-				"shop_men": "man",
-				"shop_men_url": "http://google.com",
-				"shop_women": "woman",
-				"shop_women_url": "http://google.com",
-				"planet": "planet",
-				"buy_title": "buy",
-				"campaign_title": "see campaign",
+				"camper_lab": "Camper Lab",
+				"shop_title": "Acquisti",
+				"shop_men": "uomo",
+				"shop_women": "donna",
+				"planet": "Pianeta",
+				"buy_title": "Acquista",
+				"campaign_title": "Guarda la campagna",
+				"legal": "Legale",
 				"home_txt": "HOME"
 			},
 			"de": {
-				"countries": {
-					"GBR": "english",
-					"FRA": "french",
-					"ESP": "spanish",
-					"ITA": "italian",
-					"DEU": "german",
-					"PRT": "portugese"
-				},
-				"legal": "legal",
-				"legal_url": "http://google.com",
-				"camper_lab": "camper lab",
-				"camper_lab_url": "http://google.com",
-				"shop_title": "shop",
-				"shop_men": "man",
-				"shop_men_url": "http://google.com",
-				"shop_women": "woman",
-				"shop_women_url": "http://google.com",
-				"planet": "planet",
-				"buy_title": "buy",
-				"campaign_title": "see campaign",
+				"camper_lab": "Camper Lab",
+				"shop_title": "Shop",
+				"shop_men": "Herren",
+				"shop_women": "Damen",
+				"planet": "Planet",
+				"buy_title": "Kaufen",
+				"campaign_title": "Kampagne ansehen",
+				"legal": "Impressum",
 				"home_txt": "HOME"
 			},
 			"pt": {
-				"countries": {
-					"GBR": "english",
-					"FRA": "french",
-					"ESP": "spanish",
-					"ITA": "italian",
-					"DEU": "german",
-					"PRT": "portugese"
-				},
-				"legal": "legal",
-				"legal_url": "http://google.com",
-				"camper_lab": "camper lab",
-				"camper_lab_url": "http://google.com",
-				"shop_title": "shop",
-				"shop_men": "man",
-				"shop_men_url": "http://google.com",
-				"shop_women": "woman",
-				"shop_women_url": "http://google.com",
-				"planet": "planet",
-				"buy_title": "buy",
-				"campaign_title": "see campaign",
+				"camper_lab": "Camper Lab",
+				"shop_title": "Compre",
+				"shop_men": "homem",
+				"shop_women": "mulher",
+				"planet": "Planeta",
+				"buy_title": "Comprar",
+				"campaign_title": "Ver campanha",
+				"legal": "Legal",
 				"home_txt": "HOME"
 			}
 		}
 	},
 
-	"countries": [
-		{
-			"id": "GBR",
-			"lang": "en",
-			"url": "http://google.com"
-		},{
-			"id": "FRA",
-			"lang": "fr",
-			"url": "http://google.com"
-		},{
-			"id": "ESP",
-			"lang": "es",
-			"url": "http://google.com"
-		},{
-			"id": "ITA",
-			"lang": "it",
-			"url": "http://google.com"
-		},{
-			"id": "DEU",
-			"lang": "de",
-			"url": "http://google.com"
-		},{
-			"id": "PRT",
-			"lang": "pt",
-			"url": "http://google.com"
-		}
-	],
 	"planets": ["ski", "metal", "alaska", "wood", "gemstone"],
 	"elements": ["fire", "earth", "metal", "water", "wood"],
 	"gender": ["male", "female", "animal"],
@@ -191,6 +93,7 @@
 				"name": "FISS",
 				"color": "0x343a5c",
 				"video-id": "mzs5yc3i5x",
+				"product-url": "/men/shoes/fiss/camper-fiss-K100021-002",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -199,38 +102,64 @@
 			},{
 				"id": 1,
 				"name": "FISS",
+				"color": "0x343a5c",
+				"video-id": "mzs5yc3i5x",
+				"product-url": "/men/shoes/fiss/camper-fiss-K100021-001",
+				"knots": [
+					{"x":0.2, "y":0.5},
+					{"x":0.0, "y":0.3},
+					{"x":0.1, "y":0.7}
+				]
+			},{
+				"id": 2,
+				"name": "FISS",
 				"color": "0xcff0fc",
 				"video-id": "0l1dswyr4x",
+				"product-url": "/men/shoes/fiss/camper-fiss-K300023-002",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
 					{"x":-0.4, "y":0.7}
 				]
 			},{
-				"id": 2,
+				"id": 3,
 				"name": "FISS",
 				"color": "0xe7e33c",
 				"video-id": "cwj04a3z55",
+				"product-url": "/women/shoes/fiss/camper-fiss-K400029-003",
 				"knots": [
-					{"x":0.3, "y":-0.1},
-					{"x":0.6, "y":-0.4},
-					{"x":0.6, "y":-0.6}
+					{"x":0.1, "y":-0.1},
+					{"x":0.6, "y":-0.3},
+					{"x":0.5, "y":-0.6}
 				]
 			},{
-				"id": 3,
+				"id": 4,
 				"name": "FISS",
 				"color": "0xdb3076",
 				"video-id": "8fbp0pbww8",
+				"product-url": "/women/shoes/fiss/camper-fiss-K400029-001",
 				"knots": [
 					{"x":-0.3, "y":-0.1},
 					{"x":-0.6, "y":-0.4},
 					{"x":-0.6, "y":-0.6}
 				]
 			},{
-				"id": 4,
+				"id": 5,
+				"name": "FISS",
+				"color": "0xdb3076",
+				"video-id": "8fbp0pbww8",
+				"product-url": "/women/shoes/fiss/camper-fiss-K400031-003",
+				"knots": [
+					{"x":0.0, "y":-0.8},
+					{"x":0.2, "y":-0.6},
+					{"x":-0.1, "y":-0.1}
+				]
+			},{
+				"id": 6,
 				"name": "FISS",
 				"color": "0xf4ecda",
 				"video-id": "8fbp0pbww8",
+				"product-url": "/women/shoes/laika/camper-laika-K400035-001",
 				"knots": [
 					{"x":-0.1, "y":0.1},
 					{"x":-0.2, "y":0.4},
@@ -244,6 +173,7 @@
 				"name": "BELUGA",
 				"color": "0x818181",
 				"video-id": "gsun7amzq8",
+				"product-url": "/women/shoes/beluga/camper-beluga-K400014-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -251,9 +181,21 @@
 				]
 			},{
 				"id": 1,
+				"name": "BELUGA",
+				"color": "0x818181",
+				"video-id": "gsun7amzq8",
+				"product-url": "/men/shoes/beluga/camper-beluga-K300008-002",
+				"knots": [
+					{"x":0.1, "y":-0.7},
+					{"x":-0.1, "y":-0.1},
+					{"x":0.4, "y":0}
+				]
+			},{
+				"id": 2,
 				"name": "HARDWOOD",
 				"color": "0xe82b18",
 				"video-id": "fevnsbsj84",
+				"product-url": "/men/shoes/hardwood/camper-hardwood-K300029-001",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
@@ -267,6 +209,7 @@
 				"name": "gemma",
 				"color": "0xb6937d",
 				"video-id": "ljrt61icha",
+				"product-url": "/women/shoes/gemma/camper-gemma-K400033-002",
 				"knots": [
 					{"x":-0.2, "y":0.3},
 					{"x":-0.6, "y":0.4},
@@ -274,29 +217,43 @@
 				]
 			},{
 				"id": 1,
+				"name": "gemma",
+				"color": "0xb6937d",
+				"video-id": "ljrt61icha",
+				"product-url": "/women/shoes/gemma/camper-gemma-K400033-002",
+				"knots": [
+					{"x":-0.2, "y":-0.3},
+					{"x":0.1, "y":-0.4},
+					{"x":0.3, "y":-0.1}
+				]
+			},{
+				"id": 2,
 				"name": "pelotas",
 				"color": "0xc98e94",
 				"video-id": "n0ksuy0wua",
+				"product-url": "/women/shoes/pelotas/camper-pelotas-K200038-001",
 				"knots": [
 					{"x":0.3, "y":-0.6},
 					{"x":0.6, "y":0.4},
 					{"x":0.4, "y":0.7}
 				]
 			},{
-				"id": 2,
+				"id": 3,
 				"name": "ENDURO",
 				"color": "0x616a71",
 				"video-id": "8xpnpynqup",
+				"product-url": "/men/shoes/enduro/camper-enduro-K300020-002",
 				"knots": [
 					{"x":-0.3, "y":0.1},
 					{"x":-0.6, "y":-0.1},
 					{"x":-0.6, "y":-0.6}
 				]
 			},{
-				"id": 3,
+				"id": 4,
 				"name": "ENDURO",
 				"color": "0x0e2e61",
 				"video-id": "m509p0iu4u",
+				"product-url": "/women/shoes/enduro/camper-enduro-K400025-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":-0.1},
@@ -310,6 +267,7 @@
 				"name": "VINTAR",
 				"color": "0xd79b7a",
 				"video-id": "gldrv27k76",
+				"product-url": "/men/shoes/vintar/camper-vintar-K300048-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -320,6 +278,7 @@
 				"name": "BELUGA",
 				"color": "0x88a2c7",
 				"video-id": "1mevrxz7v6",
+				"product-url": "/women/shoes/beluga/camper-beluga-K400015-001",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
@@ -333,6 +292,7 @@
 				"name": "ENDURO",
 				"color": "0x2892c1",
 				"video-id": "9qbhhpb89b",
+				"product-url": "/men/shoes/enduro/camper-enduro-K300020-001",
 				"knots": [
 					{"x":-0.2, "y":0.3},
 					{"x":-0.6, "y":0.4},
@@ -343,6 +303,7 @@
 				"name": "ENDURO",
 				"color": "0x62a8bb",
 				"video-id": "pnr81ri2xo",
+				"product-url": "/women/shoes/enduro/camper-enduro-K400025-002",
 				"knots": [
 					{"x":0.3, "y":-0.6},
 					{"x":0.6, "y":0.4},
@@ -353,6 +314,7 @@
 				"name": "gemma",
 				"color": "0x090b36",
 				"video-id": "ckgwzd3npu",
+				"product-url": "/women/shoes/gemma/camper-gemma-K200046-001",
 				"knots": [
 					{"x":-0.3, "y":0.1},
 					{"x":-0.6, "y":-0.3},
@@ -365,19 +327,12 @@
 	"lang": {
 		"en": {
 			"global": {
-				"header-title": "Header",
-				"footer-title": "Footer",
 				"elements": {
 					"fire": "fire",
 					"earth": "earth",
 					"metal": "metal",
 					"water": "water",
 					"wood": "wood"
-				},
-				"gender": {
-					"male": "m",
-					"female": "f",
-					"animal": "a"
 				}
 			},
 			"landing": {

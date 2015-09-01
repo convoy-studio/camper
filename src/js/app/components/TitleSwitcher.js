@@ -97,5 +97,6 @@ export default class TitleSwitcher {
 		}
 		this.element.off('mouseenter', this.onOver)
 		this.element.off('mouseleave', this.onOut)
+		this.rectangleBorder.componentWillUnmount()
 	}
 }

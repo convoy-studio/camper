@@ -42,8 +42,10 @@ export default class SpringGarden {
 			knot.changeSize(this.knotRadius)
 			knot.toX = newKnotScale.x * (this.radius)
 			knot.toY = newKnotScale.y * (this.radius)
+			knot.x = 0
+			knot.y = 0
 		}
-		this.container.rotation = Utils.Rand(-4, 4)
+		this.container.rotation = Utils.Rand(-14, 14)
 		this.config.springLength = 200
 		this.assignOpenedConfig()
 	}
@@ -64,12 +66,12 @@ export default class SpringGarden {
 			this.areaPolygon.moveTo(previousKnot.x, previousKnot.y)
 			this.areaPolygon.lineTo(knot.x, knot.y)
 		}
-		this.config.springLength -= (this.config.springLength) * 0.1
-		this.container.rotation -= (this.container.rotation) * 0.1
+		this.config.springLength -= (this.config.springLength) * 0.4
+		this.container.rotation -= (this.container.rotation) * 0.4
 	}
 	assignOpenedConfig() {
-		this.config.spring = 0.03
-		this.config.friction = 0.92
+		this.config.spring = 0.09
+		this.config.friction = 0.9
 	}
 	clear() {
 		for (var i = 0; i < this.knots.length; i++) {

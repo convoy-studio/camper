@@ -145,20 +145,6 @@ a {
     position: fixed;
     z-index: 11;
 }
-.play-btn {
-    $w: 100px;
-    width: $w;
-    left: 50%;
-    top: 50%;
-    margin-left: -$w/2;
-    margin-top: -$w/2;
-    @include opacity(0.9);
-    @include anim(.6s, 0s, $easeOutExpo, scale(1) translateZ(0), 50%, 50%, transform opacity);
-    &.hovered {
-        @include opacity(1);
-        @include anim(.6s, 0s, $easeOutExpo, scale(1.1) translateZ(0), 50%, 50%, transform opacity);
-    }
-}
 .dots-arrow-btn, .dots-rectangle-btn, .play-btn {
     position: absolute;
     // background-color: red;
@@ -177,8 +163,33 @@ a {
         // }
     }
 }
+.play-btn {
+    $w: 200px;
+    width: $w;
+    height: $w;
+    left: 50%;
+    top: 50%;
+    margin-left: -$w/2;
+    margin-top: -$w/2;
+    z-index: 100;
+    background-color: red;
+    svg {
+        .around {
+            fill: transparent;
+            stroke: $white;
+            stroke-width: 3px;
+        }
+    }
+    // @include opacity(0.9);
+    // @include anim(.6s, 0s, $easeOutExpo, scale(1) translateZ(0), 50%, 50%, transform opacity);
+    // &.hovered {
+    //     @include opacity(1);
+    //     @include anim(.6s, 0s, $easeOutExpo, scale(1.1) translateZ(0), 50%, 50%, transform opacity);
+    // }
+}
 .buy-btn {
     position: absolute;
+    font-size: $globalFontSize;
 }
 .dots-rectangle-btn {
     @include simpleAnim(.6s, 0s, $easeOutExpo);

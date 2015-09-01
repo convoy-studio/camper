@@ -14,14 +14,19 @@ class FrontContainer extends BaseComponent {
 		scope.facebookUrl = generaInfos['facebook_url']
 		scope.twitterUrl = generaInfos['twitter_url']
 		scope.instagramUrl = generaInfos['instagram_url']
+		scope.labUrl = generaInfos['lab_url']
+		scope.menShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/men/shoes/new-collection'
+		scope.womenShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/women/shoes/new-collection'
+		scope.legalUrl = 'http://www.camper.com/html/legal/privacy_'+JS_lang+'.html'
 		scope.isMobile = AppStore.Detector.isMobile
 
 		if(scope.isMobile) {
 			scope.mobileMenu = [
 				{ id:'home', name:scope.infos['home_txt'], url:'#!/landing' },
-				{ id:'shop-men', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_men'], url:scope.infos['shop_men_url'] },
-				{ id:'shop-women', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_women'], url:scope.infos['shop_women_url'] },
-				{ id:'lab', name:scope.infos['camper_lab'], url:scope.infos['camper_lab_url'] },
+				{ id:'shop-men', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_men'], url:scope.menShopUrl },
+				{ id:'shop-women', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_women'], url:scope.womenShopUrl },
+				{ id:'lab', name:scope.infos['camper_lab'], url:scope.labUrl },
+				{ id:'legal', name:scope.infos['legal'], url:scope.legalUrl },
 			]
 		}
 
@@ -49,6 +54,7 @@ class FrontContainer extends BaseComponent {
 		this.$socialIconsContainer = this.$socialWrapper.find('ul')
 		this.$socialBtns = this.$socialWrapper.find('li')
 		this.$camperLab = this.child.find('.camper-lab')
+		this.$legal = this.child.find('.legal')
 		this.$shop = this.child.find('.shop-wrapper')
 		this.$home = this.child.find('.home-btn')
 		this.countriesH = 0
@@ -148,12 +154,17 @@ class FrontContainer extends BaseComponent {
 			left: shopCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
+		var legalCss = {
+			left: AppConstants.PADDING_AROUND,
+			top: windowH - AppConstants.PADDING_AROUND - this.$legal.height(),	
+		}
 
 		this.$socialWrapper.css(socialCss)
 		this.$camperLab.css(camperLabCss)
 		this.$shop.css(shopCss)
 		this.$socialIconsContainer.css(socialIconsCss)
 		this.$home.css(homeCss)
+		this.$legal.css(legalCss)
 
 		if(AppStore.Detector.isMobile) {
 			this.resizeMobile()

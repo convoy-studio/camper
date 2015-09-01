@@ -5,7 +5,7 @@ import Router from 'Router'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import ArrowBtn from 'ArrowBtn'
-import PlayBtn from 'PlayBtn'
+// import PlayBtn from 'PlayBtn'
 import RectangleBtn from 'RectangleBtn'
 import TitleSwitcher from 'TitleSwitcher'
 import CompassesContainer from 'CompassesContainer'
@@ -41,6 +41,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		var productContainersWrapper = this.child.find('.product-containers-wrapper')
 		var containerA = productContainersWrapper.find('.product-container-a')
 		var containerB = productContainersWrapper.find('.product-container-b')
+
 		this.containers = {
 			'product-container-a': {
 				el: containerA,
@@ -52,8 +53,8 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 					path: containerA.find('.spinner-wrapper svg path')
 				},
 				video: {
+					// playBtn: new PlayBtn(containerA.find('.play-btn')).componentDidMount(),
 					el: containerA.find('.video-wrapper'),
-					play: containerA.find('.play-btn'),
 					container: containerA.find('.video-container'),
 				}
 			},
@@ -67,15 +68,14 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 					path: containerB.find('.spinner-wrapper svg path')
 				},
 				video: {
+					// playBtn: new PlayBtn(containerB.find('.play-btn')).componentDidMount(),
 					el: containerB.find('.video-wrapper'),
-					play: containerB.find('.play-btn'),
 					container: containerB.find('.video-container'),
 				}
 			}
 		}
 
 		this.arrowClicked = this.arrowClicked.bind(this)
-		this.onBuyClicked = this.onBuyClicked.bind(this)
 		this.onPlanetClicked = this.onPlanetClicked.bind(this)
 		this.bottomClicked = this.bottomClicked.bind(this)
 
@@ -91,11 +91,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.downBtn.componentDidMount()
 
 		this.buyBtn = new TitleSwitcher(this.child.find('.buy-btn'), this.child.find('.dots-rectangle-btn'), this.infos['buy_title'])
-		this.buyBtn.onClick = this.onBuyClicked
 		this.buyBtn.componentDidMount()
-
-		this.playBtn = new PlayBtn(this.child.find('.play-btn'))
-		this.playBtn.componentDidMount()
 
 		if(!AppStore.Detector.isMobile) {
 			this.compassesContainer = new CompassesContainer(this.pxScrollContainer, this.child.find(".interface.absolute"))
@@ -152,10 +148,6 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 	onPlanetClicked() {
 		var url = "/landing"
 		Router.setHash(url)
-	}
-	onBuyClicked() {
-		// console.log('buy')
-		// window.location.href = 
 	}
 	arrowClicked(direction) {
 		if(this.animationRunning) return
@@ -231,6 +223,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		}
 		this.id = newId
 		this.props.data = AppStore.pageContent()
+
 		this.updateProductData()
 		this.fromInternalChange = true
 		this.checkCurrentProductByUrl()
@@ -253,6 +246,10 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		var c = color.replace('0x', '#')
 		this.currentContainer.spinner.path.css('fill', c)
 		this.currentContainer.video.el.css('background-color', c)
+
+		var $buyBtn = this.buyBtn.element
+		var buyUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+this.products[this.currentIndex]['product-url']
+		$buyBtn.attr('href', buyUrl)
 	}
 	showProductById(id) {
 		this.animationRunning = true

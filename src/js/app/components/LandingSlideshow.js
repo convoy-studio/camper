@@ -12,7 +12,6 @@ export default class LandingSlideshow {
 		this.currentId = 'alaska'
 	}
 	componentDidMount() {
-		this.updateIsRunning = false
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
 	 	this.slideshowWrapper = AppStore.getContainer()
@@ -55,7 +54,6 @@ export default class LandingSlideshow {
 	 		var sprite = AppStore.getSprite()
 	 		sprite.texture = texture
 	 		sprite.params = {}
-
 	 		this.slideshowWrapper.addChild(wrapperContainer)
 	 		wrapperContainer.addChild(sprite)
 	 		wrapperContainer.addChild(maskRect.g)
@@ -75,7 +73,6 @@ export default class LandingSlideshow {
 
 	 	this.maskEasing = BezierEasing(.84,.13,0,1.03)
 	 	this.chooseSlideToHighlight()
-	 	this.resetUpdateTimeout()
 	}
 	updateTitles(title, name) {
 		var planetTitle = this.titleContainer.planetTitle
@@ -96,7 +93,6 @@ export default class LandingSlideshow {
 		this.elementThatMovedInSlidesArray = firstElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()
-		this.resetUpdateTimeout()
 	}
 	previous() {
 		var lastElement = this.slides.pop()
@@ -104,14 +100,6 @@ export default class LandingSlideshow {
 		this.elementThatMovedInSlidesArray = lastElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()
-		this.resetUpdateTimeout()
-	}
-	resetUpdateTimeout() {
-		this.updateIsRunning = true
-		clearTimeout(this.updateTimeout)
-		this.updateTimeout = setTimeout(()=>{
-			this.updateIsRunning = false
-		}, 1400)
 	}
 	chooseSlideToHighlight() {
 		var totalLen = this.slides.length-1
@@ -153,7 +141,6 @@ export default class LandingSlideshow {
 		s.sprite.y = resizeVars.top
 	}
 	update() {
-		if(this.updateIsRunning != true) return
 		var slides = this.slides
 		this.counter += 0.012
 		for (var i = 0; i < slides.length; i++) {
@@ -167,7 +154,7 @@ export default class LandingSlideshow {
 			this.drawCenteredMaskRect(s.maskRect.g, maskRectX, 0, s.maskRect.width, s.maskRect.height)
 		}
 		this.slideshowContainer.scale.x += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
-		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.x) * 0.08
+		this.slideshowContainer.scale.y += (this.slideshowContainer.scaleXY - this.slideshowContainer.scale.y) * 0.08
 	}
 	positionSlideshowContainer() {
 		var windowW = AppStore.Window.w
