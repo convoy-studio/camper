@@ -22,13 +22,9 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		this.experience = new XpClazz(this.pxContainer)
 		this.experience.componentDidMount()
 		
-		this.compassesContainer = new CompassesContainer(this.pxContainer, this.child)
-		this.compassesContainer.id = this.id
-		this.compassesContainer.componentDidMount()
-
-		this.goCampaignBtn = new RectangleBtn(this.child.find('.go-campaign-btn'), infos.campaign_title)
-		this.goCampaignBtn.btnClicked = this.onGoCampaignClicked
-		this.goCampaignBtn.componentDidMount()
+		// this.goCampaignBtn = new RectangleBtn(this.child.find('.go-campaign-btn'), infos.campaign_title)
+		// this.goCampaignBtn.btnClicked = this.onGoCampaignClicked
+		// this.goCampaignBtn.componentDidMount()
 
 		super.componentDidMount()
 	}
@@ -50,36 +46,23 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 	}
 	didTransitionInComplete() {
 		super.didTransitionInComplete()	
-		this.compassesContainer.didTransitionInComplete()
 	}
 	willTransitionOut() {
 		super.willTransitionOut()
-		this.compassesContainer.willTransitionOut()
 	}
 	update() {
 		this.experience.update()
-		this.compassesContainer.update()
 	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
 		this.experience.resize()
-		this.compassesContainer.resize()
-
-		setTimeout(()=>{
-			var compassContainerBottom = this.compassesContainer.y + this.compassesContainer.height
-			this.goCampaignBtn.position(
-				(windowW >> 1) - (this.goCampaignBtn.width >> 1),
-				compassContainerBottom + (this.goCampaignBtn.height >> 1)
-			)
-		}, 0)
 
 		super.resize()
 	}
 	componentWillUnmount() {
-		this.compassesContainer.componentWillUnmount()
-		this.goCampaignBtn.componentWillUnmount()
+		// this.goCampaignBtn.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }

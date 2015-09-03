@@ -2,12 +2,15 @@
 html, body {
     padding: 0;
     margin: 0;
+    font-family: sans-serif;
 }
 
 html {
     @extend .full;
     overflow: hidden;
 }
+
+svg { max-height: 100%; }
 
 #app-container  {
     // font smoothing

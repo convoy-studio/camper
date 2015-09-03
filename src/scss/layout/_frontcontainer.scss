@@ -56,6 +56,7 @@
 	.logo {
 		position: absolute;
 		$w: 140px;
+		height: 70px;
 		width: $w;
 		@include screen(0px, $MQ_MEDIUM) {
 	        width: $w * 0.8;

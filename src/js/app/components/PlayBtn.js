@@ -61,40 +61,30 @@ export default class PlayBtn {
 		})
 
 		var offset = 10
-		this.tlOver.to(aroundEl, 1, { scale:1.1, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-		this.tlOver.to(knotsEl[0], 1, { x:offset+(radius >> 1), force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOver.to(knotsEl[1], 1, { x:-offset, y:(offset >> 1), force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOver.to(knotsEl[2], 1, { x:-offset, y:-(offset >> 1), force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOver.to(linesEl[0], 1, { scaleX:1, x:offset+(radius >> 1), force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-		this.tlOver.to(linesEl[1], 1, { scaleX:1, x:offset+(radius >> 1), force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+		var paddingX = 4
+		if(AppStore.Detector.oldIE) {
+			this.element.html('<img src=' + AppStore.baseMediaPath() + 'image/play-btn.png' +'>')
+		}else{
+			this.tlOver.to(aroundEl, 1, { scale:1.1, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+			this.tlOver.to(knotsEl[0], 1, { x:offset+(radius >> 1) - paddingX, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOver.to(knotsEl[1], 1, { x:-offset + 12 - paddingX, y:(offset >> 1) - 6, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOver.to(knotsEl[2], 1, { x:-offset + 12 - paddingX, y:-(offset >> 1) + 6, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOver.to(linesEl[0], 1, { scaleX:1.2, x:offset+(radius >> 1) - paddingX, force3D:true, transformOrigin:'100% 100%', ease:Elastic.easeOut }, 0)
+			this.tlOver.to(linesEl[1], 1, { scaleX:1.2, x:offset+(radius >> 1) - paddingX, force3D:true, transformOrigin:'100% 0%', ease:Elastic.easeOut }, 0)
 
-		this.tlOut.to(aroundEl, 1, { scale:1, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-		this.tlOut.to(knotsEl[0], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOut.to(knotsEl[1], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOut.to(knotsEl[2], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
-		this.tlOut.to(linesEl[0], 1, { scaleX:1, x:0, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-		this.tlOut.to(linesEl[1], 1, { scaleX:1, x:0, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
-		// this.tlOut.to(linesEl[2], 1, { x:0, rotation:'0deg', force3D:true, transformOrigin:'0% 100%', ease:Elastic.easeOut }, 0)
-		// this.tlOut.to(linesEl[3], 1, { x:0, rotation:'0deg', force3D:true, transformOrigin:'0% 0%', ease:Elastic.easeOut }, 0)
-		// this.tlOut.to(knotsEl[3], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
-		// this.tlOut.to(knotsEl[4], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOut.to(aroundEl, 1, { scale:1, force3D:true, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+			this.tlOut.to(knotsEl[0], 1, { x:0, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOut.to(knotsEl[1], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOut.to(knotsEl[2], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
+			this.tlOut.to(linesEl[0], 1, { scaleX:1, x:0, force3D:true, transformOrigin:'100% 100%', ease:Elastic.easeOut }, 0)
+			this.tlOut.to(linesEl[1], 1, { scaleX:1, x:0, force3D:true, transformOrigin:'100% 0%', ease:Elastic.easeOut }, 0)
 
-		this.tlOver.pause(0)
-		this.tlOut.pause(0)
+			this.tlOver.pause(0)
+			this.tlOut.pause(0)
+		}
 
-		this.rollover = this.rollover.bind(this)
-		this.rollout = this.rollout.bind(this)
-		this.click = this.click.bind(this)
-		this.element.on('mouseenter', this.rollover)
-		this.element.on('mouseleave', this.rollout)
-		if(this.btnClicked != undefined) this.element.on('click', this.click)
+		this.close()
 
-		// this.width = margin * 3
-		// this.height = margin * 2
-		// this.element.css({
-		// 	width: this.width,
-		// 	height: this.height
-		// })
 		return this
 	}
 	position(x, y) {
@@ -103,31 +93,24 @@ export default class PlayBtn {
 			top: y
 		})
 	}
-	click(e) {
-		e.preventDefault()
-		this.btnClicked(this.direction)
-	}
-	rollout(e) {
-		e.preventDefault()
-		this.mouseOut()	
-	}
-	rollover(e) {
-		e.preventDefault()
-		this.mouseOver()	
-	}
 	mouseOver() {
+		if(AppStore.Detector.oldIE)  return
 		this.tlOut.kill()
 		this.tlOver.play(0)
 	}
 	mouseOut() {
+		if(AppStore.Detector.oldIE)  return
 		this.tlOver.kill()
 		this.tlOut.play(0)
+	}
+	open() {
+		TweenMax.fromTo(this.element, .1, { opacity:0 }, { opacity:1, ease:Expo.easeOut })
+	}
+	close() {
+		TweenMax.fromTo(this.element, .1, { opacity:1 }, { opacity:0, ease:Expo.easeOut })	
 	}
 	componentWillUnmount() {
 		AppStore.releaseTimeline(this.tlOver)
 		AppStore.releaseTimeline(this.tlOut)
-		this.element.off('mouseenter', this.rollover)
-		this.element.off('mouseleave', this.rollout)
-		this.element.off('click', this.click)
 	}
 }

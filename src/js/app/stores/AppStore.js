@@ -170,7 +170,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return (newIndex > oldIndex) ? AppConstants.RIGHT :  AppConstants.LEFT
     },
     responsiveImageWidth: function(responsiveArray) {
-        var windowW = (AppStore.Window.w == undefined) ? window.innerWidth : AppStore.Window.w
+        var windowW = (AppStore.Window.w == undefined) ? $(window).innerWidth() : AppStore.Window.w
         // var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
         var scale = 1
         return Utils.Closest(responsiveArray, windowW * scale)
@@ -244,9 +244,11 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return _windowWidthHeight()
     },
     addPXChild: function(item) {
+        if(AppStore.Detector.oldIE) return
         AppStore.PXContainer.add(item.child)
     },
     removePXChild: function(item) {
+        if(AppStore.Detector.oldIE) return
         AppStore.PXContainer.remove(item.child)
     },
     getTimeline: function() {

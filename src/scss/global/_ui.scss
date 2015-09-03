@@ -172,7 +172,7 @@ a {
     margin-left: -$w/2;
     margin-top: -$w/2;
     z-index: 100;
-    background-color: red;
+    @include opacity(0);
     svg {
         .around {
             fill: transparent;
@@ -204,6 +204,7 @@ a {
     }
     .spinner-wrapper {
         @include opacity(0);
+        height: 100px;
     }
     .logo {
         @include opacity(0);
@@ -211,6 +212,7 @@ a {
         z-index: 2;
         $w: 200px;
         width: $w;
+        height: 70px;
         left: 50%;
         top: 44%;
         margin-top: -$w/2;

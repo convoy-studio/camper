@@ -5,7 +5,7 @@ import Router from 'Router'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import ArrowBtn from 'ArrowBtn'
-// import PlayBtn from 'PlayBtn'
+import PlayBtn from 'PlayBtn'
 import RectangleBtn from 'RectangleBtn'
 import TitleSwitcher from 'TitleSwitcher'
 import CompassesContainer from 'CompassesContainer'
@@ -53,7 +53,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 					path: containerA.find('.spinner-wrapper svg path')
 				},
 				video: {
-					// playBtn: new PlayBtn(containerA.find('.play-btn')).componentDidMount(),
+					playBtn: new PlayBtn(containerA.find('.play-btn')).componentDidMount(),
 					el: containerA.find('.video-wrapper'),
 					container: containerA.find('.video-container'),
 				}
@@ -68,7 +68,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 					path: containerB.find('.spinner-wrapper svg path')
 				},
 				video: {
-					// playBtn: new PlayBtn(containerB.find('.play-btn')).componentDidMount(),
+					playBtn: new PlayBtn(containerB.find('.play-btn')).componentDidMount(),
 					el: containerB.find('.video-wrapper'),
 					container: containerB.find('.video-container'),
 				}
@@ -90,6 +90,10 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.downBtn.btnClicked = this.bottomClicked
 		this.downBtn.componentDidMount()
 
+		if(AppStore.Detector.oldIE || AppStore.Detector.isMobile) {
+			this.downBtn.element.css('display','none')
+		}
+
 		this.buyBtn = new TitleSwitcher(this.child.find('.buy-btn'), this.child.find('.dots-rectangle-btn'), this.infos['buy_title'])
 		this.buyBtn.componentDidMount()
 
@@ -99,9 +103,9 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 			this.compassesContainer.componentDidMount()
 		}
 
-		// this.onVideoMouseEnter = this.onVideoMouseEnter.bind(this)
-		// this.onVideoMouseLeave = this.onVideoMouseLeave.bind(this)
-		// this.onVideoClick = this.onVideoClick.bind(this)
+		this.onVideoMouseEnter = this.onVideoMouseEnter.bind(this)
+		this.onVideoMouseLeave = this.onVideoMouseLeave.bind(this)
+		this.onVideoClick = this.onVideoClick.bind(this)
 
 		this.checkCurrentProductByUrl()
 		this.updateColors()
@@ -112,28 +116,29 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		super.componentDidMount()
 	}
 	addVideoEvents() {
-		// if(this.currentContainer == undefined) return
-		// this.currentContainer.video.el.on('mouseenter', this.onVideoMouseEnter)
-		// this.currentContainer.video.el.on('mouseleave', this.onVideoMouseLeave)
-		// this.currentContainer.video.el.on('click', this.onVideoClick)
+		if(this.currentContainer == undefined) return
+		this.currentContainer.video.el.on('mouseenter', this.onVideoMouseEnter)
+		this.currentContainer.video.el.on('mouseleave', this.onVideoMouseLeave)
+		this.currentContainer.video.el.on('click', this.onVideoClick)
 	}
 	removeVideoEvents() {
-		// if(this.currentContainer == undefined) return
-		// this.currentContainer.video.el.off('mouseenter', this.onVideoMouseEnter)
-		// this.currentContainer.video.el.off('mouseleave', this.onVideoMouseLeave)
-		// this.currentContainer.video.el.off('click', this.onVideoClick)
+		if(this.currentContainer == undefined) return
+		this.currentContainer.video.el.off('mouseenter', this.onVideoMouseEnter)
+		this.currentContainer.video.el.off('mouseleave', this.onVideoMouseLeave)
+		this.currentContainer.video.el.off('click', this.onVideoClick)
 	}
 	onVideoMouseEnter(e) {
 		e.preventDefault()
-		this.currentContainer.video.play.addClass('hovered')
+		this.currentContainer.video.playBtn.mouseOver()
 	}
 	onVideoMouseLeave(e) {
 		e.preventDefault()
-		this.currentContainer.video.play.removeClass('hovered')
+		this.currentContainer.video.playBtn.mouseOut()
 	}
 	onVideoClick(e) {
 		e.preventDefault()
 		this.assignVideoToNewContainer()
+		this.currentContainer.video.playBtn.close()
 	}
 	updateTitles(title, name) {
 		var planetTitle = this.titleContainer.planetTitle
@@ -247,6 +252,8 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.currentContainer.spinner.path.css('fill', c)
 		this.currentContainer.video.el.css('background-color', c)
 
+		this.currentContainer.video.playBtn.open()
+
 		var $buyBtn = this.buyBtn.element
 		var buyUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+this.products[this.currentIndex]['product-url']
 		$buyBtn.attr('href', buyUrl)
@@ -321,7 +328,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		setTimeout(()=>{
 			this.animationRunning = false
 			this.removePreviousContainerAssets()
-			this.assignVideoToNewContainer()
+			// this.assignVideoToNewContainer()
 		}, this.timeoutTime)
 	}
 	removePreviousContainerAssets() {
@@ -459,6 +466,11 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		var previousXPos = (AppStore.Detector.isMobile) ? 0 : (this.videoCss.left >> 1) - (this.previousBtn.width >> 1) - 4
 		var nextXPos = (AppStore.Detector.isMobile) ? windowW - this.previousBtn.width : (this.videoCss.left + this.videoCss.width) + ((windowW - (this.videoCss.left + this.videoCss.width)) >> 1) - (this.nextBtn.width >> 1) + 4
 
+		if(AppStore.Detector.oldIE) {
+			previousXPos += 40
+			nextXPos -= 40
+		}
+
 		this.previousBtn.position(
 			previousXPos,
 			(windowH >> 1) - (this.previousBtn.height >> 1)
@@ -479,6 +491,9 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		$(document).off('keydown', this.onKeyPressed)
 		clearTimeout(this.videoAssignTimeout)
 		if(!AppStore.Detector.isMobile) this.compassesContainer.componentWillUnmount()
+		this.containers['product-container-a'].video.playBtn.componentWillUnmount()
+		this.containers['product-container-b'].video.playBtn.componentWillUnmount()
+		this.removeVideoEvents()
 		this.previousBtn.componentWillUnmount()
 		this.nextBtn.componentWillUnmount()
 		this.buyBtn.componentWillUnmount()

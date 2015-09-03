@@ -95,19 +95,32 @@ export default class ArrowBtn {
 		this.tlOut.to(knotsEl[3], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
 		this.tlOut.to(knotsEl[4], 1, { x:0, y:0, force3D:true, ease:Elastic.easeOut }, 0)
 
-		switch(this.direction) {
-			case AppConstants.LEFT:
-				break
-			case AppConstants.RIGHT:
-				TweenMax.set(this.element, { rotation:'180deg', transformOrigin: '50% 50%' })
-				break
-			case AppConstants.TOP:
-				TweenMax.set(this.element, { rotation:'90deg', transformOrigin: '50% 50%' })
-				break
-			case AppConstants.BOTTOM:
-				TweenMax.set(this.element, { rotation:'-90deg', transformOrigin: '50% 50%' })
-				break
+		if(AppStore.Detector.oldIE) {
+			switch(this.direction) {
+				case AppConstants.RIGHT:
+					this.element.html('<img src=' + AppStore.baseMediaPath() + 'image/arrow-next.png' +'>')
+					break
+				case AppConstants.LEFT:
+					this.element.html('<img src=' + AppStore.baseMediaPath() + 'image/arrow-previous.png' +'>')
+					break
+			}
+
+		}else{
+			switch(this.direction) {
+				case AppConstants.LEFT:
+					break
+				case AppConstants.RIGHT:
+					TweenMax.set(this.element, { rotation:'180deg', transformOrigin: '50% 50%' })
+					break
+				case AppConstants.TOP:
+					TweenMax.set(this.element, { rotation:'90deg', transformOrigin: '50% 50%' })
+					break
+				case AppConstants.BOTTOM:
+					TweenMax.set(this.element, { rotation:'-90deg', transformOrigin: '50% 50%' })
+					break
+			}
 		}
+
 
 		this.tlOver.pause(0)
 		this.tlOut.pause(0)

@@ -137,33 +137,11 @@
 				"name": "FISS",
 				"color": "0xdb3076",
 				"video-id": "8fbp0pbww8",
-				"product-url": "/women/shoes/fiss/camper-fiss-K400029-001",
-				"knots": [
-					{"x":-0.3, "y":-0.1},
-					{"x":-0.6, "y":-0.4},
-					{"x":-0.6, "y":-0.6}
-				]
-			},{
-				"id": 5,
-				"name": "FISS",
-				"color": "0xdb3076",
-				"video-id": "8fbp0pbww8",
 				"product-url": "/women/shoes/fiss/camper-fiss-K400031-003",
 				"knots": [
 					{"x":0.0, "y":-0.8},
 					{"x":0.2, "y":-0.6},
 					{"x":-0.1, "y":-0.1}
-				]
-			},{
-				"id": 6,
-				"name": "FISS",
-				"color": "0xf4ecda",
-				"video-id": "8fbp0pbww8",
-				"product-url": "/women/shoes/laika/camper-laika-K400035-001",
-				"knots": [
-					{"x":-0.1, "y":0.1},
-					{"x":-0.2, "y":0.4},
-					{"x":0.3, "y":0.5}
 				]
 			}
 		],
@@ -266,7 +244,7 @@
 				"id": 0,
 				"name": "VINTAR",
 				"color": "0xd79b7a",
-				"video-id": "gldrv27k76",
+				"video-id": "1mevrxz7v6",
 				"product-url": "/men/shoes/vintar/camper-vintar-K300048-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -277,7 +255,7 @@
 				"id": 1,
 				"name": "BELUGA",
 				"color": "0x88a2c7",
-				"video-id": "1mevrxz7v6",
+				"video-id": "gldrv27k76",
 				"product-url": "/women/shoes/beluga/camper-beluga-K400015-001",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
@@ -291,7 +269,7 @@
 				"id": 0,
 				"name": "ENDURO",
 				"color": "0x2892c1",
-				"video-id": "9qbhhpb89b",
+				"video-id": "pnr81ri2xo",
 				"product-url": "/men/shoes/enduro/camper-enduro-K300020-001",
 				"knots": [
 					{"x":-0.2, "y":0.3},
@@ -302,7 +280,7 @@
 				"id": 1,
 				"name": "ENDURO",
 				"color": "0x62a8bb",
-				"video-id": "pnr81ri2xo",
+				"video-id": "9qbhhpb89b",
 				"product-url": "/women/shoes/enduro/camper-enduro-K400025-002",
 				"knots": [
 					{"x":0.3, "y":-0.6},

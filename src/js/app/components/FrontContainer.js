@@ -17,8 +17,7 @@ class FrontContainer extends BaseComponent {
 		scope.labUrl = generaInfos['lab_url']
 		scope.menShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/men/shoes/new-collection'
 		scope.womenShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/women/shoes/new-collection'
-		scope.legalUrl = 'http://www.camper.com/html/legal/privacy_'+JS_lang+'.html'
-		scope.isMobile = AppStore.Detector.isMobile
+		scope.isMobile = (AppStore.Detector.oldIE) ? false : AppStore.Detector.isMobile
 
 		if(scope.isMobile) {
 			scope.mobileMenu = [
@@ -26,7 +25,6 @@ class FrontContainer extends BaseComponent {
 				{ id:'shop-men', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_men'], url:scope.menShopUrl },
 				{ id:'shop-women', name:scope.infos['shop_title'] + ' ' + scope.infos['shop_women'], url:scope.womenShopUrl },
 				{ id:'lab', name:scope.infos['camper_lab'], url:scope.labUrl },
-				{ id:'legal', name:scope.infos['legal'], url:scope.legalUrl },
 			]
 		}
 
@@ -54,10 +52,20 @@ class FrontContainer extends BaseComponent {
 		this.$socialIconsContainer = this.$socialWrapper.find('ul')
 		this.$socialBtns = this.$socialWrapper.find('li')
 		this.$camperLab = this.child.find('.camper-lab')
-		this.$legal = this.child.find('.legal')
 		this.$shop = this.child.find('.shop-wrapper')
 		this.$home = this.child.find('.home-btn')
 		this.countriesH = 0
+
+		if(AppStore.Detector.oldIE) {
+			var $logo = this.child.find('.logo')
+			var $facebook = this.child.find('#footer .facebook a')
+			var $twitter = this.child.find('#footer .twitter a')
+			var $instagram = this.child.find('#footer .instagram a')
+			$logo.html('<img src=' + AppStore.baseMediaPath() + 'image/logo.png' +'>')
+			$facebook.html('<img src=' + AppStore.baseMediaPath() + 'image/facebook.png' +'>')
+			$twitter.html('<img src=' + AppStore.baseMediaPath() + 'image/twitter.png' +'>')
+			$instagram.html('<img src=' + AppStore.baseMediaPath() + 'image/instagram.png' +'>')
+		}
 
 		this.onSubMenuMouseEnter = this.onSubMenuMouseEnter.bind(this)
 		this.onSubMenuMouseLeave = this.onSubMenuMouseLeave.bind(this)
@@ -154,17 +162,12 @@ class FrontContainer extends BaseComponent {
 			left: shopCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
-		var legalCss = {
-			left: AppConstants.PADDING_AROUND,
-			top: windowH - AppConstants.PADDING_AROUND - this.$legal.height(),	
-		}
 
 		this.$socialWrapper.css(socialCss)
 		this.$camperLab.css(camperLabCss)
 		this.$shop.css(shopCss)
 		this.$socialIconsContainer.css(socialIconsCss)
 		this.$home.css(homeCss)
-		this.$legal.css(legalCss)
 
 		if(AppStore.Detector.isMobile) {
 			this.resizeMobile()

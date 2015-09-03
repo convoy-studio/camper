@@ -17,6 +17,14 @@ class App {
 
 			AppStore.Detector.isMobile = (md.mobile() || md.tablet()) ? true : false
 
+			var $appContainer = $('#app-container')
+			AppStore.Detector.oldIE = $appContainer.is('.ie6, .ie7, .ie8')
+			// AppStore.Detector.oldIE = true
+
+			if(AppStore.Detector.oldIE) {
+				AppStore.Detector.isMobile = true
+			}
+
 			// Init Preloader
 			AppStore.Preloader = new Preloader()
 

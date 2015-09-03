@@ -1,8 +1,8 @@
 import BaseComponent from 'BaseComponent'
 import {PagerStore, PagerActions, PagerConstants, PagerDispatcher} from 'Pager'
-import _capitalize from 'lodash/String/capitalize'
 import template from 'PagesContainer_hbs'
 import AppStore from 'AppStore'
+import Utils from 'Utils'
 
 class BasePager extends BaseComponent {
 	constructor() {
@@ -52,7 +52,7 @@ class BasePager extends BaseComponent {
 		if(oldComponent != undefined) oldComponent.child.css('z-index', 1)
 	}
 	setupNewComponent(hash, template) {
-		var id = _capitalize(hash.replace("/", ""))
+		var id = Utils.CapitalizeFirstLetter(hash.replace("/", ""))
 		this.oldPageDivRef = this.currentPageDivRef
 		this.currentPageDivRef = (this.currentPageDivRef === 'page-a') ? 'page-b' : 'page-a'
 		var el = this.child.find('#'+this.currentPageDivRef)

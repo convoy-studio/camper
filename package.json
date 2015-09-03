@@ -42,7 +42,9 @@
     "hbsfy": "^2.2.1",
     "imagemin-pngcrush": "^4.1.0",
     "imagemin-pngquant": "^4.1.0",
+    "is": "^3.0.1",
     "lazypipe": "^0.2.3",
+    "lodash": "^3.10.1",
     "node-dir": "^0.1.8",
     "python-shell": "^0.1.0",
     "readable-stream": "^2.0.0",
@@ -58,22 +60,15 @@
   },
   "devDependencies": {
     "bezier-easing": "^1.1.1",
-    "by": "^0.2.3",
     "crossroads": "^0.12.0",
     "eventemitter2": "^0.4.14",
     "flux-dispatcher": "^1.0.6",
     "glslify": "^2.2.1",
     "hasher": "^1.2.0",
-    "is": "^3.0.1",
     "jquery": "^1.11.3",
-    "lodash": "^3.10.1",
     "mobile-detect": "^1.2.1",
     "object-assign": "^3.0.0",
-    "objectpool": "0.0.2",
-    "require-globify": "^1.2.1",
-    "to-slug-case": "^0.1.2",
-    "wheel": "0.0.3",
-    "wheel-inertia": "0.0.2"
+    "to-slug-case": "^0.1.2"
   },
   "repository": {
     "type": "git",

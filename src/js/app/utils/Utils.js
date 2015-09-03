@@ -90,7 +90,16 @@ class Utils {
 		div.style.transform       = style
     }
     static Translate(div, x, y, z) {
-    	Utils.Style(div, 'translate3d('+x+'px,'+y+'px,'+z+'px)')
+
+    	if ('webkitTransform' in document.body.style || 'mozTransform' in document.body.style || 'oTransform' in document.body.style || 'transform' in document.body.style) {
+    		Utils.Style(div, 'translate3d('+x+'px,'+y+'px,'+z+'px)')
+		}else{
+			$(div).css({
+				top:y,
+				left:x
+			})
+		}
+
     }
     static UUID() {
 		function s4() {
@@ -111,6 +120,9 @@ class Utils {
 		item.vx *= friction
 		item.vy *= friction
     }
+    static CapitalizeFirstLetter(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 }
 
 export default Utils

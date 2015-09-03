@@ -68,16 +68,19 @@
 					<img src="{{empty-image}}">
 				</div>
 				<div class="video-wrapper btn">
-					{{! <div class="play-btn">
-						<svg>
-							<circle class="around" />
-							<circle class="knot" />
-							<circle class="knot" />
-							<circle class="knot" />
-							<line class="line"/>
-							<line class="line"/>
-						</svg>
-					</div> }}
+					<div class="play-btn">
+						{{#if isOldIE}}
+						{{else}}
+							<svg>
+								<circle class="around" />
+								<circle class="knot" />
+								<circle class="knot" />
+								<circle class="knot" />
+								<line class="line"/>
+								<line class="line"/>
+							</svg>
+						{{/if}}
+					</div>
 					<div class="video-container btn"></div>
 				</div>
 			</div>
@@ -93,16 +96,19 @@
 					<img src="{{empty-image}}">
 				</div>
 				<div class="video-wrapper btn">
-					{{! <div class="play-btn">
-						<svg>
-							<circle class="around" />
-							<circle class="knot" />
-							<circle class="knot" />
-							<circle class="knot" />
-							<line class="line"/>
-							<line class="line"/>
-						</svg>
-					</div> }}
+					<div class="play-btn">
+						{{#if isOldIE}}
+						{{else}}
+							<svg>
+								<circle class="around" />
+								<circle class="knot" />
+								<circle class="knot" />
+								<circle class="knot" />
+								<line class="line"/>
+								<line class="line"/>
+							</svg>
+						{{/if}}
+					</div>
 					<div class="video-container btn"></div>
 				</div>
 			</div>

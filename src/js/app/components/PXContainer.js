@@ -13,14 +13,24 @@ export default class PXContainer {
 		if(AppStore.Detector.isMobile) {
 		} else {
 			this.renderer = new PIXI.autoDetectRenderer(1, 1, { antialias: true })
-			this.oldColor = "0xffffff"
-			this.newColor = "0xffffff"
-			this.colorTween = {color:this.oldColor}
+			this.currentColor = undefined
 			var el = $(elementId)
 			$(this.renderer.view).attr('id', 'px-container')
 			el.append(this.renderer.view)
 			this.stage = new PIXI.Container()
+			this.background = new PIXI.Graphics()
+			this.drawBackground(0x000000)
+			this.stage.addChild(this.background)
 		}
+	}
+	drawBackground(color) {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+
+		this.background.lineStyle(0);
+		this.background.beginFill(color, 1);
+		this.background.drawRect(0, 0, windowW, windowH);
+		this.background.endFill();
 	}
 	add(child) {
 		if(AppStore.Detector.isMobile) return
@@ -41,24 +51,24 @@ export default class PXContainer {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.renderer.resize(windowW * scale, windowH * scale)
+
+		this.drawBackground(this.currentColor)
 	}
 	didHasherChange() {
 		var pageId = AppStore.getPageId()
 		var palette = AppStore.paletteColorsById(pageId)
-		// this.oldColor = this.newColor
-		// this.newColor = palette[0]
-		// console.log(this.oldColor, this.newColor)
-		// if(palette != undefined) TweenMax.to(this.renderer, 1, { colorProps: {backgroundColor:"red"}})
-		// if(palette != undefined) TweenMax.to(this.colorTween, 1, { colorProps: {color:this.newColor}, onUpdate: ()=>{
-		// 	console.log(this.colorTween.color)
-		// }})
 		if(AppStore.Detector.isMobile) {
 			if(palette != undefined) {
 				var c = palette[0]
+				this.currentColor = c
 				$('html').css('background-color', c.replace('0x', '#'))
 			}
 		}else{
-			if(palette != undefined) this.renderer.backgroundColor = palette[0]
+			if(palette != undefined) {
+				var c = palette[0]
+				this.currentColor = c
+				this.drawBackground(c)
+			}
 		}
 	}
 }

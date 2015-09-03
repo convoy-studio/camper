@@ -5,7 +5,6 @@ import App from 'App'
 import $ from 'jquery'
 import TweenMax from 'gsap'
 import raf from 'raf'
-import pixi from 'pixi.js'
 import wheel from 'jquery-mousewheel'
 
 window.jQuery = window.$ = $

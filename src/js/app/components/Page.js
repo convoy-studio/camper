@@ -42,7 +42,7 @@ export default class Page extends BasePage {
 	update() {
 	}
 	componentWillUnmount() {
-		this.pxContainer.removeChildren()
+		if(!AppStore.Detector.oldIE) this.pxContainer.removeChildren()
 		AppStore.releaseContainer(this.pxContainer)
 		AppStore.off(AppConstants.WINDOW_RESIZE, this.resize)
 		super.componentWillUnmount()

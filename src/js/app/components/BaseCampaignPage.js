@@ -7,10 +7,10 @@ import Utils from 'Utils'
 export default class BaseCampaignPage extends BasePlanetPage {
 	constructor(props) {
 		props.data.isMobile = AppStore.Detector.isMobile
-
+		props.data.isOldIE = AppStore.Detector.oldIE
 		super(props)
 		this.pxScrollContainer = AppStore.getContainer()
-		this.pxContainer.addChild(this.pxScrollContainer)
+		if(!AppStore.Detector.oldIE) this.pxContainer.addChild(this.pxScrollContainer)
 		this.pageHeight = 0
 		this.scrollTarget = 0
 	}
@@ -82,7 +82,7 @@ export default class BaseCampaignPage extends BasePlanetPage {
 	}
 	componentWillUnmount() {
 		if(!AppStore.Detector.isMobile) this.scrollbar.componentWillUnmount()
-		this.pxScrollContainer.removeChildren()
+		if(!AppStore.Detector.oldIE) this.pxScrollContainer.removeChildren()
 		AppStore.releaseContainer(this.pxScrollContainer)
 		$(window).off("mousewheel", this.onWheel)
 		super.componentWillUnmount()
