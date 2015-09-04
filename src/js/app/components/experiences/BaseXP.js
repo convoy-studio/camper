@@ -1,8 +1,10 @@
 import AppStore from 'AppStore'
 
 export default class BaseXP {
-	constructor(parentContainer) {
+	constructor(parentContainer, parentElement, topParent) {
 		this.pxContainer = AppStore.getContainer()
+		this.element = parentElement
+		this.parent = topParent
 		this.parentContainer = parentContainer
 		this.parentContainer.addChild(this.pxContainer)
 	}

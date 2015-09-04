@@ -238,6 +238,10 @@ a {
         @include anim(.6s, 0s, $easeInOutExpo, scale(1.1), 50%, 50%, transform opacity);
     }
 }
+.xp-button {
+    cursor: pointer;
+    position: absolute;
+}
 #planet.page-wrapper {
     .compasses-texts-wrapper {
         position: absolute;

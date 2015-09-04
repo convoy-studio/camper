@@ -48,8 +48,8 @@ class BasePager extends BaseComponent {
 	switchPagesDivIndex() {
 		var newComponent = this.components['new-component']
 		var oldComponent = this.components['old-component']
-		if(newComponent != undefined) newComponent.child.css('z-index', 2)
-		if(oldComponent != undefined) oldComponent.child.css('z-index', 1)
+		if(newComponent != undefined) newComponent.parent.css('z-index', 2)
+		if(oldComponent != undefined) oldComponent.parent.css('z-index', 1)
 	}
 	setupNewComponent(hash, template) {
 		var id = Utils.CapitalizeFirstLetter(hash.replace("/", ""))

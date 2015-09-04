@@ -59,7 +59,6 @@ var watch = argv._.length ? argv._[0] === 'watch' : true;
 var production = deploy
 var browserSync = require("browser-sync")
 browserSync.create('My Server')
-console.log(!production)
 var bundler = browserify({
     entries: 'src/js/Main.js',
     extensions: ['.js'],
@@ -167,12 +166,24 @@ var tasks = {
         
         return rebundle();
     },
-
     optimize: function() {
-
         var paths = {
             files: './deploy/**',
             filesDest: './deploy',
+        };
+
+        return gulp.src(paths.files, {base: paths.filesDest})
+            .pipe(imagemin({
+                progressive: true,
+                svgoPlugins: [{removeViewBox: false}],
+                use: [pngquant()]
+            }))
+            .pipe(gulp.dest(paths.filesDest));
+    },
+    optimizePngs: function() {
+        var paths = {
+            files: './www/image/**',
+            filesDest: './www/image',
         };
 
         return gulp.src(paths.files, {base: paths.filesDest})
@@ -291,6 +302,7 @@ gulp.task('deployDir', tasks.deployDir);
 gulp.task('deployCopy', tasks.deployCopy);
 gulp.task('transform', tasks.transform);
 gulp.task('optimize', tasks.optimize);
+gulp.task('optimize-pngs', tasks.optimizePngs);
 gulp.task('build-vendor', tasks.buildVendor);
 gulp.task('build-app', tasks.buildApp);
 
@@ -310,6 +322,8 @@ gulp.task('deploy', gulpsync.sync([
 ]));
 
 gulp.task('default', [ 'build', 'watch']);
+
+
 
 // gulp (watch) : for development and browser reload
 // gulp build : for a one off development build

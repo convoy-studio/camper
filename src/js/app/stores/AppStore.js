@@ -63,7 +63,7 @@ function _addBasePathsToUrls(urls, pageId, targetId, type) {
     return manifest
 }
 function _getPageAssetsBasePathById(id, assetGroupId) {
-    return AppStore.baseMediaPath() + '/image/planets/' + id + '/' + assetGroupId + '/'
+    return AppStore.baseMediaPath() + 'image/planets/' + id + '/' + assetGroupId + '/'
 }
 function _getMenuContent() {
     return data.menu
@@ -123,6 +123,17 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     getEmptyImgUrl: function() {
         return AppStore.getEnvironment().static + 'image/empty.png'
+    },
+    videoExtensionSupport: function() {
+        if (Modernizr.video) {
+            if (Modernizr.video.h264) {
+                return 'mp4'
+            } else if (Modernizr.video.webm) {
+                return 'webm'
+            } else if (Modernizr.video.ogg){
+                return 'ogv'
+            }
+        }
     },
     mainImageUrl: function(id, responsiveArray) {
         return AppStore.baseMediaPath() + 'image/planets/' + id + '/main-' + AppStore.responsiveImageWidth(responsiveArray) + '.jpg'

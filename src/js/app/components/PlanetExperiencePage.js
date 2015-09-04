@@ -19,9 +19,9 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		var infos = AppStore.generalInfosLangScope()
 
 		var XpClazz = this.getExperienceById(this.id)
-		this.experience = new XpClazz(this.pxContainer)
+		this.experience = new XpClazz(this.pxContainer, this.child, this.parent)
 		this.experience.componentDidMount()
-		
+
 		// this.goCampaignBtn = new RectangleBtn(this.child.find('.go-campaign-btn'), infos.campaign_title)
 		// this.goCampaignBtn.btnClicked = this.onGoCampaignClicked
 		// this.goCampaignBtn.componentDidMount()
