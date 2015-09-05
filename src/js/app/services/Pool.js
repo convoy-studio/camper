@@ -4,7 +4,7 @@ import SpringGarden from 'SpringGarden'
 export default class Pool {
 	constructor() {
 		var planets = AppStore.planets()
-		var pxContainerNum = 20 + (planets.length * 1)
+		var pxContainerNum = 22 + (planets.length * 1)
 		var graphicsNum = (planets.length * 3) - 2
 		var spritesNum = planets.length
 		var springGardensNum = 12

@@ -26,7 +26,6 @@ export default class AlaskaXP extends BaseXP {
 		this.button = $('<div class="xp-button"></div>')
 		this.element.append(this.button)
 
-		// this.element.css('cursor', 'pointer')
 		this.particleContainer = new PIXI.Container()
 
 	 	this.twistFilter = new PIXI.filters.TwistFilter()
@@ -96,11 +95,15 @@ export default class AlaskaXP extends BaseXP {
 		this.rocks = {
 			'rock-a': {
 				'front': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-0'))),
+				// 'front-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-0-normal_NRM')),
 				'back': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-1'))),
+				// 'back-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-1-normal_NRM')),
 				'holder': AppStore.getContainer(),
 				'wrapperFront': AppStore.getContainer(),
 				'wrapperBack': AppStore.getContainer(),
 				'wrapperShoe': AppStore.getContainer(),
+				'normalWrapperFront': AppStore.getContainer(),
+				'normalWrapperBack': AppStore.getContainer(),
 				'width': 677,
 				'height': 1056,
 				'paddingX': 30,
@@ -116,11 +119,15 @@ export default class AlaskaXP extends BaseXP {
 			},
 			'rock-b': {
 				'front': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-0'))),
+				// 'front-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-0-normal_NRM')),
 				'back': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-1'))),
+				// 'back-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-1-normal_NRM')),
 				'holder': AppStore.getContainer(),
 				'wrapperFront': AppStore.getContainer(),
 				'wrapperBack': AppStore.getContainer(),
 				'wrapperShoe': AppStore.getContainer(),
+				'normalWrapperFront': AppStore.getContainer(),
+				'normalWrapperBack': AppStore.getContainer(),
 				'width': 980,
 				'height': 825,
 				'paddingX': 50,
@@ -135,6 +142,33 @@ export default class AlaskaXP extends BaseXP {
 				}
 			}
 		}
+
+		// this.rocks['rock-a'].frontNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-a']['front-normal'])
+		// this.rocks['rock-a'].backNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-a']['back-normal'])
+		// this.rocks['rock-b'].frontNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-b']['front-normal'])
+		// this.rocks['rock-b'].backNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-b']['back-normal'])
+
+		// var gui = new dat.GUI();
+		// var that = this
+		// var DebugTxt = function() {
+		// 	this.offsetX = that.rocks['rock-a'].frontNormalFilter.offset.x
+		// 	this.offsetY = that.rocks['rock-a'].frontNormalFilter.offset.y
+		// };
+
+		// var text = new DebugTxt();
+		// $(gui.domElement).parent().css('z-index', 9999)
+
+		// gui.add(text, 'offsetX', 0, 500).onChange(function(value) {
+		// 	that.currentRock.frontNormalFilter.scale.x = value
+		// });
+
+
+		// this.rocks['rock-a'].normalWrapperFront.filters = [this.rocks['rock-a'].frontNormalFilter]
+		// this.rocks['rock-a'].normalWrapperBack.filters = [this.rocks['rock-a'].backNormalFilter]
+		// this.rocks['rock-b'].normalWrapperFront.filters = [this.rocks['rock-b'].frontNormalFilter]
+		// this.rocks['rock-b'].normalWrapperBack.filters = [this.rocks['rock-b'].backNormalFilter]
+
+		// console.log(this.rocks['rock-a'].front, this.rocks['rock-a'].back)
 
 		this.shoes = [
 			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-0'))),
@@ -250,22 +284,30 @@ export default class AlaskaXP extends BaseXP {
 		rock.holder.addChildAt(rock.wrapperBack, 0)
 		rock.holder.addChildAt(rock.wrapperShoe, 1)
 		rock.holder.addChildAt(rock.wrapperFront, 2)
-		rock.wrapperBack.addChild(rock.back)
-		rock.wrapperFront.addChild(rock.front)
+
+		rock.wrapperBack.addChild(rock.normalWrapperBack)
+		rock.wrapperFront.addChild(rock.normalWrapperFront)
+		rock.normalWrapperBack.addChild(rock.back)
+		rock.normalWrapperFront.addChild(rock.front)
+
 		rock.back.anchor.x = 0.5
 		rock.back.anchor.y = 0.5
-		rock.back.scale.x = scale
-		rock.back.scale.y = scale
 		rock.front.anchor.x = 0.5
 		rock.front.anchor.y = 0.5
-		rock.front.scale.x = scale
-		rock.front.scale.y = scale
+		rock.normalWrapperBack.pivot.x = 0.5
+		rock.normalWrapperBack.pivot.y = 0.5
+		rock.normalWrapperBack.scale.x = scale
+		rock.normalWrapperBack.scale.y = scale
+		rock.normalWrapperFront.pivot.x = 0.5
+		rock.normalWrapperFront.pivot.y = 0.5
+		rock.normalWrapperFront.scale.x = scale
+		rock.normalWrapperFront.scale.y = scale
 		rock.holder.pivot.x = 0.5
 		rock.holder.pivot.y = 0.5
-		rock.front.x = (rock.paddingX) + (rock.offsetX)
-		rock.front.y = (rock.paddingY) + (rock.offsetY)
-		rock.back.x = -(rock.paddingX) + (rock.offsetX)
-		rock.back.y = -(rock.paddingY) + (rock.offsetY)
+		rock.normalWrapperFront.x = (rock.paddingX) + (rock.offsetX)
+		rock.normalWrapperFront.y = (rock.paddingY) + (rock.offsetY)
+		rock.normalWrapperBack.x = -(rock.paddingX) + (rock.offsetX)
+		rock.normalWrapperBack.y = -(rock.paddingY) + (rock.offsetY)
 		rock.width *= scale
 		rock.height *= scale
 		rock.wrapperFront.toX = 0
@@ -288,12 +330,12 @@ export default class AlaskaXP extends BaseXP {
     	this.twistFilter.angle -= (this.twistFilter.angle + 0.001) * 0.1
 
 		this.currentRock.anim.time += 0.04
-		this.currentRock.back.x = -(this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.cos(this.currentRock.anim.time) * 5
-		this.currentRock.back.y = -(this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.sin(this.currentRock.anim.time) * 22
-		this.currentRock.front.x = (this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.cos(this.currentRock.anim.time) * 4
-		this.currentRock.front.y = (this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.sin(this.currentRock.anim.time) * 22
-		this.currentRock.back.rotation = Math.sin(this.currentRock.anim.time) * 0.02
-		this.currentRock.front.rotation = Math.cos(this.currentRock.anim.time) * 0.02
+		this.currentRock.normalWrapperBack.x = -(this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.cos(this.currentRock.anim.time) * 5
+		this.currentRock.normalWrapperBack.y = -(this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.sin(this.currentRock.anim.time) * 22
+		this.currentRock.normalWrapperFront.x = (this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.cos(this.currentRock.anim.time) * 4
+		this.currentRock.normalWrapperFront.y = (this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.sin(this.currentRock.anim.time) * 22
+		this.currentRock.normalWrapperBack.rotation = Math.sin(this.currentRock.anim.time) * 0.02
+		this.currentRock.normalWrapperFront.rotation = Math.cos(this.currentRock.anim.time) * 0.02
 
 		this.currentShoe.rotation = Math.cos(this.currentRock.anim.time*0.8) * 0.1
 
@@ -337,10 +379,14 @@ export default class AlaskaXP extends BaseXP {
 		this.rocks[id].wrapperFront.removeChildren()
 		this.rocks[id].wrapperBack.removeChildren()
 		this.rocks[id].wrapperShoe.removeChildren()
+		this.rocks[id].normalWrapperFront.removeChildren()
+		this.rocks[id].normalWrapperBack.removeChildren()
 		AppStore.releaseContainer(this.rocks[id].holder)
 		AppStore.releaseContainer(this.rocks[id].wrapperFront)
 		AppStore.releaseContainer(this.rocks[id].wrapperBack)
 		AppStore.releaseContainer(this.rocks[id].wrapperShoe)
+		AppStore.releaseContainer(this.rocks[id].normalWrapperFront)
+		AppStore.releaseContainer(this.rocks[id].normalWrapperBack)
 	}
 	componentWillUnmount() {
 		this.removeFromRockById('rock-a')

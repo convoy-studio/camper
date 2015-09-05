@@ -51,7 +51,6 @@ export default class PXContainer {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.renderer.resize(windowW * scale, windowH * scale)
-
 		this.drawBackground(this.currentColor)
 	}
 	didHasherChange() {
