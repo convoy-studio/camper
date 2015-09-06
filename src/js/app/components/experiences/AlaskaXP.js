@@ -389,6 +389,7 @@ export default class AlaskaXP extends BaseXP {
 		AppStore.releaseContainer(this.rocks[id].normalWrapperBack)
 	}
 	componentWillUnmount() {
+		this.pxContainer.filters = null
 		this.removeFromRockById('rock-a')
 		this.removeFromRockById('rock-b')
 		this.button.off('click', this.onClick)

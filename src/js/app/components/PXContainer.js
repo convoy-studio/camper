@@ -12,7 +12,11 @@ export default class PXContainer {
 
 		if(AppStore.Detector.isMobile) {
 		} else {
-			this.renderer = new PIXI.autoDetectRenderer(1, 1, { antialias: true })
+			var renderOptions = {
+			    resolution: 1,
+			    antialias: true
+			};
+			this.renderer = new PIXI.autoDetectRenderer(1, 1, renderOptions)
 			this.currentColor = undefined
 			var el = $(elementId)
 			$(this.renderer.view).attr('id', 'px-container')

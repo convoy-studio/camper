@@ -502,13 +502,9 @@
 			"id": "alaska",
 			"experience-assets": [
 				"rock-0-0.png",
-				"rock-0-0-normal_NRM.jpg",
 				"rock-0-1.png",
-				"rock-0-1-normal_NRM.jpg",
 				"rock-1-0.png",
-				"rock-1-0-normal_NRM.jpg",
 				"rock-1-1.png",
-				"rock-1-1-normal_NRM.jpg",
 				"particle.png",
 				"shoe-0.png",
 				"shoe-1.png",
@@ -528,6 +524,10 @@
 		"/planet/gemstone": {
 			"id": "gemstone",
 			"experience-assets": [
+				"texture.jpg",
+				"shoe-0.png",
+				"shoe-1.png",
+				"shoe-2.png",
 			],
 			"campaign-assets": [
 			]
