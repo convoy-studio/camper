@@ -1,6 +1,7 @@
 import BaseXP from 'BaseXP'
 import AppStore from 'AppStore'
 import Vec2 from 'Vec2'
+import Utils from 'Utils'
 const glslify = require('glslify')
 
 export default class GemStoneXP extends BaseXP {
@@ -8,9 +9,6 @@ export default class GemStoneXP extends BaseXP {
 		super(parentContainer, parentElement)
 	}
 	componentDidMount() {
-		super.componentDidMount()
-		this.onMouseMove = this.onMouseMove.bind(this)
-		this.toggleActivationStep = this.toggleActivationStep.bind(this)
 		this.mouseVec = {
 			middle: new Vec2(0, 0),
 			normalMiddle: new Vec2(0, 0),
@@ -21,6 +19,8 @@ export default class GemStoneXP extends BaseXP {
 
 		this.stepsCounter = 0
 		this.state = 'normal'
+		this.shoeIndex = 0
+		this.counter = 0
 
 		this.button = $('<div class="xp-button"></div>')
 		this.element.append(this.button)
@@ -39,7 +39,17 @@ export default class GemStoneXP extends BaseXP {
 			iterations: {type: '1f', value: 1.0},
 	    })
 	    this.pxContainer.addChild(this.sprite)
-	    $('#app-container').on('mousemove', this.onMouseMove)
+
+	    this.illusion = {
+	    	holder: AppStore.getContainer(),
+	    	mask: new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-gradient-mask'))),
+	    	maskFilter: undefined,
+	    	shoeContainer: AppStore.getContainer(),
+	    	shoeWrapper: AppStore.getContainer(),
+	    	displacementMapTexture: new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-displacement-map'))),
+	    	backgroundSpr: new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-background-texture'))),
+	    }
+	    this.illusion.maskFilter = new PIXI.filters.DisplacementFilter(this.illusion.displacementMapTexture)
 
 	    this.shoes = [
 			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-0'))),
@@ -47,25 +57,62 @@ export default class GemStoneXP extends BaseXP {
 			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-2')))
 		]
 
+		this.onMouseMove = this.onMouseMove.bind(this)
+		this.toggleActivationStep = this.toggleActivationStep.bind(this)
 	    this.onMouseOver = this.onMouseOver.bind(this)
 		this.onMouseOut = this.onMouseOut.bind(this)
 		this.button.on('mouseenter', this.onMouseOver)
 		this.button.on('mouseleave', this.onMouseOut)
+	    $('#app-container').on('mousemove', this.onMouseMove)
+
+		this.setupIllusion()
+		super.componentDidMount()
+	}
+	setupIllusion() {
+		var ll = this.illusion
+		this.pxContainer.addChild(ll.holder)
+		ll.holder.addChild(ll.shoeContainer)
+		ll.shoeContainer.addChild(ll.backgroundSpr)
+		ll.shoeContainer.addChild(ll.shoeWrapper)
+		ll.holder.addChild(ll.mask)
+		ll.holder.addChild(ll.displacementMapTexture)
+
+		ll.backgroundSpr.anchor.x = 0.5
+		ll.backgroundSpr.anchor.y = 0.5
+		ll.displacementMapTexture.anchor.x = 0.5
+		ll.displacementMapTexture.anchor.y = 0.5
+		ll.mask.anchor.x = 0.5
+		ll.mask.anchor.y = 0.5
+		ll.holder.pivot.x = 0.5
+		ll.holder.pivot.y = 0.5
+		ll.shoeContainer.pivot.x = 0.5
+		ll.shoeContainer.pivot.y = 0.5
+		ll.shoeWrapper.pivot.x = 0.5
+		ll.shoeWrapper.pivot.y = 0.5
+		ll.mask.scale.x = 0
+		ll.mask.scale.y = 0
+		ll.backgroundSpr.scale.x = 0
+		ll.backgroundSpr.scale.y = 0
+
+		ll.holder.filters = [ll.maskFilter]
+		ll.shoeContainer.mask = ll.mask
 	}
 	onMouseOver(e) {
 		e.preventDefault()
 		this.activationInterval = setInterval(this.toggleActivationStep, 1000)
 	}
 	toggleActivationStep() {
-		this.stepsCounter += 1
+		this.stepsCounter += 2
 		if(this.stepsCounter > 5) {
 			this.resetActivationState()
 			this.stateToShowroom()
+			this.animateInShoe()
 			clearTimeout(this.showroomTimeout)
 			this.showroomTimeout = setTimeout(()=>{
 				this.state = 'normal'
-				this.updateMousePos()		
-			}, 2500)
+				this.updateMousePos()
+				this.animateOutShoe()
+			}, 2800)
 		}
 	}
 	stateToShowroom() {
@@ -74,6 +121,36 @@ export default class GemStoneXP extends BaseXP {
 	resetActivationState() {
 		this.stepsCounter = 0
 		clearInterval(this.activationInterval)
+	}
+	animateInShoe() {
+		var ll = this.illusion
+
+		this.shoeIndex += 1
+		this.shoeIndex = (this.shoeIndex > this.shoes.length-1) ? 0 : this.shoeIndex
+		this.shoeIndex = (this.shoeIndex < 0) ? this.shoes.length-1 : this.shoeIndex
+		this.currentShoe = this.shoes[this.shoeIndex]
+		this.currentShoe.anchor.x = 0.5
+		this.currentShoe.anchor.y = 0.5
+		ll.shoeWrapper.rotation = 0
+
+		TweenMax.fromTo(ll.backgroundSpr.scale, 2, {x:1.8, y:1.8}, { x:1.6, y:1.6, ease:Expo.easeOut })
+		TweenMax.fromTo(ll.mask.scale, 2, {x:0, y:0}, { x:4.1, y:3.6, ease:Elastic.easeOut })
+		TweenMax.fromTo(this.currentShoe.scale, 2, {x:0, y:0}, { x:1.2, y:1.2, ease:Elastic.easeOut })
+		TweenMax.fromTo(this.currentShoe, 2, {rotation:Utils.Rand(-1, 1)}, { rotation:0, ease:Elastic.easeOut })
+
+		ll.shoeWrapper.addChild(this.currentShoe)
+	}
+	animateOutShoe() {
+		var ll = this.illusion
+
+		TweenMax.to(ll.backgroundSpr.scale, 1.6, { x:0, y:0, ease:Expo.easeInOut })
+		TweenMax.to(ll.mask.scale, 1.4, { x:0, y:0, ease:Expo.easeInOut })
+		TweenMax.to(this.currentShoe.scale, 1.6, { x:0, y:0, ease:Expo.easeInOut })
+		TweenMax.to(ll.shoeWrapper, 1.6, { rotation:Utils.Rand(-3, -2), ease:Expo.easeInOut })
+
+		setTimeout(()=>{
+			ll.shoeWrapper.removeChild(this.currentShoe)
+		}, 1600)
 	}
 	resetValues() {
 		this.uniforms.zoom.value += (2 - this.uniforms.zoom.value) * 0.05
@@ -100,6 +177,18 @@ export default class GemStoneXP extends BaseXP {
 	update() {
 		super.update()
 
+		this.counter += 0.04
+
+		this.illusion.maskFilter.maskSprite.scale.x = 1 + Math.sin(this.counter) * 0.4
+		this.illusion.maskFilter.maskSprite.scale.y = 1 + Math.sin(this.counter) * 0.4
+		this.illusion.maskFilter.maskSprite.rotation += 0.01
+
+		this.illusion.shoeWrapper.rotation = Math.sin(this.counter) * 0.1
+		this.illusion.shoeWrapper.x = Math.sin(this.counter) * 10
+		this.illusion.shoeWrapper.y = Math.cos(this.counter) * 20
+		this.illusion.shoeWrapper.scale.x = 1 + Math.sin(this.counter) * 0.101
+		this.illusion.shoeWrapper.scale.y = 1 + Math.sin(this.counter) * 0.1
+
 		if(this.state == 'normal') {
 			var time = 0.005 + (0.02 - (this.mouseVec.normalDist * 0.02)) + (this.stepsCounter * 0.001)
 			time = Math.max(time, 0.007)
@@ -120,7 +209,6 @@ export default class GemStoneXP extends BaseXP {
 			this.mouseVec.normalDist = 1
 			var time = 0.001 + (0.02 - (this.mouseVec.normalDist * 0.02))
 			this.uniforms.time.value += time
-
 			this.resetValues()
 		}
 	}
@@ -144,12 +232,24 @@ export default class GemStoneXP extends BaseXP {
 			top: (windowH >> 1) - (buttonH >> 1)
 		})
 
+		this.illusion.holder.x = windowW >> 1
+		this.illusion.holder.y = windowH >> 1
+
 		super.resize()
 	}
 	componentWillUnmount() {
+		clearInterval(this.activationInterval)
+		clearTimeout(this.showroomTimeout)
 		$('#app-container').off('mousemove', this.onMouseMove)
 		this.button.off('mouseenter', this.onMouseOver)
 		this.button.off('mouseleave', this.onMouseOut)
+		this.illusion.holder.filters = null
+		this.illusion.holder.removeChildren()
+		AppStore.releaseContainer(this.illusion.holder)
+		this.illusion.shoeContainer.removeChildren()
+		AppStore.releaseContainer(this.illusion.shoeContainer)
+		this.illusion.shoeWrapper.removeChildren()
+		AppStore.releaseContainer(this.illusion.shoeWrapper)
 		super.componentWillUnmount()
 	}
 }

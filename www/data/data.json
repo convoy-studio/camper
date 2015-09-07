@@ -487,6 +487,7 @@
 		"/planet/ski": {
 			"id": "ski",
 			"experience-assets": [
+				"bumps.png"
 			],
 			"campaign-assets": [
 			]
@@ -528,6 +529,9 @@
 				"shoe-0.png",
 				"shoe-1.png",
 				"shoe-2.png",
+				"gradient-mask.jpg",
+				"background-texture.jpg",
+				"displacement-map.jpg"
 			],
 			"campaign-assets": [
 			]

@@ -235,7 +235,7 @@ export default class AlaskaXP extends BaseXP {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.currentRock.holder.x = (windowW >> 1)
-		this.currentRock.holder.y = -this.currentRock.height
+		this.currentRock.holder.y = -this.currentRock.height * 0.8
 		this.currentRock.anim.toY = (windowH >> 1)
 		this.previousRock.holder.x = (windowW >> 1)
 		this.previousRock.anim.toY = windowH * 2
@@ -255,11 +255,11 @@ export default class AlaskaXP extends BaseXP {
 		this.currentRock.wrapperShoe.scale.y = 0
 		this.previousRock.wrapperShoe.rotation = Utils.Rand(-2.8, -1.8)
 
-		this.twistFilter.angle = 3
+		this.twistFilter.angle = 2
 
 		setTimeout(()=>{
 			TweenMax.to(this.currentRock.holder, 1, { y:this.currentRock.anim.toY, ease:Elastic.easeOut })
-			TweenMax.fromTo(this.currentRock.holder.scale, 2, { x:0.8, y:0 }, { x:1, y:1, ease:Elastic.easeOut })
+			TweenMax.fromTo(this.currentRock.holder.scale, 2, { x:-0.1, y:0 }, { x:1, y:1, ease:Elastic.easeOut })
 			this.isAnimate = false
 			this.previousRock.wrapperShoe.removeChildren()
 		}, 2000)			
