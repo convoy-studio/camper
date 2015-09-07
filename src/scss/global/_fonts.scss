@@ -1,11 +1,15 @@
 @include font-face('FuturaBold', '../font/futura/FuturaBT-Medium');
+@include font-face('Mechsuit', '../font/mechsuit/mechsuit-webfont');
+@include font-face('Paladins', '../font/paladins/paladinssemiital-webfont');
+@include font-face('Skirmisher', '../font/skirmisher/skirmisherlaserital-webfont');
 
 #font-charger {
 	left: -10000px;
 	top: -10000px;
 	position: absolute;
 	@include opacity(0);
-	#FuturaBold {
-		font-family: 'FuturaBold';
-	}
+	#FuturaBold {font-family: 'FuturaBold';}
+	#Mechsuit {font-family: 'Mechsuit';}
+	#Paladins {font-family: 'Paladins';}
+	#Skirmisher {font-family: 'Skirmisher';}
 }
