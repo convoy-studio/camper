@@ -118,6 +118,11 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     generalInfos: function() {
         return data.infos
     },
+    randomSentence: function() {
+        var sentences = data.sentences
+        var index = parseInt(Utils.Rand(0, sentences.length-1), 10)
+        return sentences[index]
+    },
     generalInfosLangScope: function() {
         return _getGeneralInfos()
     },

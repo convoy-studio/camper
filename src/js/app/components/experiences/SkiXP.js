@@ -2,6 +2,9 @@ import BaseXP from 'BaseXP'
 import AppStore from 'AppStore'
 import BezierEasing from 'bezier-easing'
 import Utils from 'Utils'
+import GradientText from 'GradientText'
+import particles from 'pixi-particles'
+import AppConstants from 'AppConstants'
 
 export default class SkiXP extends BaseXP {
 	constructor(parentContainer, parentElement) {
@@ -13,6 +16,11 @@ export default class SkiXP extends BaseXP {
 		this.pointsLen = 20
 		this.ropeLength = 1920 / this.pointsLen;
 		this.points = []
+		this.isTitleAnimate = false
+		this.elapsed = Date.now()
+		this.counter = {
+			vel:0.05
+		}
 
 		for (var i = 0; i < this.pointsLen; i++) {
 		    this.points.push(new PIXI.Point(i * this.ropeLength, 0));
@@ -31,32 +39,108 @@ export default class SkiXP extends BaseXP {
 		this.bumpsContainer = AppStore.getContainer()
 		this.pxContainer.addChild(this.bumpsContainer)
 
-		var style = {
-		    font : 'bold italic 36px Mechsuit',
-		    fill : '#F7EDCA',
-		    stroke : '#4a1850',
-		    strokeThickness : 5,
-		    dropShadow : true,
-		    dropShadowColor : '#000000',
-		    dropShadowAngle : Math.PI / 6,
-		    dropShadowDistance : 6,
-		    wordWrap : true,
-		    wordWrapWidth : 440
+		var gradientTextA = new GradientText(this.pxContainer)
+		gradientTextA.componentDidMount({fontFamily:'Mechsuit', fontSize:90, strokeThickness:14})
+		var gradientTextB = new GradientText(this.pxContainer)
+		gradientTextB.componentDidMount({fontFamily:'Paladins', fontSize:120, strokeThickness:14})
+		var gradientTextC = new GradientText(this.pxContainer)
+		gradientTextC.componentDidMount({fontFamily:'Skirmisher', fontSize:150, strokeThickness:14})
+
+		this.gradientTextIndex = 0
+		this.gradientTexts = [
+			gradientTextA, 
+			gradientTextB,
+			gradientTextC
+		]
+		for (var i = 0; i < this.gradientTexts.length; i++) {
+			var gradientTxt = this.gradientTexts[i]
+			gradientTxt.container.alpha = 0
 		};
 
-		var richText = new PIXI.Text('Rich text with a lot of options and across multiple lines'.toUpperCase(),style);
-		richText.x = 30;
-		richText.y = 180;
-		this.pxContainer.addChild(richText)
-		console.log(richText.width)
+		var style = {
+		    font: '22px FuturaBold',
+		    fill: 'white',
+		};
 
-		setTimeout(()=>{
-			richText.text = "hello".toUpperCase()
-			console.log(richText.width)
+		this.gameStatus = {
+			textField: new PIXI.Text("SCORE: 1000 PTS", style),
+			pointTextField: new PIXI.Text("+150 pts", style),
+			counter: 0,
+			score: 0,
+			time: 0
+		}
 
-		}, 2000);
+		this.pxContainer.addChild(this.gameStatus.textField)
+		this.pxContainer.addChild(this.gameStatus.pointTextField)
+		this.gameStatus.textField.anchor.x = this.gameStatus.textField.anchor.y = 0.5
+		this.gameStatus.pointTextField.anchor.x = this.gameStatus.pointTextField.anchor.y = 0.5
+		this.gameStatus.pointTextField.scale.x = this.gameStatus.pointTextField.scale.y = 0
+
+		this.particleContainer = new PIXI.Container()
+		this.emitter = new cloudkid.Emitter(
+		  this.particleContainer,
+		  [
+			PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-shoe-0')),
+			PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-shoe-1')),
+			PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-shoe-2')),
+			PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-shoe-3'))
+		  ],
+		    {
+		         "alpha": {
+					"start": 1,
+					"end": 1
+				},
+				"scale": {
+					"start": 0.1,
+					"end": 1.4
+				},
+				"color": {
+					"start": "ffffff",
+					"end": "9ff3ff"
+				},
+				"speed": {
+					"start":400,
+					"end": 100
+				},
+				"acceleration": {
+					"x":0,
+					"y":400
+				},
+				"startRotation": {
+					"min":280,
+					"max": 260
+				},
+				"rotationSpeed": {
+					"min": 0,
+					"max": 0
+				},
+				"lifetime": {
+					"min": 5,
+					"max": 8
+				},
+				"blendMode": "normal",
+				"frequency": 0.6,
+				"emitterLifetime": 0,
+				"maxParticles": 100,
+				"pos": {
+					"x": 0,
+					"y": 0
+				},
+				"addAtBack": true,
+				"spawnType": "circle",
+				"spawnCircle": {
+					"x": 0,
+					"y": 0,
+					"r": 700
+				}
+		    }
+		)
 
 		this.setupBumps()
+
+		this.pxContainer.addChild(this.particleContainer)
+
+		this.emitter.emit = true
 
 		super.componentDidMount()
 	}
@@ -100,30 +184,83 @@ export default class SkiXP extends BaseXP {
 		var id = target.id
 		var index = Math.round(id.replace('bump_', ''))
 		var bump = this.bumps[index]
-		var scale = Utils.Rand(0.1, 0.2)
-		bump.rope.scale.x = (bump.scaleInitialX < 0) ? (bump.scaleInitialX - scale) : (bump.scaleInitialX + scale)
-		bump.rope.scale.y = bump.scaleInitialY + scale
+		var scale = Utils.Rand(0.01, 0.02)
 		bump.counter = 0
+		this.gameStatus.lastScore = this.gameStatus.score
+
+		this.gameStatus.textField.text = 'SCORE: ' + this.gameStatus.score + ' pts'
+		this.gameStatus.score += Math.round(Utils.Rand(1, 100))
+
+		if(this.isTitleAnimate) return
+
+		this.gameStatus.counter += 1
+		if(this.gameStatus.counter > 10) {
+			this.currentGradientText = this.getGradientText()
+			this.currentGradientText.setText()
+			this.resizeGradientTexts()
+
+			this.gameStatus.pointTextField.text = Math.round(Math.random() * 300) + ' pts'
+
+			this.gameStatus.pointTextField.x = AppStore.Mouse.x
+			this.gameStatus.pointTextField.y = AppStore.Mouse.y
+			this.gameStatus.pointTextField.alpha = 1
+
+			TweenMax.fromTo(this.gameStatus.pointTextField.scale, 0.6, {x:0, y:2}, { x:1.4, y:1.4, ease:Elastic.easeOut })
+			TweenMax.to(this.gameStatus.pointTextField, 1, { y:-100, alpha:0, ease:Linear.easeOut })
+
+			TweenMax.fromTo(this.gameStatus.textField.scale, 0.6, {x:0, y:2}, { x:1.4, y:1.4, ease:Elastic.easeOut })
+			TweenMax.to(this.gameStatus.textField.scale, 0.8, { delay:0.8, x:1, y:1, ease:Expo.easeOut })
+			TweenMax.fromTo(this.currentGradientText.container.scale, 0.4, { x:0, y:0 }, { x:this.currentGradientText.scale-0.5, y:this.currentGradientText.scale-0.5, ease:Elastic.easeOut })
+			TweenMax.to(this.currentGradientText.container.scale, 0.4, { delay:0.2, x:this.currentGradientText.scale, y:this.currentGradientText.scale, ease:Elastic.easeOut })
+			TweenMax.fromTo(this.currentGradientText.container, 0.4, { alpha:0 }, { alpha:1, ease:Elastic.easeOut })
+			this.currentGradientText.toggle()
+			this.isTitleAnimate = true
+			TweenMax.to(this.counter, 0.4, { vel:0.3, ease:Elastic.easeOut })
+			setTimeout(()=>{
+				TweenMax.to(this.currentGradientText.container.scale, 0.6, { x:this.currentGradientText.scale + 2, y:this.currentGradientText.scale + 0.1, ease:Expo.easeInOut })
+				TweenMax.to(this.currentGradientText.container, 0.6, { alpha:0, ease:Expo.easeInOut })
+			}, 1600)
+			setTimeout(()=>{
+				this.isTitleAnimate = false
+				TweenMax.to(this.counter, 0.5, { vel:0.02, ease:Expo.easeInOut })
+			}, 2000)
+			this.gameStatus.counter = 0
+		}
+	}
+	getGradientText() {
+		this.gradientTextIndex += 1
+		this.gradientTextIndex = (this.gradientTextIndex > this.gradientTexts.length-1) ? 0 : this.gradientTextIndex
+		this.gradientTextIndex = (this.gradientTextIndex < 0) ? this.gradientTexts.length-1 : this.gradientTextIndex
+		return this.gradientTexts[this.gradientTextIndex]
 	}
 	update() {
-		this.count += 0.1
+		this.count += this.counter.vel
+
+		if(this.currentGradientText != undefined) {
+			this.currentGradientText.update()
+		}
+
+		var now = Date.now()
+		this.emitter.update((now - this.elapsed) * 0.001)
+    	this.elapsed = now
 
 	    for (var i = 0; i < this.points.length; i++) {
 	        this.points[i].x = i * this.ropeLength + Math.cos((i * 0.3) + this.count) * 10;
 	        this.points[i].y = Math.sin((i * 0.5) + this.count) * 40;
 	    }
-	    for (var i = 0; i < this.bumps.length; i++) {
-	    	var bump = this.bumps[i]
-	    	bump.counter += (1 - bump.counter) * 0.1
-	    	var ease = bump.ease.get(bump.counter)
-	    	if(bump.scaleInitialX > 0) {
-	    		bump.rope.scale.x += (bump.scaleInitialX - bump.rope.scale.x) * ease
-	    	}else{
-	    		bump.rope.scale.x -= (bump.rope.scale.x - bump.scaleInitialX) * ease
-	    	}
-	    	bump.rope.scale.y += (bump.scaleInitialY - bump.rope.scale.y) * ease
-	    }
 		super.update()
+	}
+	resizeGradientTexts() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		for (var i = 0; i < this.gradientTexts.length; i++) {
+			var gradientText = this.gradientTexts[i]
+			gradientText.resize()
+			gradientText.position(
+				(windowW >> 1),
+				(windowH >> 1)
+			)
+		}
 	}
 	resize() {
 		var windowW = AppStore.Window.w
@@ -138,9 +275,24 @@ export default class SkiXP extends BaseXP {
 		this.bumpsContainer.scale.y = scale
 		this.bumpsContainer.x = (windowW >> 1) - ((2100*scale) >> 1)
 		this.bumpsContainer.y = (windowH >> 1) - (((200*this.bumps.length)*scale) >> 1)
+
+		this.particleContainer.x = (windowW >> 1)
+		this.particleContainer.y = (windowH >> 1)
+
+		this.gameStatus.textField.x = windowW >> 1
+		this.gameStatus.textField.y = AppConstants.PADDING_AROUND + (this.gameStatus.textField.height >> 1)
+
+		this.resizeGradientTexts()
+
 		super.resize()
 	}
 	componentWillUnmount() {
+
+		for (var i = 0; i < this.gradientTexts.length; i++) {
+			var gradientTxt = this.gradientTexts[i]
+			gradientTxt.componentWillUnmount()
+		};
+
 		super.componentWillUnmount()
 	}
 }

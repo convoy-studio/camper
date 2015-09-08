@@ -487,7 +487,14 @@
 		"/planet/ski": {
 			"id": "ski",
 			"experience-assets": [
-				"bumps.png"
+				"bumps.png",
+				"light-line.png",
+				"lens-flare.png",
+				"displacement-map.jpg",
+				"shoe-0.png",
+				"shoe-1.png",
+				"shoe-2.png",
+				"shoe-3.png"
 			],
 			"campaign-assets": [
 			]
@@ -536,5 +543,28 @@
 			"campaign-assets": [
 			]
 		}
-	}
+	},
+
+	"sentences": [
+		"Well done !",
+		"Oh gosh !",
+		"Cool bro !",
+		"Perfect !",
+		"You are rippin' !",
+		"Nice trick !",
+		"Yeah !",
+		"Mega cool !",
+		"Giga cool !",
+		"Bravo !",
+		"Impressive !",
+		"Stunning !",
+		"Big time !",
+		"Crucial !",
+		"Terrific !",
+		"Outstanding !",
+		"Smashing !",
+		"Fabulous !",
+		"Unbelievable !",
+		"Epic !"
+	]
 }
