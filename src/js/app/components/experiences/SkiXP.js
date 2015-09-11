@@ -76,7 +76,7 @@ export default class SkiXP extends BaseXP {
 		this.gameStatus.pointTextField.anchor.x = this.gameStatus.pointTextField.anchor.y = 0.5
 		this.gameStatus.pointTextField.scale.x = this.gameStatus.pointTextField.scale.y = 0
 
-		this.particleContainer = new PIXI.Container()
+		this.particleContainer = AppStore.getContainer()
 		this.emitter = new cloudkid.Emitter(
 		  this.particleContainer,
 		  [
@@ -288,10 +288,18 @@ export default class SkiXP extends BaseXP {
 	}
 	componentWillUnmount() {
 
+		this.bumpsContainer.removeChildren()
+		AppStore.releaseContainer(this.bumpsContainer)
+
+		this.particleContainer.removeChildren()
+		AppStore.releaseContainer(this.particleContainer)
+
 		for (var i = 0; i < this.gradientTexts.length; i++) {
 			var gradientTxt = this.gradientTexts[i]
 			gradientTxt.componentWillUnmount()
 		};
+
+		this.emitter.destroy()
 
 		super.componentWillUnmount()
 	}

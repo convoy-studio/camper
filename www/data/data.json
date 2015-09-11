@@ -93,6 +93,7 @@
 				"name": "FISS",
 				"color": "0x343a5c",
 				"video-id": "mzs5yc3i5x",
+				"video-thumb": "thumb-0",
 				"product-url": "/men/shoes/fiss/camper-fiss-K100021-002",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -104,6 +105,7 @@
 				"name": "FISS",
 				"color": "0x343a5c",
 				"video-id": "mzs5yc3i5x",
+				"video-thumb": "thumb-1",
 				"product-url": "/men/shoes/fiss/camper-fiss-K100021-001",
 				"knots": [
 					{"x":0.2, "y":0.5},
@@ -115,6 +117,7 @@
 				"name": "FISS",
 				"color": "0xcff0fc",
 				"video-id": "0l1dswyr4x",
+				"video-thumb": "thumb-2",
 				"product-url": "/men/shoes/fiss/camper-fiss-K300023-002",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
@@ -126,6 +129,7 @@
 				"name": "FISS",
 				"color": "0xe7e33c",
 				"video-id": "cwj04a3z55",
+				"video-thumb": "thumb-3",
 				"product-url": "/women/shoes/fiss/camper-fiss-K400029-003",
 				"knots": [
 					{"x":0.1, "y":-0.1},
@@ -137,6 +141,7 @@
 				"name": "FISS",
 				"color": "0xdb3076",
 				"video-id": "8fbp0pbww8",
+				"video-thumb": "thumb-3",
 				"product-url": "/women/shoes/fiss/camper-fiss-K400031-003",
 				"knots": [
 					{"x":0.0, "y":-0.8},
@@ -151,6 +156,7 @@
 				"name": "BELUGA",
 				"color": "0x818181",
 				"video-id": "gsun7amzq8",
+				"video-thumb": "thumb-0",
 				"product-url": "/women/shoes/beluga/camper-beluga-K400014-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -162,6 +168,7 @@
 				"name": "BELUGA",
 				"color": "0x818181",
 				"video-id": "gsun7amzq8",
+				"video-thumb": "thumb-0",
 				"product-url": "/men/shoes/beluga/camper-beluga-K300008-002",
 				"knots": [
 					{"x":0.1, "y":-0.7},
@@ -173,6 +180,7 @@
 				"name": "HARDWOOD",
 				"color": "0xe82b18",
 				"video-id": "fevnsbsj84",
+				"video-thumb": "thumb-0",
 				"product-url": "/men/shoes/hardwood/camper-hardwood-K300029-001",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
@@ -187,6 +195,7 @@
 				"name": "gemma",
 				"color": "0xb6937d",
 				"video-id": "ljrt61icha",
+				"video-thumb": "thumb-0",
 				"product-url": "/women/shoes/gemma/camper-gemma-K400033-002",
 				"knots": [
 					{"x":-0.2, "y":0.3},
@@ -198,6 +207,7 @@
 				"name": "gemma",
 				"color": "0xb6937d",
 				"video-id": "ljrt61icha",
+				"video-thumb": "thumb-0",
 				"product-url": "/women/shoes/gemma/camper-gemma-K400033-002",
 				"knots": [
 					{"x":-0.2, "y":-0.3},
@@ -209,6 +219,7 @@
 				"name": "pelotas",
 				"color": "0xc98e94",
 				"video-id": "n0ksuy0wua",
+				"video-thumb": "thumb-1",
 				"product-url": "/women/shoes/pelotas/camper-pelotas-K200038-001",
 				"knots": [
 					{"x":0.3, "y":-0.6},
@@ -220,6 +231,7 @@
 				"name": "ENDURO",
 				"color": "0x616a71",
 				"video-id": "8xpnpynqup",
+				"video-thumb": "thumb-2",
 				"product-url": "/men/shoes/enduro/camper-enduro-K300020-002",
 				"knots": [
 					{"x":-0.3, "y":0.1},
@@ -231,6 +243,7 @@
 				"name": "ENDURO",
 				"color": "0x0e2e61",
 				"video-id": "m509p0iu4u",
+				"video-thumb": "thumb-3",
 				"product-url": "/women/shoes/enduro/camper-enduro-K400025-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -245,6 +258,7 @@
 				"name": "VINTAR",
 				"color": "0xd79b7a",
 				"video-id": "1mevrxz7v6",
+				"video-thumb": "thumb-0",
 				"product-url": "/men/shoes/vintar/camper-vintar-K300048-001",
 				"knots": [
 					{"x":0.3, "y":0.1},
@@ -256,6 +270,7 @@
 				"name": "BELUGA",
 				"color": "0x88a2c7",
 				"video-id": "gldrv27k76",
+				"video-thumb": "thumb-1",
 				"product-url": "/women/shoes/beluga/camper-beluga-K400015-001",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
@@ -270,6 +285,7 @@
 				"name": "ENDURO",
 				"color": "0x2892c1",
 				"video-id": "pnr81ri2xo",
+				"video-thumb": "thumb-0",
 				"product-url": "/men/shoes/enduro/camper-enduro-K300020-001",
 				"knots": [
 					{"x":-0.2, "y":0.3},
@@ -281,6 +297,7 @@
 				"name": "ENDURO",
 				"color": "0x62a8bb",
 				"video-id": "9qbhhpb89b",
+				"video-thumb": "thumb-1",
 				"product-url": "/women/shoes/enduro/camper-enduro-K400025-002",
 				"knots": [
 					{"x":0.3, "y":-0.6},
@@ -292,6 +309,7 @@
 				"name": "gemma",
 				"color": "0x090b36",
 				"video-id": "ckgwzd3npu",
+				"video-thumb": "thumb-2",
 				"product-url": "/women/shoes/gemma/camper-gemma-K200046-001",
 				"knots": [
 					{"x":-0.3, "y":0.1},
@@ -502,6 +520,10 @@
 		"/planet/metal": {
 			"id": "metal",
 			"experience-assets": [
+				"ball-a.png",
+				"ball-b.png",
+				"noise.jpg",
+				"gradient-mask.jpg"
 			],
 			"campaign-assets": [
 			]
@@ -525,6 +547,8 @@
 		"/planet/wood": {
 			"id": "wood",
 			"experience-assets": [
+				"wood-part.png",
+				"wood-begin.png"
 			],
 			"campaign-assets": [
 			]

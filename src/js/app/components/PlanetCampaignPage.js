@@ -266,13 +266,22 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.removeVideoEvents()
 		this.currentContainer = this.containers[this.currentProductContainerClass]
 		this.addVideoEvents()
-		
+
 		this.assignAssetsToNewContainer()
 		this.resizeVideoWrapper()
 		this.resizePosterWrappers()
 		this.animateContainers()
 
+		this.applyScreenshot()
+
 		this.updatePageHeight()
+	}
+	applyScreenshot() {
+		var videoThumb = this.products[this.productId]['video-thumb']
+		var imgSize = AppStore.responsiveImageWidth(AppConstants.RESPONSIVE_IMAGE)
+		var imgSrc = AppStore.getEnvironment().static + 'image/planets/' + this.id + '/' + videoThumb + '-' + imgSize + '.jpg'
+		var $img = $('<img src='+imgSrc+'>')
+		this.currentContainer.video.container.html($img)
 	}
 	assignAssetsToNewContainer() {
 		var productScope = AppStore.getSpecificProductById(this.id, this.productId)
