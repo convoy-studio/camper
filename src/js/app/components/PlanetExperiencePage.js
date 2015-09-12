@@ -20,6 +20,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 
 		var XpClazz = this.getExperienceById(this.id)
 		this.experience = new XpClazz(this.pxContainer, this.child, this.parent)
+		this.experience.id = this.id
 		this.experience.componentDidMount()
 
 		// this.goCampaignBtn = new RectangleBtn(this.child.find('.go-campaign-btn'), infos.campaign_title)
@@ -48,6 +49,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.didTransitionInComplete()	
 	}
 	willTransitionOut() {
+		this.experience.willTransitionOut()
 		super.willTransitionOut()
 	}
 	update() {

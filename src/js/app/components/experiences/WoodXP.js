@@ -112,47 +112,26 @@ export default class WoodXP extends BaseXP {
 
 		this.emitter.emit = true
 
-		var woodBegin = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('wood-experience-wood-begin')))
-		woodBegin.anchor.x = woodBegin.anchor.y = 0.5
-		woodBegin.scale.x = woodBegin.scale.y = 0.3
-
 		var totalScale = 0.9
-		this.totalSteps = 18
+		this.totalSteps = 15
 		var scaleStep = totalScale / this.totalSteps
 		var currentScale = totalScale
 		for (var i = 0; i < this.totalSteps; i++) {
 			var part = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('wood-experience-wood-part')))
 			part.anchor.x = part.anchor.y = 0.5
 			part.rotation = Utils.Rand(-.1, .1)
-
+			
 			part.scale.x = part.scale.y = currentScale
 			currentScale -= scaleStep
 
 			var filter = new PIXI.filters.ColorMatrixFilter()
 			part.filters = [filter]
-
-			var brightness;
-
-			if(i < 2) {
-				brightness = Utils.Rand(1.0, 1.1)
-			}else if(i > 2 && i < 4) {
-				brightness = Utils.Rand(0.6, 0.9)
-			}else if(i > 3 && i < 10) {
-				brightness = Utils.Rand(0.5, 0.8)
-			}else if(i > 14 && i < 17) {
-				brightness = Utils.Rand(0.7, 0.9)
-			}else{
-				brightness = Utils.Rand(0.9, 1.1)
-			}
-
+			var brightness = Utils.Rand(0.7, 1)
 			filter.brightness(brightness)
 
 			this.circles.container.addChild(part)
 			this.circles.parts[i] = part
 		};
-
-		this.circles.container.addChild(woodBegin)
-		this.circles.parts.push(woodBegin)
 
 		this.pxContainer.addChild(this.displacementMapTexture)
 		this.circles.container.filters = [this.displacementFilter]
@@ -238,6 +217,16 @@ export default class WoodXP extends BaseXP {
 		super.resize()
 	}
 	componentWillUnmount() {
+		for (var i = 0; i < this.notes.btns.length; i++) {
+			var btn = this.notes.btns[i]
+			btn.off('mouseenter', this.onMouseEnter)
+		};
+		this.circles.container.filters = null
+		this.circles.container.removeChildren()
+		this.particleContainer.removeChildren()
+		AppStore.releaseContainer(this.circles.container)
+		AppStore.releaseContainer(this.particleContainer)
+		this.emitter.destroy()
 		super.componentWillUnmount()
 	}
 }

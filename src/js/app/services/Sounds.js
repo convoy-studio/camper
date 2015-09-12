@@ -51,6 +51,17 @@ class Sounds  {
 			activeS.sound[param] = value
 		};
 	}
+	stopSoundsByPlanetId(id) {
+		var tempArray = this.activeIds.slice(0)
+		for (var i = 0; i < this.activeIds.length; i++) {
+			var activeS = this.activeIds[i]
+			if(activeS.id.indexOf(id) >= 0) {
+				activeS.sound.stop()
+				tempArray = tempArray.splice(i, 1)
+			}
+		}
+		this.activeIds = tempArray.slice(0)
+	}
 }
 
 export default Sounds

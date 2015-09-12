@@ -560,7 +560,6 @@
 			"id": "wood",
 			"experience-assets": [
 				"wood-part.png",
-				"wood-begin.png",
 				"rain.png",
 				"displacement.jpg"
 			],

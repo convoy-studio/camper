@@ -10,11 +10,14 @@ export default class BaseXP {
 	}
 	componentDidMount() {
 	}
+	willTransitionOut() {
+	}
 	update() {
 	}
 	resize() {
 	}
 	componentWillUnmount() {
+		AppStore.Sounds.stopSoundsByPlanetId(this.id)
 		this.parentContainer.removeChild(this.pxContainer)
 		this.pxContainer.removeChildren()
 		AppStore.releaseContainer(this.pxContainer)
