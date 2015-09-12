@@ -241,6 +241,8 @@ a {
 .xp-button {
     cursor: pointer;
     position: absolute;
+    // background-color: red;
+    // @include opacity(0.5);
 }
 #planet.page-wrapper {
     .compasses-texts-wrapper {

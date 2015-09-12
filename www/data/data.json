@@ -14,7 +14,8 @@
 				"buy_title": "Buy",
 				"campaign_title": "See campaign",
 				"legal": "Legal",
-				"home_txt": "HOME"
+				"home_txt": "HOME",
+				"mute_txt": "MUTE"
 			},
 			"fr": {
 				"camper_lab": "Camper Lab",
@@ -25,7 +26,8 @@
 				"buy_title": "Acheter",
 				"campaign_title": "Voir la campagne",
 				"legal": "Légal",
-				"home_txt": "HOME"
+				"home_txt": "HOME",
+				"mute_txt": "MUTE"
 			},
 			"es": {
 				"camper_lab": "Camper Lab",
@@ -36,7 +38,8 @@
 				"buy_title": "Comprar",
 				"campaign_title": "Ver campaña",
 				"legal": "Información legal",
-				"home_txt": "HOME"
+				"home_txt": "HOME",
+				"mute_txt": "MUTE"
 			},
 			"it": {
 				"camper_lab": "Camper Lab",
@@ -47,7 +50,8 @@
 				"buy_title": "Acquista",
 				"campaign_title": "Guarda la campagna",
 				"legal": "Legale",
-				"home_txt": "HOME"
+				"home_txt": "HOME",
+				"mute_txt": "MUTE"
 			},
 			"de": {
 				"camper_lab": "Camper Lab",
@@ -58,7 +62,8 @@
 				"buy_title": "Kaufen",
 				"campaign_title": "Kampagne ansehen",
 				"legal": "Impressum",
-				"home_txt": "HOME"
+				"home_txt": "HOME",
+				"mute_txt": "MUTE"
 			},
 			"pt": {
 				"camper_lab": "Camper Lab",
@@ -69,7 +74,8 @@
 				"buy_title": "Comprar",
 				"campaign_title": "Ver campanha",
 				"legal": "Legal",
-				"home_txt": "HOME"
+				"home_txt": "HOME",
+				"mute_txt": "MUTE"
 			}
 		}
 	},
@@ -94,7 +100,7 @@
 				"color": "0x343a5c",
 				"video-id": "mzs5yc3i5x",
 				"video-thumb": "thumb-0",
-				"product-url": "/men/shoes/fiss/camper-fiss-K100021-002",
+				"product-url": "/men/shoes/fiss_lab",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":0.4},
@@ -106,7 +112,7 @@
 				"color": "0x343a5c",
 				"video-id": "mzs5yc3i5x",
 				"video-thumb": "thumb-1",
-				"product-url": "/men/shoes/fiss/camper-fiss-K100021-001",
+				"product-url": "/men/shoes/fiss_lab",
 				"knots": [
 					{"x":0.2, "y":0.5},
 					{"x":0.0, "y":0.3},
@@ -118,7 +124,7 @@
 				"color": "0xcff0fc",
 				"video-id": "0l1dswyr4x",
 				"video-thumb": "thumb-2",
-				"product-url": "/men/shoes/fiss/camper-fiss-K300023-002",
+				"product-url": "/men/shoes/fiss_lab",
 				"knots": [
 					{"x":-0.3, "y":-0.6},
 					{"x":-0.6, "y":0.4},
@@ -130,7 +136,7 @@
 				"color": "0xe7e33c",
 				"video-id": "cwj04a3z55",
 				"video-thumb": "thumb-3",
-				"product-url": "/women/shoes/fiss/camper-fiss-K400029-003",
+				"product-url": "/women/shoes/fiss_lab",
 				"knots": [
 					{"x":0.1, "y":-0.1},
 					{"x":0.6, "y":-0.3},
@@ -142,7 +148,7 @@
 				"color": "0xdb3076",
 				"video-id": "8fbp0pbww8",
 				"video-thumb": "thumb-3",
-				"product-url": "/women/shoes/fiss/camper-fiss-K400031-003",
+				"product-url": "/women/shoes/fiss_lab",
 				"knots": [
 					{"x":0.0, "y":-0.8},
 					{"x":0.2, "y":-0.6},
@@ -169,7 +175,7 @@
 				"color": "0x818181",
 				"video-id": "gsun7amzq8",
 				"video-thumb": "thumb-0",
-				"product-url": "/men/shoes/beluga/camper-beluga-K300008-002",
+				"product-url": "/men/shoes/bella_lab",
 				"knots": [
 					{"x":0.1, "y":-0.7},
 					{"x":-0.1, "y":-0.1},
@@ -196,7 +202,7 @@
 				"color": "0xb6937d",
 				"video-id": "ljrt61icha",
 				"video-thumb": "thumb-0",
-				"product-url": "/women/shoes/gemma/camper-gemma-K400033-002",
+				"product-url": "/women/shoes/gemma_lab",
 				"knots": [
 					{"x":-0.2, "y":0.3},
 					{"x":-0.6, "y":0.4},
@@ -208,7 +214,7 @@
 				"color": "0xb6937d",
 				"video-id": "ljrt61icha",
 				"video-thumb": "thumb-0",
-				"product-url": "/women/shoes/gemma/camper-gemma-K400033-002",
+				"product-url": "/women/shoes/gemma_lab",
 				"knots": [
 					{"x":-0.2, "y":-0.3},
 					{"x":0.1, "y":-0.4},
@@ -232,7 +238,7 @@
 				"color": "0x616a71",
 				"video-id": "8xpnpynqup",
 				"video-thumb": "thumb-2",
-				"product-url": "/men/shoes/enduro/camper-enduro-K300020-002",
+				"product-url": "/men/shoes/enduro_lab",
 				"knots": [
 					{"x":-0.3, "y":0.1},
 					{"x":-0.6, "y":-0.1},
@@ -244,7 +250,7 @@
 				"color": "0x0e2e61",
 				"video-id": "m509p0iu4u",
 				"video-thumb": "thumb-3",
-				"product-url": "/women/shoes/enduro/camper-enduro-K400025-001",
+				"product-url": "/women/shoes/enduro_lab",
 				"knots": [
 					{"x":0.3, "y":0.1},
 					{"x":0.6, "y":-0.1},
@@ -286,7 +292,7 @@
 				"color": "0x2892c1",
 				"video-id": "pnr81ri2xo",
 				"video-thumb": "thumb-0",
-				"product-url": "/men/shoes/enduro/camper-enduro-K300020-001",
+				"product-url": "/men/shoes/enduro_lab",
 				"knots": [
 					{"x":-0.2, "y":0.3},
 					{"x":-0.6, "y":0.4},
@@ -298,7 +304,7 @@
 				"color": "0x62a8bb",
 				"video-id": "9qbhhpb89b",
 				"video-thumb": "thumb-1",
-				"product-url": "/women/shoes/enduro/camper-enduro-K400025-002",
+				"product-url": "/women/shoes/enduro_lab",
 				"knots": [
 					{"x":0.3, "y":-0.6},
 					{"x":0.6, "y":0.4},
@@ -310,7 +316,7 @@
 				"color": "0x090b36",
 				"video-id": "ckgwzd3npu",
 				"video-thumb": "thumb-2",
-				"product-url": "/women/shoes/gemma/camper-gemma-K200046-001",
+				"product-url": "/women/shoes/gemma_lab",
 				"knots": [
 					{"x":-0.3, "y":0.1},
 					{"x":-0.6, "y":-0.3},
@@ -514,6 +520,8 @@
 				"shoe-2.png",
 				"shoe-3.png"
 			],
+			"sounds-assets": [
+			],
 			"campaign-assets": [
 			]
 		},
@@ -524,6 +532,8 @@
 				"ball-b.png",
 				"noise.jpg",
 				"gradient-mask.jpg"
+			],
+			"sounds-assets": [
 			],
 			"campaign-assets": [
 			]
@@ -541,6 +551,8 @@
 				"shoe-2.png",
 				"shoe-3.png"
 			],
+			"sounds-assets": [
+			],
 			"campaign-assets": [
 			]
 		},
@@ -548,7 +560,21 @@
 			"id": "wood",
 			"experience-assets": [
 				"wood-part.png",
-				"wood-begin.png"
+				"wood-begin.png",
+				"rain.png",
+				"displacement.jpg"
+			],
+			"sounds-assets": [
+				"rain",
+				"owl",
+				"woodblock-0",
+				"woodblock-1",
+				"woodblock-2",
+				"woodblock-3",
+				"woodblock-4",
+				"woodblock-5",
+				"woodblock-6",
+				"woodblock-7"
 			],
 			"campaign-assets": [
 			]
@@ -563,6 +589,8 @@
 				"gradient-mask.jpg",
 				"background-texture.jpg",
 				"displacement-map.jpg"
+			],
+			"sounds-assets": [
 			],
 			"campaign-assets": [
 			]

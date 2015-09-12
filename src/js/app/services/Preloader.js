@@ -3,6 +3,8 @@ import AppStore from 'AppStore'
 class Preloader  {
 	constructor() {
 		this.queue = new createjs.LoadQueue()
+		createjs.Sound.alternateExtensions = ["mp3"]
+		this.queue.installPlugin(createjs.Sound)
 		this.queue.on("complete", this.onManifestLoadCompleted, this)
 		this.currentLoadedCallback = undefined
 	}

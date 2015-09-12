@@ -42,6 +42,12 @@ var AppActions = {
             actionType: AppConstants.PX_CONTAINER_REMOVE_CHILD,
             item: {child: child}
         })            
+    },
+    toggleSounds: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.TOGGLE_SOUNDS,
+            item: undefined
+        })            
     }
 }
 

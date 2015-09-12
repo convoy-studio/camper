@@ -45,6 +45,10 @@ function _getPageAssetsToLoad() {
     var type = _getTypeOfPage()
     targetId = type.toLowerCase() + '-assets'
     var manifest = _addBasePathsToUrls(scope[targetId], scope.id, targetId, type)
+    if(type == AppConstants.EXPERIENCE) {
+        var soundsManifest = _addSoundsBasePathsToUrls(scope['sounds-assets'], scope.id, 'sounds-assets', 'sounds')
+        manifest = manifest.concat(soundsManifest)
+    }
     return manifest
 }
 function _addBasePathsToUrls(urls, pageId, targetId, type) {
@@ -55,6 +59,21 @@ function _addBasePathsToUrls(urls, pageId, targetId, type) {
         var splitter = urls[i].split('.')
         var fileName = splitter[0]
         var extension = splitter[1]
+        manifest[i] = {
+            id: pageId + '-' + type.toLowerCase() + '-' + fileName,
+            src: basePath + fileName + '.' + extension
+        }
+    }
+    return manifest
+}
+function _addSoundsBasePathsToUrls(urls, pageId, targetId, type) {
+    var basePath = _getPageAssetsBasePathById(pageId, targetId)
+    var manifest = []
+    if(urls == undefined || urls.length < 1) return manifest
+    for (var i = 0; i < urls.length; i++) {
+        var splitter = urls[i].split('.')
+        var fileName = splitter[0]
+        var extension = 'ogg'
         manifest[i] = {
             id: pageId + '-' + type.toLowerCase() + '-' + fileName,
             src: basePath + fileName + '.' + extension
@@ -302,6 +321,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     Pool: undefined,
     Preloader: undefined,
+    Sounds: undefined,
     Mouse: undefined,
     PXContainer: undefined,
     Orientation: AppConstants.LANDSCAPE,
@@ -341,7 +361,10 @@ var AppStore = assign({}, EventEmitter2.prototype, {
                 AppStore.removePXChild(action.item)
                 AppStore.emitChange(action.actionType)
                 break
-
+            case AppConstants.TOGGLE_SOUNDS:
+                AppStore.Sounds.toggle()
+                AppStore.emitChange(action.actionType)
+                break
         }
         return true
     })

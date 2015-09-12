@@ -2,6 +2,7 @@ import BaseComponent from 'BaseComponent'
 import template from 'FrontContainer_hbs'
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
+import AppActions from 'AppActions'
 
 class FrontContainer extends BaseComponent {
 	constructor() {
@@ -54,6 +55,7 @@ class FrontContainer extends BaseComponent {
 		this.$camperLab = this.child.find('.camper-lab')
 		this.$shop = this.child.find('.shop-wrapper')
 		this.$home = this.child.find('.home-btn')
+		this.$mute = this.child.find('.mute')
 		this.countriesH = 0
 
 		if(AppStore.Detector.oldIE) {
@@ -77,6 +79,9 @@ class FrontContainer extends BaseComponent {
 		this.$socialWrapper.on('mouseenter', this.onSocialMouseEnter)
 		this.$socialWrapper.on('mouseleave', this.onSocialMouseLeave)
 
+		this.onMuteClicked = this.onMuteClicked.bind(this)
+		this.$mute.on('click', this.onMuteClicked)
+
 		this.socialTl = new TimelineMax()
 		this.socialTl.staggerFrom(this.$socialBtns, 1, { scale:0, y:10, force3D:true, opacity:0, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0.01, 0)
 		this.socialTl.from(this.$socialIconsContainer, 1, { y:30, ease:Elastic.easeOut }, 0)
@@ -87,6 +92,10 @@ class FrontContainer extends BaseComponent {
 		if(AppStore.Detector.isMobile) {
 			this.initMobile()
 		}
+	}
+	onMuteClicked(e) {
+		e.preventDefault()
+		AppActions.toggleSounds()
 	}
 	initMobile() {
 		this.onBurgerClicked = this.onBurgerClicked.bind(this)
@@ -162,12 +171,17 @@ class FrontContainer extends BaseComponent {
 			left: shopCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
+		var muteCss = {
+			left: AppConstants.PADDING_AROUND,
+			top: windowH - AppConstants.PADDING_AROUND - this.$mute.height(),	
+		}
 
 		this.$socialWrapper.css(socialCss)
 		this.$camperLab.css(camperLabCss)
 		this.$shop.css(shopCss)
 		this.$socialIconsContainer.css(socialIconsCss)
 		this.$home.css(homeCss)
+		this.$mute.css(muteCss)
 
 		if(AppStore.Detector.isMobile) {
 			this.resizeMobile()

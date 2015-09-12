@@ -5,6 +5,7 @@ import Router from 'Router'
 import GEvents from 'GlobalEvents'
 import Pool from 'Pool'
 import Preloader from 'Preloader'
+import Sounds from 'Sounds'
 import MobileDetect from 'mobile-detect'
 import AppConstants from 'AppConstants'
 
@@ -27,6 +28,9 @@ class App {
 
 			// Init Preloader
 			AppStore.Preloader = new Preloader()
+
+			// Init Sounds
+			AppStore.Sounds = new Sounds()
 
 			// Init Pool
 			AppStore.Pool = new Pool()
