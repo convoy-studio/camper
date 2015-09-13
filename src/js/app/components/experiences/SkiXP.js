@@ -22,6 +22,11 @@ export default class SkiXP extends BaseXP {
 			vel:0.05
 		}
 
+		AppStore.Sounds.play('ski-sounds-drums', { interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1 })
+
+			
+
+
 		for (var i = 0; i < this.pointsLen; i++) {
 		    this.points.push(new PIXI.Point(i * this.ropeLength, 0));
 		}
@@ -193,17 +198,27 @@ export default class SkiXP extends BaseXP {
 
 		if(this.isTitleAnimate) return
 
+		var randIndex = Utils.Rand(0, 1, 0)
+		var soundId = 'ski-sounds-bump-' + randIndex
+		AppStore.Sounds.play(soundId)
+
 		this.gameStatus.counter += 1
 		if(this.gameStatus.counter > 10) {
 			this.currentGradientText = this.getGradientText()
 			this.currentGradientText.setText()
 			this.resizeGradientTexts()
 
+			AppStore.Sounds.play('ski-sounds-text-in-0')
+
 			this.gameStatus.pointTextField.text = Math.round(Math.random() * 300) + ' pts'
 
 			this.gameStatus.pointTextField.x = AppStore.Mouse.x
 			this.gameStatus.pointTextField.y = AppStore.Mouse.y
 			this.gameStatus.pointTextField.alpha = 1
+
+			var randIndex = Utils.Rand(0, 1, 0)
+			var soundId = 'ski-sounds-flying-' + randIndex
+			AppStore.Sounds.play(soundId)
 
 			TweenMax.fromTo(this.gameStatus.pointTextField.scale, 0.6, {x:0, y:2}, { x:1.4, y:1.4, ease:Elastic.easeOut })
 			TweenMax.to(this.gameStatus.pointTextField, 1, { y:-100, alpha:0, ease:Linear.easeOut })

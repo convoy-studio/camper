@@ -32,19 +32,9 @@ export default class AlaskaXP extends BaseXP {
 	 	this.twistFilter.angle = 0
 		this.pxContainer.filters = [this.twistFilter]
 
-		// Create a new emitter
 		this.emitter = new cloudkid.Emitter(
-
-		  // The DisplayObjectContainer to put the emitter in
-		  // if using blend modes, it's important to put this
-		  // on top of a bitmap, and not use the PIXI.Stage
-		  this.particleContainer,
-
-		  // The collection of particle images to use
-		  [PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-particle'))],
-
-		    // Emitter configuration, edit this to change the look
-		    // of the emitter
+			this.particleContainer,
+			[PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-particle'))],
 		    {
 		        "alpha": {
 		            "start": 0.8,
@@ -270,9 +260,18 @@ export default class AlaskaXP extends BaseXP {
 		TweenMax.to(this.previousRock.wrapperShoe.scale, 1, { x:1.4, y:1.4, ease:Elastic.easeOut })
 		TweenMax.to(this.previousRock.wrapperShoe, 1, { rotation:0, ease:Elastic.easeOut })
 
+		var randIndex = Utils.Rand(0, 2, 0)
+		var soundId = 'alaska-sounds-rock-open-' + randIndex
+		AppStore.Sounds.play(soundId)
+
 		setTimeout(()=>{
 			TweenMax.to(this.previousRock.holder, 1, { y:this.previousRock.anim.toY, ease:Expo.easeInOut })
 			TweenMax.fromTo(this.previousRock.holder.scale, 1, { x:1, y:1 }, { x:0.8, y:0.8, ease:Expo.easeInOut })
+			
+			var randIndex = Utils.Rand(0, 1, 0)
+			var soundId = 'alaska-sounds-rock-in-' + randIndex
+			AppStore.Sounds.play(soundId)
+
 		}, 800)
 
 		this.particleContainer.alpha = 1

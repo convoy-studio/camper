@@ -25,6 +25,7 @@ export default class WoodXP extends BaseXP {
 		this.displacementMapTexture.anchor.x = this.displacementMapTexture.anchor.y = 0.5
 		this.displacementFilter = new PIXI.filters.DisplacementFilter(this.displacementMapTexture)
 		this.displacementMapTexture.scale.x = this.displacementMapTexture.scale.y = 0
+		this.displacementTween = TweenMax.fromTo(this.displacementMapTexture.scale, 2, { x:0, y:0 }, { x:20, y:20, ease:Expo.easeOut })
 
 		this.onMouseEnter = this.onMouseEnter.bind(this)
 
@@ -146,7 +147,7 @@ export default class WoodXP extends BaseXP {
 		var noteNum = id.replace('note-', '')
 		var soundId = 'wood-sounds-woodblock-' + noteNum
 		AppStore.Sounds.play(soundId)
-		TweenMax.fromTo(this.displacementMapTexture.scale, 2, { x:0, y:0 }, { x:20, y:20, ease:Expo.easeOut })
+		this.displacementTween.play(0)
 	}
 	update() {
 		this.counter += 0.3

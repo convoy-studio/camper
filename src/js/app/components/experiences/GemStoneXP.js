@@ -25,6 +25,8 @@ export default class GemStoneXP extends BaseXP {
 		this.button = $('<div class="xp-button"></div>')
 		this.element.append(this.button)
 
+		AppStore.Sounds.play('gemstone-sounds-reveal-1', { loop:-1 })
+
 		var explosionFrag = glslify('../shaders/gemstone/diffusion-mix-frag.glsl')
 		var imgUrl = AppStore.Preloader.getImageURL('gemstone-experience-texture')
 		var texture = PIXI.Texture.fromImage(imgUrl)
@@ -100,14 +102,16 @@ export default class GemStoneXP extends BaseXP {
 	onMouseOver(e) {
 		e.preventDefault()
 		this.activationInterval = setInterval(this.toggleActivationStep, 1000)
+		AppStore.Sounds.play('gemstone-sounds-reveal-0', { interrupt: createjs.Sound.INTERRUPT_ANY, volume:0.1 })
 	}
 	toggleActivationStep() {
-		this.stepsCounter += 2
+		this.stepsCounter += 3
 		if(this.stepsCounter > 5) {
 			this.resetActivationState()
 			this.stateToShowroom()
 			this.animateInShoe()
 			clearTimeout(this.showroomTimeout)
+			AppStore.Sounds.play('gemstone-sounds-cave-return')
 			this.showroomTimeout = setTimeout(()=>{
 				this.state = 'normal'
 				this.updateMousePos()

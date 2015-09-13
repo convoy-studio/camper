@@ -57,9 +57,6 @@ class Utils {
 		}
 		return css
 	}
-	static Rand(min, max) {
-		return Math.random() * (max - min) + min
-	}
 	static DegreesToRadians(degrees) {
 		return degrees * (Math.PI / 180)
 	}
@@ -108,6 +105,15 @@ class Utils {
 				.substring(1);
 		}
 		return s4() + s4();
+	}
+	static Rand(min, max, decimals) {
+        var randomNum = Math.random() * (max - min) + min
+        if(decimals == undefined) {
+        	return randomNum
+        }else{
+	        var d = Math.pow(10, decimals)
+	        return ~~((d * randomNum) + 0.5) / d
+        }
 	}
     static SpringTo(item, toX, toY, index, spring, friction, springLength) {
     	var dx = toX - item.x

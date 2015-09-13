@@ -521,6 +521,12 @@
 				"shoe-3.png"
 			],
 			"sounds-assets": [
+				"drums",
+				"bump-0",
+				"bump-1",
+				"flying-0",
+				"flying-1",
+				"text-in-0"
 			],
 			"campaign-assets": [
 			]
@@ -534,6 +540,9 @@
 				"gradient-mask.jpg"
 			],
 			"sounds-assets": [
+				"burn",
+				"overall-0",
+				"ambient"
 			],
 			"campaign-assets": [
 			]
@@ -552,6 +561,11 @@
 				"shoe-3.png"
 			],
 			"sounds-assets": [
+				"rock-in-0",
+				"rock-in-1",
+				"rock-open-0",
+				"rock-open-1",
+				"rock-open-2"
 			],
 			"campaign-assets": [
 			]
@@ -590,6 +604,9 @@
 				"displacement-map.jpg"
 			],
 			"sounds-assets": [
+				"cave-return",
+				"reveal-0",
+				"reveal-1"
 			],
 			"campaign-assets": [
 			]

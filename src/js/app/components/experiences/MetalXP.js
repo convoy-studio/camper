@@ -33,6 +33,8 @@ export default class MetalXP extends BaseXP {
 		  }
 		})
 
+		AppStore.Sounds.play('metal-sounds-overall-0')
+
 		this.matterCanvas = this.element.find('canvas')
 
 		var mouseConstraint = MouseConstraint.create(this.engine);
@@ -139,6 +141,12 @@ export default class MetalXP extends BaseXP {
 				pair.bodyA.active = true
 				pair.bodyB.active = true
 			}
+
+			clearTimeout(this.ambientSoundTimeout)
+			this.ambientSoundTimeout = setTimeout(()=>{
+				AppStore.Sounds.play('metal-sounds-ambient', { interrupt: createjs.Sound.INTERRUPT_ANY })
+			}, 300)
+
 		})
 
 		Matter.Events.on(this.engine, 'collisionActive', function(event) {
@@ -148,6 +156,12 @@ export default class MetalXP extends BaseXP {
 				pair.bodyA.active = true
 				pair.bodyB.active = true
 			}
+
+			clearTimeout(this.burnSoundTimeout)
+			this.burnSoundTimeout = setTimeout(()=>{
+				AppStore.Sounds.play('metal-sounds-burn', { interrupt: createjs.Sound.INTERRUPT_ANY, volume:Utils.Rand(0.2, 0.8, 0.1) })	
+			}, 300)
+			
 		})
 
 		Matter.Events.on(this.engine, 'collisionEnd', function(event) {
