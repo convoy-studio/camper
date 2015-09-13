@@ -75,10 +75,10 @@ export default class MetalXP extends BaseXP {
 			ball.anchor.x = ball.anchor.y = 0.5
 			ball.scale.x = ball.scale.y = 0.5
 
-			var mask = AppStore.getSprite()
-			mask.texture = PIXI.Texture.fromImage(gradientMaskUrl)
-			mask.anchor.x = mask.anchor.y = 0.5
-			mask.scale.x = mask.scale.y = 0.53
+			// var mask = AppStore.getSprite()
+			// mask.texture = PIXI.Texture.fromImage(gradientMaskUrl)
+			// mask.anchor.x = mask.anchor.y = 0.5
+			// mask.scale.x = mask.scale.y = 0.53
 
 			var texture = PIXI.Texture.fromImage(imgUrl)
 			var sprite = AppStore.getSprite()
@@ -87,6 +87,7 @@ export default class MetalXP extends BaseXP {
 			sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, uniforms = {
 				resolution: { type: '2f', value: { x: 1, y: 1 } },
 				uSampler: {type: 'sampler2D', value: texture},
+				mask: {type: 'sampler2D', value: PIXI.Texture.fromImage(gradientMaskUrl)},
 				time: {type: '1f', value: 0},
 				rotation: {type: '1f', value: Utils.Rand(-80,80)},
 				displace: {type: '1f', value: Utils.Rand(0.01,0.3)},
@@ -100,8 +101,8 @@ export default class MetalXP extends BaseXP {
 			var holder = AppStore.getContainer()
 			holder.addChild(ball)
 			holder.addChild(sprite)
-			holder.addChild(mask)
-			sprite.mask = mask
+			// holder.addChild(mask)
+			// sprite.mask = mask
 			this.pxContainer.addChild(holder)
 
 			var ratio = 226
@@ -109,14 +110,13 @@ export default class MetalXP extends BaseXP {
 			sprite.height = ratio
 			uniforms.resolution.x = ratio
 			uniforms.resolution.y = ratio
-			// console.log(sprite.width, sprite.height, sprite.scale.x, sprite.scale.y)
 			sprite.anchor.x = sprite.anchor.y = 0.5
 
 			g.holder = holder
 			g.ball = ball
 			g.lava = sprite
 			g.line = line
-			g.mask = mask
+			// g.mask = mask
 			g.uniforms = uniforms
 			this.cranes[i] = g
 		};
