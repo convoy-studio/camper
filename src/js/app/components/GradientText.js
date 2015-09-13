@@ -7,15 +7,9 @@ export default class GradientText {
 	}
 	componentDidMount(params) {
 
-		var dsprite = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-displacement-map')))
-		var dfilter = new PIXI.filters.DisplacementFilter(dsprite)
-		this.displacement = {
-			sprite: dsprite,
-			filter: dfilter
-		}
 		this.gradientText = {
 			container: AppStore.getContainer(),
-			gradient: new PIXI.Sprite()
+			gradient: AppStore.getSprite()
 		}
 		this.gradientText.gradient.blendMode = PIXI.BLEND_MODES.ADD
 
@@ -27,11 +21,11 @@ export default class GradientText {
 		this.gradientText.gradient.anchor.y = 0.5
 		this.gradientText.container.addChild(this.gradientText.gradient)
 		this.container = this.gradientText.container
-		this.container.addChild(dsprite)
-		this.container.filters = [dfilter]
 
+		var lightLineUrl = AppStore.Preloader.getImageURL('ski-experience-light-line')
 		for (var i = 0; i < 16; i++) {
-			var l = PIXI.Sprite.fromImage(AppStore.Preloader.getImageURL('ski-experience-light-line'));
+			var l = AppStore.getSprite()
+			l.texture = PIXI.Texture.fromImage(lightLineUrl)
 			l.blendMode = PIXI.BLEND_MODES.ADD
 			l.scale.x = Utils.Rand(10, 40)
 			l.scale.y = Utils.Rand(0.1, 1.4)
@@ -42,8 +36,10 @@ export default class GradientText {
 			this.lines[i] = l
 		};
 
-		this.flareA = PIXI.Sprite.fromImage(AppStore.Preloader.getImageURL('ski-experience-lens-flare'));
-		this.flareB = PIXI.Sprite.fromImage(AppStore.Preloader.getImageURL('ski-experience-lens-flare'));
+		this.flareA = AppStore.getSprite()
+		this.flareA.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-lens-flare'))
+		this.flareB = AppStore.getSprite()
+		this.flareB.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-lens-flare'))
 		this.flareA.blendMode = this.flareB.blendMode = PIXI.BLEND_MODES.ADD
 		this.flareA.anchor.x = this.flareA.anchor.y = this.flareB.anchor.x = this.flareB.anchor.y = 0.5
 		this.flareA.scale.x = this.flareA.scale.y = this.flareB.scale.x = this.flareB.scale.y = 4
@@ -102,9 +98,6 @@ export default class GradientText {
 
 		this.flareA.velX *= (this.flareA.x > 0) ? -1 : 1
 		this.flareB.velX *= (this.flareB.x > 0) ? -1 : 1
-
-		this.displacement.sprite.scale.x = 1
-		this.displacement.sprite.scale.y = 1
 	}
 	setText() {
 		this.gradientText.gradient.mask = null
@@ -165,9 +158,6 @@ export default class GradientText {
 		}
 		this.flareA.x += this.flareA.velX
 		this.flareB.x += this.flareB.velX
-
-		this.displacement.sprite.scale.x += 0.04
-		this.displacement.sprite.scale.y += 0.04
 	}
 	resize() {
 		var windowW = AppStore.Window.w
@@ -178,8 +168,16 @@ export default class GradientText {
 		this.gradientText.container.scale.y = this.scale
 	}
 	componentWillUnmount() {
-		this.container.filters = null
+		for (var i = 0; i < this.lines.length; i++) {
+			var line = this.lines[i]
+			AppStore.releaseSprite(line)
+		};
+		AppStore.releaseSprite(this.flareA)
+		AppStore.releaseSprite(this.flareB)
 		this.gradientText.container.removeChildren()
+		this.linesContainer.removeChildren()
 		AppStore.releaseContainer(this.gradientText.container)
+		AppStore.releaseContainer(this.linesContainer)
+		AppStore.releaseSprite(this.gradientText.gradient)
 	}
 }

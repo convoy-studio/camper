@@ -84,7 +84,7 @@ export default class Landing extends Page {
 	}
 	middleAreaClick(e) {
 		e.preventDefault()
-		var url = "/planet/" + this.landingSlideshow.currentId + '/0'
+		var url = "/planet/" + this.landingSlideshow.currentId
 		Router.setHash(url)
 	}
 	arrowClicked(e) {

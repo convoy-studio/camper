@@ -12,10 +12,10 @@ export default class MetalXP extends BaseXP {
 		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/metal/experience-assets/bg-video/metal_L.' + AppStore.videoExtensionSupport())
 		this.video = $(texture.baseTexture.source)
 		this.video.attr('loop', true)
-		this.videoSprite = new PIXI.Sprite(texture)
+		this.videoSprite = AppStore.getSprite()
+		this.videoSprite.texture = texture
 		this.pxContainer.addChild(this.videoSprite)
 
-		// Matter module aliases
 		var Engine = Matter.Engine,
 		    World = Matter.World,
 		    Body = Matter.Body,
@@ -60,38 +60,29 @@ export default class MetalXP extends BaseXP {
 
 		var explosionFrag = glslify('../shaders/metal/diffusion-mix-frag.glsl')
 		var imgUrl = AppStore.Preloader.getImageURL('metal-experience-noise')
+		var ballAUrl = AppStore.Preloader.getImageURL('metal-experience-ball-a')
+		var gradientMaskUrl = AppStore.Preloader.getImageURL('metal-experience-gradient-mask')
 		this.cranes = []
 		for (var i = 0; i < 4; i++) {
 			var g = {}
 
-			var line = new PIXI.Graphics()
+			var line = AppStore.getGraphics()
 			this.pxContainer.addChild(line)
 
-			var ball = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('metal-experience-ball-a')))
+			var ball = AppStore.getSprite()
+			ball.texture = PIXI.Texture.fromImage(ballAUrl)
+			ball.texture.width = ball.texture.height = 512
 			ball.anchor.x = ball.anchor.y = 0.5
 			ball.scale.x = ball.scale.y = 0.5
 
-			// var lava = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('metal-experience-ball-b')))
-			// lava.anchor.x = lava.anchor.y = 0.5
-			// lava.scale.x = lava.scale.y = 0.5
-
-			var mask = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('metal-experience-gradient-mask')))
+			var mask = AppStore.getSprite()
+			mask.texture = PIXI.Texture.fromImage(gradientMaskUrl)
 			mask.anchor.x = mask.anchor.y = 0.5
 			mask.scale.x = mask.scale.y = 0.53
 
-			// var dsprite = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('metal-experience-displacement')))
-			// var dfilter = new PIXI.filters.DisplacementFilter(dsprite)
-			// var displacement = {
-			// 	sprite: dsprite,
-			// 	filter: dfilter
-			// }
-			// dsprite.scale.x = dsprite.scale.y = 2
-			// dsprite.alpha = 0.1
-			// dsprite.y = 100
-			// dfilter.padding = 500
-
 			var texture = PIXI.Texture.fromImage(imgUrl)
-			var sprite = new PIXI.Sprite(texture)
+			var sprite = AppStore.getSprite()
+			sprite.texture = texture
 			var uniforms = undefined
 			sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, uniforms = {
 				resolution: { type: '2f', value: { x: 1, y: 1 } },
@@ -108,27 +99,25 @@ export default class MetalXP extends BaseXP {
 
 			var holder = AppStore.getContainer()
 			holder.addChild(ball)
-			// holder.addChild(lava)
 			holder.addChild(sprite)
 			holder.addChild(mask)
-			// holder.addChild(dsprite)
 			sprite.mask = mask
 			this.pxContainer.addChild(holder)
-			// ball.filters = [dfilter]
 
 			var ratio = 226
 			sprite.width = ratio
 			sprite.height = ratio
 			uniforms.resolution.x = ratio
 			uniforms.resolution.y = ratio
+			// console.log(sprite.width, sprite.height, sprite.scale.x, sprite.scale.y)
 			sprite.anchor.x = sprite.anchor.y = 0.5
 
 			g.holder = holder
 			g.ball = ball
 			g.lava = sprite
 			g.line = line
+			g.mask = mask
 			g.uniforms = uniforms
-			// g.displacement = displacement
 			this.cranes[i] = g
 		};
 
@@ -199,8 +188,6 @@ export default class MetalXP extends BaseXP {
   			}
 
   			uniforms.time.value += 0.001
-  			// displacement.sprite.rotation += 0.01
-  			// displacement.sprite.scale.x = displacement.sprite.scale.y = 1 + Math.sin(uniforms.time.value*2) * 4
 
   			line.clear()
   			line.lineStyle(1, 0xffffff, 1);
@@ -227,18 +214,24 @@ export default class MetalXP extends BaseXP {
 
 		for (var i = 0; i < this.cranes.length; i++) {
   			var ball = this.cranes[i].ball
+  			var mask = this.cranes[i].mask
   			var lava = this.cranes[i].lava
   			var holder = this.cranes[i].holder
   			var line = this.cranes[i].line
+  			var uniforms = this.cranes[i].uniforms
   			var displacement = this.cranes[i].displacement
   			
-  			ball.destroy()
-  			lava.destroy()
+  			uniforms = null
 
+  			AppStore.releaseGraphics(line)
+  			AppStore.releaseSprite(ball)
+  			AppStore.releaseSprite(mask)
+  			AppStore.releaseSprite(lava)
   			holder.removeChildren()
   			AppStore.releaseContainer(holder)
   		}
 
+  		AppStore.releaseSprite(this.videoSprite)
 		super.componentWillUnmount()
 	}
 }

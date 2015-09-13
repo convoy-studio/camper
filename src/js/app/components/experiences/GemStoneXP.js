@@ -30,7 +30,8 @@ export default class GemStoneXP extends BaseXP {
 		var explosionFrag = glslify('../shaders/gemstone/diffusion-mix-frag.glsl')
 		var imgUrl = AppStore.Preloader.getImageURL('gemstone-experience-texture')
 		var texture = PIXI.Texture.fromImage(imgUrl)
-		this.sprite = new PIXI.Sprite(texture)
+		this.sprite = AppStore.getSprite()
+		this.sprite.texture = texture
 		this.sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, this.uniforms = {
 			resolution: { type: '2f', value: { x: 1, y: 1 } },
 			uSampler: {type: 'sampler2D', value: texture},
@@ -44,20 +45,28 @@ export default class GemStoneXP extends BaseXP {
 
 	    this.illusion = {
 	    	holder: AppStore.getContainer(),
-	    	mask: new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-gradient-mask'))),
+	    	mask: AppStore.getSprite(),
 	    	maskFilter: undefined,
 	    	shoeContainer: AppStore.getContainer(),
 	    	shoeWrapper: AppStore.getContainer(),
-	    	displacementMapTexture: new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-displacement-map'))),
-	    	backgroundSpr: new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-background-texture'))),
+	    	displacementMapTexture: AppStore.getSprite(),
+	    	backgroundSpr: AppStore.getSprite(),
 	    }
+
+	    this.illusion.displacementMapTexture.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-displacement-map'))
+	    this.illusion.backgroundSpr.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-background-texture'))
+	    this.illusion.mask.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-gradient-mask'))
 	    this.illusion.maskFilter = new PIXI.filters.DisplacementFilter(this.illusion.displacementMapTexture)
 
 	    this.shoes = [
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-0'))),
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-1'))),
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-2')))
+			AppStore.getSprite(),
+			AppStore.getSprite(),
+			AppStore.getSprite()
 		]
+
+		this.shoes[0].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-0'))
+		this.shoes[1].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-1'))
+		this.shoes[2].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-shoe-2'))
 
 		this.onMouseMove = this.onMouseMove.bind(this)
 		this.toggleActivationStep = this.toggleActivationStep.bind(this)
@@ -247,8 +256,18 @@ export default class GemStoneXP extends BaseXP {
 		$('#app-container').off('mousemove', this.onMouseMove)
 		this.button.off('mouseenter', this.onMouseOver)
 		this.button.off('mouseleave', this.onMouseOut)
+
+		for (var i = 0; i < this.shoes.length; i++) {
+			var shoe = this.shoes[i]
+			AppStore.releaseSprite(shoe)	
+		};
+
 		this.illusion.holder.filters = null
 		this.illusion.holder.removeChildren()
+		AppStore.releaseSprite(this.sprite)
+		AppStore.releaseSprite(this.illusion.mask)
+		AppStore.releaseSprite(this.illusion.displacementMapTexture)
+		AppStore.releaseSprite(this.illusion.backgroundSpr)
 		AppStore.releaseContainer(this.illusion.holder)
 		this.illusion.shoeContainer.removeChildren()
 		AppStore.releaseContainer(this.illusion.shoeContainer)

@@ -6,7 +6,7 @@ export default class Pool {
 		var planets = AppStore.planets()
 		var pxContainerNum = 22 + (planets.length * 1)
 		var graphicsNum = (planets.length * 3) - 2
-		var spritesNum = planets.length
+		var spritesNum = planets.length + (3*2) + (8*4) + 30
 		var springGardensNum = 12
 	
 		if(!AppStore.Detector.oldIE) {
@@ -38,10 +38,15 @@ export default class Pool {
 		container.scale.y = 1
 		container.position.x = 0
 		container.position.y = 0
+		container.x = 0
+		container.y = 0
 		container.pivot.x = 0
 		container.pivot.y = 0
 		container.rotation = 0
 		container.alpha = 1
+		container.blendMode = PIXI.BLEND_MODES.NORMAL
+		container.mask = undefined
+		container.filters = undefined
 		return container
 	}
 	releaseContainer(item) {
@@ -66,21 +71,39 @@ export default class Pool {
 		this.graphics.release(item)
 	}
 	getSprite() {
+		// console.log('get >>>>>>>>>>>>>>>')
 		if(AppStore.Detector.oldIE) return
-		return this.sprites.get()
+		var sprite = this.sprites.get()
+		sprite.scale.x = 1
+		sprite.scale.y = 1
+		sprite.position.x = 0
+		sprite.position.y = 0
+		sprite.x = 0
+		sprite.y = 0
+		sprite.anchor.x = 0
+		sprite.anchor.y = 0
+		sprite.pivot.x = 0
+		sprite.pivot.y = 0
+		sprite.rotation = 0
+		sprite.alpha = 1
+		sprite.blendMode = PIXI.BLEND_MODES.NORMAL
+		sprite.filters = null
+		sprite.mask = null
+  		sprite.shader = null
+  		sprite.texture.baseTexture.dispose()
+		return sprite
 	}
 	releaseSprite(item) {
+		// console.log('release <<<<<<<<<<<<<<', item)
 		if(AppStore.Detector.oldIE) return
 		this.sprites.release(item)
 	}
 	getSpringGarden() {
 		if(AppStore.Detector.oldIE) return
-		// console.log('get >>>>>>>>>>>>>>>')
 		return this.springGardens.get()
 	}
 	releaseSpringGarden(item) {
 		if(AppStore.Detector.oldIE) return
-		// console.log('release <<<<<<<<<<<<<<', item)
 		this.springGardens.release(item)
 	}
 }

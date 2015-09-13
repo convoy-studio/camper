@@ -20,13 +20,14 @@ export default class AlaskaXP extends BaseXP {
 		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/alaska/experience-assets/bg-video/alaska_L.' + AppStore.videoExtensionSupport())
 		this.video = $(texture.baseTexture.source)
 		this.video.attr('loop', true)
-		this.videoSprite = new PIXI.Sprite(texture)
+		this.videoSprite = AppStore.getSprite()
+		this.videoSprite.texture = texture
 		this.pxContainer.addChild(this.videoSprite)
 
 		this.button = $('<div class="xp-button"></div>')
 		this.element.append(this.button)
 
-		this.particleContainer = new PIXI.Container()
+		this.particleContainer = AppStore.getContainer()
 
 	 	this.twistFilter = new PIXI.filters.TwistFilter()
 	 	this.twistFilter.angle = 0
@@ -84,10 +85,8 @@ export default class AlaskaXP extends BaseXP {
 
 		this.rocks = {
 			'rock-a': {
-				'front': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-0'))),
-				// 'front-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-0-normal_NRM')),
-				'back': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-1'))),
-				// 'back-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-1-normal_NRM')),
+				'front': AppStore.getSprite(),
+				'back': AppStore.getSprite(),
 				'holder': AppStore.getContainer(),
 				'wrapperFront': AppStore.getContainer(),
 				'wrapperBack': AppStore.getContainer(),
@@ -108,10 +107,8 @@ export default class AlaskaXP extends BaseXP {
 				}
 			},
 			'rock-b': {
-				'front': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-0'))),
-				// 'front-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-0-normal_NRM')),
-				'back': new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-1'))),
-				// 'back-normal': PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-1-normal_NRM')),
+				'front': AppStore.getSprite(),
+				'back': AppStore.getSprite(),
 				'holder': AppStore.getContainer(),
 				'wrapperFront': AppStore.getContainer(),
 				'wrapperBack': AppStore.getContainer(),
@@ -133,39 +130,22 @@ export default class AlaskaXP extends BaseXP {
 			}
 		}
 
-		// this.rocks['rock-a'].frontNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-a']['front-normal'])
-		// this.rocks['rock-a'].backNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-a']['back-normal'])
-		// this.rocks['rock-b'].frontNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-b']['front-normal'])
-		// this.rocks['rock-b'].backNormalFilter = new PIXI.filters.NormalMapFilter(this.rocks['rock-b']['back-normal'])
-
-		// var gui = new dat.GUI();
-		// var that = this
-		// var DebugTxt = function() {
-		// 	this.offsetX = that.rocks['rock-a'].frontNormalFilter.offset.x
-		// 	this.offsetY = that.rocks['rock-a'].frontNormalFilter.offset.y
-		// };
-
-		// var text = new DebugTxt();
-		// $(gui.domElement).parent().css('z-index', 9999)
-
-		// gui.add(text, 'offsetX', 0, 500).onChange(function(value) {
-		// 	that.currentRock.frontNormalFilter.scale.x = value
-		// });
-
-
-		// this.rocks['rock-a'].normalWrapperFront.filters = [this.rocks['rock-a'].frontNormalFilter]
-		// this.rocks['rock-a'].normalWrapperBack.filters = [this.rocks['rock-a'].backNormalFilter]
-		// this.rocks['rock-b'].normalWrapperFront.filters = [this.rocks['rock-b'].frontNormalFilter]
-		// this.rocks['rock-b'].normalWrapperBack.filters = [this.rocks['rock-b'].backNormalFilter]
-
-		// console.log(this.rocks['rock-a'].front, this.rocks['rock-a'].back)
+		this.rocks['rock-a'].front.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-0'))
+		this.rocks['rock-a'].back.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-0-1'))
+		this.rocks['rock-b'].front.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-0'))
+		this.rocks['rock-b'].back.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-rock-1-1'))
 
 		this.shoes = [
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-0'))),
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-1'))),
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-2'))),
-			new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-3')))
+			AppStore.getSprite(),
+			AppStore.getSprite(),
+			AppStore.getSprite(),
+			AppStore.getSprite()
 		]
+
+		this.shoes[0].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-0'))
+		this.shoes[1].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-1'))
+		this.shoes[2].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-2'))
+		this.shoes[3].texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('alaska-experience-shoe-3'))
 
 		this.emitter.emit = true
 
@@ -380,6 +360,8 @@ export default class AlaskaXP extends BaseXP {
 		this.rocks[id].wrapperShoe.removeChildren()
 		this.rocks[id].normalWrapperFront.removeChildren()
 		this.rocks[id].normalWrapperBack.removeChildren()
+		AppStore.releaseSprite(this.rocks[id].front)
+		AppStore.releaseSprite(this.rocks[id].back)
 		AppStore.releaseContainer(this.rocks[id].holder)
 		AppStore.releaseContainer(this.rocks[id].wrapperFront)
 		AppStore.releaseContainer(this.rocks[id].wrapperBack)
@@ -388,11 +370,19 @@ export default class AlaskaXP extends BaseXP {
 		AppStore.releaseContainer(this.rocks[id].normalWrapperBack)
 	}
 	componentWillUnmount() {
+		for (var i = 0; i < this.shoes.length; i++) {
+			var shoe = this.shoes[i]
+			AppStore.releaseSprite(shoe)
+		};
+
 		this.pxContainer.filters = null
 		this.removeFromRockById('rock-a')
 		this.removeFromRockById('rock-b')
 		this.button.off('click', this.onClick)
 		this.emitter.destroy()
+		this.particleContainer.removeChildren()
+		AppStore.releaseContainer(this.particleContainer)
+		AppStore.releaseSprite(this.videoSprite)
 		super.componentWillUnmount()
 	}
 }

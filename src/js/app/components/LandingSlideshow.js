@@ -3,15 +3,24 @@ import AppStore from 'AppStore'
 import Vec2 from 'Vec2'
 import Utils from 'Utils'
 import BezierEasing from 'bezier-easing'
+import Router from 'Router'
 const glslify = require('glslify')
 
 export default class LandingSlideshow {
 	constructor(pxContainer, parentEl) {
 		this.parentEl = parentEl
 		this.pxContainer = pxContainer
-		this.currentId = 'alaska'
 	}
 	componentDidMount() {
+
+		var oldHash = Router.getOldHash()
+		if(oldHash != undefined) {
+			var planet = oldHash.parts[1]
+			this.currentId = planet
+		}else{
+			this.currentId = 'alaska'	
+		}
+
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
 	 	this.slideshowWrapper = AppStore.getContainer()
@@ -71,8 +80,18 @@ export default class LandingSlideshow {
 	 		this.slides[i] = s
 	 	}
 
+	 	this.shiftUntilCorrectCurrentSlide()
+
 	 	this.maskEasing = BezierEasing(.84,.13,0,1.03)
 	 	this.chooseSlideToHighlight()
+	}
+	shiftUntilCorrectCurrentSlide() {
+		if(this.currentId == this.slides[2].id) {
+			return
+		}else{
+			this.shiftNextSlidesArray()
+			this.shiftUntilCorrectCurrentSlide()
+		}
 	}
 	updateTitles(title, name) {
 		var planetTitle = this.titleContainer.planetTitle
@@ -87,9 +106,13 @@ export default class LandingSlideshow {
 		graphics.drawRect(x, y, w, h)
 		graphics.endFill()
 	}
-	next() {
+	shiftNextSlidesArray() {
 		var firstElement = this.slides.shift()
 		this.slides.push(firstElement)
+		return firstElement
+	}
+	next() {
+		var firstElement = this.shiftNextSlidesArray()
 		this.elementThatMovedInSlidesArray = firstElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()

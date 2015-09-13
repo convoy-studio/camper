@@ -21,7 +21,8 @@ export default class WoodXP extends BaseXP {
 			btns: []
 		}
 
-		this.displacementMapTexture = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('wood-experience-displacement')))
+		this.displacementMapTexture = AppStore.getSprite()
+		this.displacementMapTexture.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('wood-experience-displacement'))
 		this.displacementMapTexture.anchor.x = this.displacementMapTexture.anchor.y = 0.5
 		this.displacementFilter = new PIXI.filters.DisplacementFilter(this.displacementMapTexture)
 		this.displacementMapTexture.scale.x = this.displacementMapTexture.scale.y = 0
@@ -118,7 +119,8 @@ export default class WoodXP extends BaseXP {
 		var scaleStep = totalScale / this.totalSteps
 		var currentScale = totalScale
 		for (var i = 0; i < this.totalSteps; i++) {
-			var part = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('wood-experience-wood-part')))
+			var part = AppStore.getSprite()
+			part.texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('wood-experience-wood-part'))
 			part.anchor.x = part.anchor.y = 0.5
 			part.rotation = Utils.Rand(-.1, .1)
 			
@@ -222,11 +224,16 @@ export default class WoodXP extends BaseXP {
 			var btn = this.notes.btns[i]
 			btn.off('mouseenter', this.onMouseEnter)
 		};
+		for (var i = 0; i < this.circles.parts.length; i++) {
+			var part = this.circles.parts[i]
+			AppStore.releaseSprite(part)
+		};
 		this.circles.container.filters = null
 		this.circles.container.removeChildren()
 		this.particleContainer.removeChildren()
 		AppStore.releaseContainer(this.circles.container)
 		AppStore.releaseContainer(this.particleContainer)
+		AppStore.releaseSprite(this.displacementMapTexture)
 		this.emitter.destroy()
 		super.componentWillUnmount()
 	}

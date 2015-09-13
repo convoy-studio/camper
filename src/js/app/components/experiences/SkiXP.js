@@ -24,15 +24,10 @@ export default class SkiXP extends BaseXP {
 
 		AppStore.Sounds.play('ski-sounds-drums', { interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1 })
 
-			
-
-
 		for (var i = 0; i < this.pointsLen; i++) {
 		    this.points.push(new PIXI.Point(i * this.ropeLength, 0));
 		}
 		var texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-bumps'))
-		var strip = new PIXI.mesh.Rope(texture, this.points);
-
 		this.bumps = []
 		for (var i = 0; i < 6; i++) {
 			this.bumps.push({

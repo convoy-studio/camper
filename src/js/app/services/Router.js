@@ -42,6 +42,13 @@ class Router {
 		this._assignRoute(productId)
 	}
 	_onPlanetURLHandler(planetId) {
+
+		if(AppStore.Detector.isMobile) {
+			var mobileUrl = '/planet/'+planetId+'/0'
+			Router.setHash(mobileUrl)
+			return
+		}
+
 		this._assignRoute(planetId)
 	}
 	_onBlogPostURLHandler(postId) {

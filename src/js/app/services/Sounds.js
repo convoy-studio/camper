@@ -1,7 +1,7 @@
 
 class Sounds  {
 	constructor() {
-		this.isMute = false
+		this.isMute = true
 		this.activeIds = []
 		this.tweenVal = {val:1}
 	}

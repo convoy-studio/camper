@@ -25,7 +25,7 @@ export default class RectangleBtn {
 
 		setTimeout(()=>{
 
-			var titleW = this.rectW
+			var titleW = this.rectW == undefined ? titleEl.width() : this.rectW
 			var titleH = AppConstants.GLOBAL_FONT_SIZE
 
 			for (var i = 0; i < knotsEl.length; i++) {
@@ -115,10 +115,13 @@ export default class RectangleBtn {
 
 			// this.rollover = this.rollover.bind(this)
 			// this.rollout = this.rollout.bind(this)
-			// this.click = this.click.bind(this)
 			// this.element.on('mouseenter', this.rollover)
 			// this.element.on('mouseleave', this.rollout)
-			// this.element.on('click', this.click)
+
+			if(this.btnClicked != undefined) {
+				this.click = this.click.bind(this)
+				this.element.on('click', this.click)
+			}
 		}, 0)
 	}
 	position(x, y) {
@@ -128,7 +131,7 @@ export default class RectangleBtn {
 	}
 	click(e) {
 		e.preventDefault()
-		if(this.btnClicked != undefined) this.btnClicked()
+		this.btnClicked()
 	}
 	rollout() {
 		this.tlOver.kill()
@@ -141,8 +144,8 @@ export default class RectangleBtn {
 	componentWillUnmount() {
 		AppStore.releaseTimeline(this.tlOver)
 		AppStore.releaseTimeline(this.tlOut)
-		// this.element.off('mouseenter', this.rollover)
-		// this.element.off('mouseleave', this.rollout)
-		// this.element.off('click', this.click)
+		if(this.btnClicked != undefined) {
+			this.element.off('click', this.click)
+		}
 	}
 }

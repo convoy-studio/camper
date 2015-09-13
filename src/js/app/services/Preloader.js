@@ -7,6 +7,7 @@ class Preloader  {
 		this.queue.installPlugin(createjs.Sound)
 		this.queue.on("complete", this.onManifestLoadCompleted, this)
 		this.currentLoadedCallback = undefined
+		this.allManifests = []
 	}
 	load(manifest, onLoaded) {
 
@@ -15,6 +16,17 @@ class Preloader  {
 			return
 		}
 
+		if(this.allManifests.length > 0) {
+			for (var i = 0; i < this.allManifests.length; i++) {
+				var m = this.allManifests[i]
+				if(m.length == manifest.length && m[0].id == manifest[0].id && m[m.length-1].id == manifest[manifest.length-1].id) {
+					onLoaded()	
+					return
+				}
+			};
+		}
+
+		this.allManifests.push(manifest)
 		this.currentLoadedCallback = onLoaded
         this.queue.loadManifest(manifest)
 	}
