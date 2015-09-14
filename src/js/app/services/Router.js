@@ -98,6 +98,7 @@ class Router {
 		return data.routing
 	}
 	static getNewHash() {
+		// console.log(hasher.newHash)
 		return hasher.newHash
 	}
 	static getOldHash() {

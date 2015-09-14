@@ -30,8 +30,7 @@ export default class GemStoneXP extends BaseXP {
 		var explosionFrag = glslify('../shaders/gemstone/diffusion-mix-frag.glsl')
 		var imgUrl = AppStore.Preloader.getImageURL('gemstone-experience-texture')
 		var texture = PIXI.Texture.fromImage(imgUrl)
-		this.sprite = AppStore.getSprite()
-		this.sprite.texture = texture
+		this.sprite = new PIXI.Sprite(texture)
 		this.sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, this.uniforms = {
 			resolution: { type: '2f', value: { x: 1, y: 1 } },
 			uSampler: {type: 'sampler2D', value: texture},
@@ -264,7 +263,6 @@ export default class GemStoneXP extends BaseXP {
 
 		this.illusion.holder.filters = null
 		this.illusion.holder.removeChildren()
-		AppStore.releaseSprite(this.sprite)
 		AppStore.releaseSprite(this.illusion.mask)
 		AppStore.releaseSprite(this.illusion.displacementMapTexture)
 		AppStore.releaseSprite(this.illusion.backgroundSpr)

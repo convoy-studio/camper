@@ -234,6 +234,7 @@ export default class WoodXP extends BaseXP {
 		AppStore.releaseContainer(this.circles.container)
 		AppStore.releaseContainer(this.particleContainer)
 		AppStore.releaseSprite(this.displacementMapTexture)
+		this.emitter.emit = false
 		this.emitter.destroy()
 		super.componentWillUnmount()
 	}

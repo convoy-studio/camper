@@ -8,6 +8,7 @@ import Preloader from 'Preloader'
 import Sounds from 'Sounds'
 import MobileDetect from 'mobile-detect'
 import AppConstants from 'AppConstants'
+import hasher from 'hasher'
 
 class App {
 	constructor() {
@@ -65,18 +66,39 @@ class App {
 			this.loadMainAssets()
 	}
 	loadMainAssets() {
+		var hashUrl = location.hash.substring(2)
+		var parts = hashUrl.substr(1).split('/')
+
 		var manifest = []
-		var planets = AppStore.planets()
-		for (var i = 0; i < planets.length; i++) {
-			var planet = planets[i]
-			var o = {}
-			var imgUrl = AppStore.mainImageUrl(planet, AppConstants.RESPONSIVE_IMAGE)
-			manifest[i] = {
-				id: 'main-loader-assets-' + planet,
-            	src: imgUrl
+		if(parts.length < 3) {
+			var h = {
+				hash: hashUrl,
+				parts: parts
 			}
+			hasher.newHash = h
+			var manifest = AppStore.pageAssetsToLoad()	
 		}
-		AppStore.Preloader.load(manifest, this.onMainAssetsLoaded)
+
+		if(manifest.length < 1 && parts.length < 3) {
+
+			var manifest = []
+			var planets = AppStore.planets()
+			for (var i = 0; i < planets.length; i++) {
+				var planet = planets[i]
+				var o = {}
+				var imgUrl = AppStore.mainImageUrl(planet, AppConstants.RESPONSIVE_IMAGE)
+				manifest[i] = {
+					id: 'main-loader-assets-' + planet,
+	            	src: imgUrl
+				}
+			}
+
+		}
+		if(manifest.length < 1) {
+			this.onMainAssetsLoaded()
+		}else{
+			AppStore.Preloader.load(manifest, this.onMainAssetsLoaded)
+		}
 	}
 	onMainAssetsLoaded() {
 		setTimeout(()=>{

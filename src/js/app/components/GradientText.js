@@ -9,7 +9,7 @@ export default class GradientText {
 
 		this.gradientText = {
 			container: AppStore.getContainer(),
-			gradient: AppStore.getSprite()
+			gradient: new PIXI.Sprite()
 		}
 		this.gradientText.gradient.blendMode = PIXI.BLEND_MODES.ADD
 
@@ -178,6 +178,5 @@ export default class GradientText {
 		this.linesContainer.removeChildren()
 		AppStore.releaseContainer(this.gradientText.container)
 		AppStore.releaseContainer(this.linesContainer)
-		AppStore.releaseSprite(this.gradientText.gradient)
 	}
 }

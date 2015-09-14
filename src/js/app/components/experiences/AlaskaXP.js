@@ -379,6 +379,7 @@ export default class AlaskaXP extends BaseXP {
 		this.removeFromRockById('rock-a')
 		this.removeFromRockById('rock-b')
 		this.button.off('click', this.onClick)
+		this.emitter.emit = false
 		this.emitter.destroy()
 		this.particleContainer.removeChildren()
 		AppStore.releaseContainer(this.particleContainer)

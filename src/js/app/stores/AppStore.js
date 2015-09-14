@@ -40,6 +40,7 @@ function _getContentScope() {
 }
 function _getPageAssetsToLoad() {
     var scope = _getContentScope()
+    if(scope == undefined) return []
     var hashObj = Router.getNewHash()
     var targetId;
     var type = _getTypeOfPage()

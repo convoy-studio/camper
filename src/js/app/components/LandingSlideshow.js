@@ -17,9 +17,8 @@ export default class LandingSlideshow {
 		if(oldHash != undefined) {
 			var planet = oldHash.parts[1]
 			this.currentId = planet
-		}else{
-			this.currentId = 'alaska'	
 		}
+		this.currentId = (this.currentId == undefined) ? 'alaska' : this.currentId
 
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()

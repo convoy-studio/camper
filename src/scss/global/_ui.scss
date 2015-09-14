@@ -193,6 +193,7 @@ a {
 }
 .dots-rectangle-btn {
     @include simpleAnim(.6s, 0s, $easeOutExpo);
+    z-index: 9999;
 }
 #main-loader {
     position: absolute;

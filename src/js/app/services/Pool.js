@@ -6,7 +6,7 @@ export default class Pool {
 		var planets = AppStore.planets()
 		var pxContainerNum = 22 + (planets.length * 1)
 		var graphicsNum = (planets.length * 3) - 2
-		var spritesNum = planets.length + (3*2) + (8*4) + 30
+		var spritesNum = planets.length + (3*2) + (8*4) + 40
 		var springGardensNum = 12
 	
 		if(!AppStore.Detector.oldIE) {
@@ -71,31 +71,51 @@ export default class Pool {
 		this.graphics.release(item)
 	}
 	getSprite() {
-		// console.log('get >>>>>>>>>>>>>>>')
 		if(AppStore.Detector.oldIE) return
 		var sprite = this.sprites.get()
-		sprite.scale.x = 1
-		sprite.scale.y = 1
-		sprite.position.x = 0
-		sprite.position.y = 0
-		sprite.x = 0
-		sprite.y = 0
-		sprite.anchor.x = 0
-		sprite.anchor.y = 0
-		sprite.pivot.x = 0
-		sprite.pivot.y = 0
-		sprite.rotation = 0
-		sprite.alpha = 1
-		sprite.blendMode = PIXI.BLEND_MODES.NORMAL
-		sprite.filters = null
-		sprite.mask = null
-  		sprite.shader = null
-  		sprite.texture.baseTexture.dispose()
+		// sprite.scale.x = 1
+		// sprite.scale.y = 1
+		// sprite.position.x = 0
+		// sprite.position.y = 0
+		// sprite.x = 0
+		// sprite.y = 0
+		// sprite.anchor.x = 0
+		// sprite.anchor.y = 0
+		// sprite.pivot.x = 0
+		// sprite.pivot.y = 0
+		// sprite.rotation = 0
+		// sprite.alpha = 1
+		// sprite.blendMode = PIXI.BLEND_MODES.NORMAL
+		// sprite.filters = null
+		// sprite.mask = null
+  // 		sprite.shader = null
+  		sprite.renderable = true
+		// console.log('get >>>>>>>>>>>>>>>', sprite)
 		return sprite
 	}
 	releaseSprite(item) {
-		// console.log('release <<<<<<<<<<<<<<', item)
 		if(AppStore.Detector.oldIE) return
+		// console.log('release <<<<<<<<<<<<<<', item)
+		item.scale.x = 1
+		item.scale.y = 1
+		item.position.x = 0
+		item.position.y = 0
+		item.x = 0
+		item.y = 0
+		item.anchor.x = 0
+		item.anchor.y = 0
+		item.pivot.x = 0
+		item.pivot.y = 0
+		item.rotation = 0
+		item.alpha = 1
+		item.blendMode = PIXI.BLEND_MODES.NORMAL
+		item.filters = null
+		item.mask = null
+  		item.shader = null
+  		item.renderable = false
+		item.texture.valid = false
+  		item.texture.baseTexture.dispose()
+  		// item.texture.destroy()
 		this.sprites.release(item)
 	}
 	getSpringGarden() {

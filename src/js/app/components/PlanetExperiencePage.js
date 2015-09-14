@@ -17,6 +17,8 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super(props)
 	}
 	componentDidMount() {
+		this.transitionInCompleted = false
+
 		var infos = AppStore.generalInfosLangScope()
 		
 		var XpClazz = this.getExperienceById(this.id)
@@ -82,6 +84,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.didTransitionOutComplete()
 	}
 	didTransitionInComplete() {
+		this.transitionInCompleted = true
 		super.didTransitionInComplete()	
 	}
 	willTransitionOut() {
@@ -89,7 +92,9 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.willTransitionOut()
 	}
 	update() {
-		this.experience.update()
+		if(this.transitionInCompleted) {
+			this.experience.update()
+		}
 	}
 	resize() {
 		var windowW = AppStore.Window.w
