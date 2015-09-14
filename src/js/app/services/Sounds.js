@@ -1,7 +1,7 @@
 
 class Sounds  {
 	constructor() {
-		this.isMute = true
+		this.isMute = false
 		this.activeIds = []
 		this.tweenVal = {val:1}
 	}
@@ -52,12 +52,13 @@ class Sounds  {
 		};
 	}
 	stopSoundsByPlanetId(id) {
-		var tempArray = this.activeIds.slice(0)
+		var tempArray = []
 		for (var i = 0; i < this.activeIds.length; i++) {
 			var activeS = this.activeIds[i]
 			if(activeS.id.indexOf(id) >= 0) {
 				activeS.sound.stop()
-				tempArray = tempArray.splice(i, 1)
+			}else{
+				tempArray.push(activeS)
 			}
 		}
 		this.activeIds = tempArray.slice(0)

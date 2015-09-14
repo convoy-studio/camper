@@ -71,14 +71,8 @@ export default class MetalXP extends BaseXP {
 
 			var ball = AppStore.getSprite()
 			ball.texture = PIXI.Texture.fromImage(ballAUrl)
-			ball.texture.width = ball.texture.height = 512
 			ball.anchor.x = ball.anchor.y = 0.5
 			ball.scale.x = ball.scale.y = 0.5
-
-			// var mask = AppStore.getSprite()
-			// mask.texture = PIXI.Texture.fromImage(gradientMaskUrl)
-			// mask.anchor.x = mask.anchor.y = 0.5
-			// mask.scale.x = mask.scale.y = 0.53
 
 			var texture = PIXI.Texture.fromImage(imgUrl)
 			var sprite = AppStore.getSprite()
@@ -101,8 +95,6 @@ export default class MetalXP extends BaseXP {
 			var holder = AppStore.getContainer()
 			holder.addChild(ball)
 			holder.addChild(sprite)
-			// holder.addChild(mask)
-			// sprite.mask = mask
 			this.pxContainer.addChild(holder)
 
 			var ratio = 226
@@ -116,7 +108,6 @@ export default class MetalXP extends BaseXP {
 			g.ball = ball
 			g.lava = sprite
 			g.line = line
-			// g.mask = mask
 			g.uniforms = uniforms
 			this.cranes[i] = g
 		};
@@ -214,7 +205,6 @@ export default class MetalXP extends BaseXP {
 
 		for (var i = 0; i < this.cranes.length; i++) {
   			var ball = this.cranes[i].ball
-  			var mask = this.cranes[i].mask
   			var lava = this.cranes[i].lava
   			var holder = this.cranes[i].holder
   			var line = this.cranes[i].line
@@ -225,8 +215,8 @@ export default class MetalXP extends BaseXP {
 
   			AppStore.releaseGraphics(line)
   			AppStore.releaseSprite(ball)
-  			AppStore.releaseSprite(mask)
   			AppStore.releaseSprite(lava)
+
   			holder.removeChildren()
   			AppStore.releaseContainer(holder)
   		}
