@@ -1,6 +1,7 @@
 import BaseXP from 'BaseXP'
 import AppStore from 'AppStore'
 import Utils from 'Utils'
+import AppConstants from 'AppConstants'
 const glslify = require('glslify')
 
 export default class MetalXP extends BaseXP {
@@ -9,7 +10,8 @@ export default class MetalXP extends BaseXP {
 	}
 	componentDidMount() {
 
-		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/metal/experience-assets/bg-video/metal_L.' + AppStore.videoExtensionSupport())
+		var videoSize = AppStore.responsivePosterImage()
+		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/metal/experience-assets/bg-video/metal_'+videoSize+'.' + AppStore.videoExtensionSupport())
 		this.video = $(texture.baseTexture.source)
 		this.video.attr('loop', true)
 		this.videoSprite = AppStore.getSprite()
@@ -192,6 +194,13 @@ export default class MetalXP extends BaseXP {
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
+
+		var videoResize = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
+
+		this.videoSprite.x = videoResize.left
+		this.videoSprite.y = videoResize.top
+		this.videoSprite.width = videoResize.width
+		this.videoSprite.height = videoResize.height
 
 		this.matterCanvas.get(0).width = windowW
 		this.matterCanvas.get(0).height = windowH

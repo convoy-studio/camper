@@ -16,7 +16,7 @@ var TransitionAnimations = {
 				timeline.fromTo(wrapper, 1, { y:windowH << 2, ease:Expo.easeInOut }, { y:0, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				var direction = (AppStore.getExperienceAnimationDirection() == AppConstants.LEFT) ? -1 : 1
+				var direction = (AppStore.ChangePlanetFromDirection == AppConstants.LEFT) ? -1 : 1
 				if(!AppStore.Detector.oldIE) timeline.fromTo(scope.pxContainer, 1, { x:windowW*direction, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
 				timeline.fromTo(wrapper, 1, { x:windowW*direction, ease:Expo.easeInOut }, { x:0, ease:Expo.easeInOut }, 0)
 				break
@@ -41,7 +41,7 @@ var TransitionAnimations = {
 				timeline.fromTo(wrapper, 1, { y:0, ease:Expo.easeInOut }, { y:windowH << 2, ease:Expo.easeInOut }, 0)
 				break
 			case AppConstants.EXPERIENCE:
-				var direction = (AppStore.getExperienceAnimationDirection() == AppConstants.LEFT) ? -1 : 1
+				var direction = (AppStore.ChangePlanetFromDirection == AppConstants.LEFT) ? -1 : 1
 				if(!AppStore.Detector.oldIE) timeline.fromTo(scope.pxContainer, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW*direction, ease:Expo.easeInOut }, 0)
 				timeline.fromTo(wrapper, 1, { x:0, ease:Expo.easeInOut }, { x:-windowW*direction, ease:Expo.easeInOut }, 0)
 				break

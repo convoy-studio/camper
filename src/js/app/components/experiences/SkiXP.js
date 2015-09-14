@@ -39,23 +39,6 @@ export default class SkiXP extends BaseXP {
 		this.bumpsContainer = AppStore.getContainer()
 		this.pxContainer.addChild(this.bumpsContainer)
 
-		var gradientTextA = new GradientText(this.pxContainer)
-		gradientTextA.componentDidMount({fontFamily:'Mechsuit', fontSize:90, strokeThickness:14})
-		var gradientTextB = new GradientText(this.pxContainer)
-		gradientTextB.componentDidMount({fontFamily:'Paladins', fontSize:120, strokeThickness:14})
-		var gradientTextC = new GradientText(this.pxContainer)
-		gradientTextC.componentDidMount({fontFamily:'Skirmisher', fontSize:150, strokeThickness:14})
-
-		this.gradientTextIndex = 0
-		this.gradientTexts = [
-			gradientTextA, 
-			gradientTextB,
-			gradientTextC
-		]
-		for (var i = 0; i < this.gradientTexts.length; i++) {
-			var gradientTxt = this.gradientTexts[i]
-			gradientTxt.container.alpha = 0
-		};
 
 		var style = {
 		    font: '22px FuturaBold',
@@ -92,7 +75,7 @@ export default class SkiXP extends BaseXP {
 				},
 				"scale": {
 					"start": 0.1,
-					"end": 1.4
+					"end": 0.4
 				},
 				"color": {
 					"start": "ffffff",
@@ -139,6 +122,24 @@ export default class SkiXP extends BaseXP {
 		this.setupBumps()
 
 		this.pxContainer.addChild(this.particleContainer)
+
+		var gradientTextA = new GradientText(this.pxContainer)
+		gradientTextA.componentDidMount({fontFamily:'Mechsuit', fontSize:90, strokeThickness:14})
+		var gradientTextB = new GradientText(this.pxContainer)
+		gradientTextB.componentDidMount({fontFamily:'Paladins', fontSize:120, strokeThickness:14})
+		var gradientTextC = new GradientText(this.pxContainer)
+		gradientTextC.componentDidMount({fontFamily:'Skirmisher', fontSize:150, strokeThickness:14})
+
+		this.gradientTextIndex = 0
+		this.gradientTexts = [
+			gradientTextA, 
+			gradientTextB,
+			gradientTextC
+		]
+		for (var i = 0; i < this.gradientTexts.length; i++) {
+			var gradientTxt = this.gradientTexts[i]
+			gradientTxt.container.alpha = 0
+		};
 
 		this.emitter.emit = true
 
@@ -190,6 +191,14 @@ export default class SkiXP extends BaseXP {
 
 		this.gameStatus.textField.text = 'SCORE: ' + this.gameStatus.score + ' pts'
 		this.gameStatus.score += Math.round(Utils.Rand(1, 100))
+
+		this.gameStatus.textField.scale.x = 1.3
+		this.gameStatus.textField.scale.y = 1.1
+		clearTimeout(this.pointStatusTimeout)
+		this.pointStatusTimeout = setTimeout(()=>{
+			this.gameStatus.textField.scale.x = 1
+			this.gameStatus.textField.scale.y = 1
+		}, 10)
 
 		if(this.isTitleAnimate) return
 

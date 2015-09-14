@@ -17,7 +17,8 @@ export default class AlaskaXP extends BaseXP {
 	}
 	componentDidMount() {
 
-		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/alaska/experience-assets/bg-video/alaska_L.' + AppStore.videoExtensionSupport())
+		var videoSize = AppStore.responsivePosterImage()
+		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/alaska/experience-assets/bg-video/alaska_'+videoSize+'.' + AppStore.videoExtensionSupport())
 		this.video = $(texture.baseTexture.source)
 		this.video.attr('loop', true)
 		this.videoSprite = AppStore.getSprite()
@@ -232,7 +233,7 @@ export default class AlaskaXP extends BaseXP {
 			TweenMax.fromTo(this.currentRock.holder.scale, 2, { x:-0.1, y:0 }, { x:1, y:1, ease:Elastic.easeOut })
 			this.isAnimate = false
 			this.previousRock.wrapperShoe.removeChildren()
-		}, 2000)			
+		}, 2600)			
 
 		TweenMax.to(this.previousRock.wrapperBack, 2, { x:Utils.Rand(-240, -100), rotation:Utils.Rand(-.7, -.2), ease:Elastic.easeOut })
 		TweenMax.to(this.previousRock.wrapperFront, 2, { x:Utils.Rand(240, 300), y:Utils.Rand(160, 240), rotation:Utils.Rand(.2, .4), ease:Elastic.easeOut })
@@ -252,7 +253,7 @@ export default class AlaskaXP extends BaseXP {
 			var soundId = 'alaska-sounds-rock-in-' + randIndex
 			AppStore.Sounds.play(soundId)
 
-		}, 800)
+		}, 1600)
 
 		this.particleContainer.alpha = 1
 	}

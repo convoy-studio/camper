@@ -52,9 +52,11 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		switch(direction) {
 			case AppConstants.RIGHT:
 				planet = AppStore.getNextPlanet(this.id)
+				AppStore.ChangePlanetFromDirection = AppConstants.RIGHT
 				break
 			case AppConstants.LEFT:
 				planet = AppStore.getPreviousPlanet(this.id)
+				AppStore.ChangePlanetFromDirection = AppConstants.LEFT
 				break
 		}
 		var url = "/planet/" + planet

@@ -30,11 +30,13 @@ export default class GemStoneXP extends BaseXP {
 		var explosionFrag = glslify('../shaders/gemstone/diffusion-mix-frag.glsl')
 		var imgUrl = AppStore.Preloader.getImageURL('gemstone-experience-texture')
 		var texture = PIXI.Texture.fromImage(imgUrl)
+		// var textureDisplacement = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('gemstone-experience-displacement-texture-1'))
 		this.sprite = AppStore.getSprite()
 		this.sprite.texture = texture
 		this.sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, this.uniforms = {
 			resolution: { type: '2f', value: { x: 1, y: 1 } },
 			uSampler: {type: 'sampler2D', value: texture},
+			// uDisplacement: {type: 'sampler2D', value: textureDisplacement},
 			time: {type: '1f', value: 0},
 			zoom: {type: '1f', value: 1.0},
 			brightness: {type: '1f', value: 1.25},
@@ -115,7 +117,7 @@ export default class GemStoneXP extends BaseXP {
 	}
 	toggleActivationStep() {
 		this.stepsCounter += 3
-		if(this.stepsCounter > 5) {
+		if(this.stepsCounter > 6) {
 			this.resetActivationState()
 			this.stateToShowroom()
 			this.animateInShoe()
@@ -185,7 +187,8 @@ export default class GemStoneXP extends BaseXP {
 		this.mouseVec.normalMouse.x = AppStore.Mouse.x
 		this.mouseVec.normalMouse.y = AppStore.Mouse.y
 		var dist = this.mouseVec.normalMiddle.distanceTo(this.mouseVec.normalMouse)
-		this.mouseVec.normalDist = (dist / this.mouseVec.radius) * 1.2
+		var newDist = (dist / this.mouseVec.radius) * 1.2
+		this.mouseVec.normalDist += (newDist - this.mouseVec.normalDist) * 0.06
 	}
 	update() {
 		super.update()
