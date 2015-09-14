@@ -3,6 +3,7 @@ import template from 'FrontContainer_hbs'
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
+import Router from 'Router'
 
 class FrontContainer extends BaseComponent {
 	constructor() {
@@ -55,6 +56,7 @@ class FrontContainer extends BaseComponent {
 		this.$camperLab = this.child.find('.camper-lab')
 		this.$shop = this.child.find('.shop-wrapper')
 		this.$home = this.child.find('.home-btn')
+		this.$play = this.child.find('.play-xp-btn')
 		this.$mute = this.child.find('.mute')
 		this.countriesH = 0
 
@@ -82,6 +84,9 @@ class FrontContainer extends BaseComponent {
 		this.onMuteClicked = this.onMuteClicked.bind(this)
 		this.$mute.on('click', this.onMuteClicked)
 
+		this.onPlayXPClicked = this.onPlayXPClicked.bind(this)
+		this.$play.on('click', this.onPlayXPClicked)
+
 		this.socialTl = new TimelineMax()
 		this.socialTl.staggerFrom(this.$socialBtns, 1, { scale:0, y:10, force3D:true, opacity:0, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0.01, 0)
 		this.socialTl.from(this.$socialIconsContainer, 1, { y:30, ease:Elastic.easeOut }, 0)
@@ -91,6 +96,17 @@ class FrontContainer extends BaseComponent {
 
 		if(AppStore.Detector.isMobile) {
 			this.initMobile()
+		}
+	}
+	onPlayXPClicked(e) {
+		e.preventDefault()
+		var hash = Router.getNewHash()
+		if(hash.parts.length > 2) {
+			var url = '/planet/' + hash.parts[1]
+			Router.setHash(url)
+		}else if(hash.parts.length == 1) {
+			var url = '/planet/' + AppStore.LandingCurrentPoster
+			Router.setHash(url)
 		}
 	}
 	onMuteClicked(e) {
@@ -167,8 +183,12 @@ class FrontContainer extends BaseComponent {
 			left: camperLabCss.left - this.$shop.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
+		var playCss = {
+			left: shopCss.left - this.$play.width() - (AppConstants.PADDING_AROUND),
+			top: AppConstants.PADDING_AROUND,
+		}
 		var homeCss = {
-			left: shopCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
+			left: playCss.left - this.$home.width() - (AppConstants.PADDING_AROUND),
 			top: AppConstants.PADDING_AROUND,
 		}
 		var muteCss = {
@@ -181,6 +201,7 @@ class FrontContainer extends BaseComponent {
 		this.$shop.css(shopCss)
 		this.$socialIconsContainer.css(socialIconsCss)
 		this.$home.css(homeCss)
+		this.$play.css(playCss)
 		this.$mute.css(muteCss)
 
 		if(AppStore.Detector.isMobile) {

@@ -127,10 +127,10 @@ export default class WoodXP extends BaseXP {
 			part.scale.x = part.scale.y = currentScale
 			currentScale -= scaleStep
 
-			var filter = new PIXI.filters.ColorMatrixFilter()
-			part.filters = [filter]
-			var brightness = Utils.Rand(0.7, 1)
-			filter.brightness(brightness)
+			// var filter = new PIXI.filters.ColorMatrixFilter()
+			// part.filters = [filter]
+			// var brightness = Utils.Rand(0.7, 1)
+			// filter.brightness(brightness)
 
 			this.circles.container.addChild(part)
 			this.circles.parts[i] = part
@@ -234,7 +234,6 @@ export default class WoodXP extends BaseXP {
 		AppStore.releaseContainer(this.circles.container)
 		AppStore.releaseContainer(this.particleContainer)
 		AppStore.releaseSprite(this.displacementMapTexture)
-		this.emitter.emit = false
 		this.emitter.destroy()
 		super.componentWillUnmount()
 	}

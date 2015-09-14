@@ -22,7 +22,7 @@ export default class SkiXP extends BaseXP {
 			vel:0.05
 		}
 
-		AppStore.Sounds.play('ski-sounds-drums', { interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1 })
+		// AppStore.Sounds.play('ski-sounds-drums', { interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1 })
 
 		for (var i = 0; i < this.pointsLen; i++) {
 		    this.points.push(new PIXI.Point(i * this.ropeLength, 0));
@@ -310,6 +310,9 @@ export default class SkiXP extends BaseXP {
 		};
 
 		this.emitter.destroy()
+
+		this.gameStatus.textField.destroy(true, true)
+		this.gameStatus.pointTextField.destroy(true, true)
 
 		super.componentWillUnmount()
 	}

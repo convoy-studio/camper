@@ -13,9 +13,18 @@
 				"planet": "Planet",
 				"buy_title": "Buy",
 				"campaign_title": "See campaign",
+				"experience_title": "See experience",
 				"legal": "Legal",
 				"home_txt": "HOME",
-				"mute_txt": "MUTE"
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY",
+				"experience": {
+					"alaska": "Break the ice",
+					"gemstone": "Touch the light",
+					"ski": "Make it bounce",
+					"wood": "Hover the circles",
+					"metal": "Drag the ball"
+				}
 			},
 			"fr": {
 				"camper_lab": "Camper Lab",
@@ -25,9 +34,18 @@
 				"planet": "Planète",
 				"buy_title": "Acheter",
 				"campaign_title": "Voir la campagne",
+				"experience_title": "See experience",
 				"legal": "Légal",
 				"home_txt": "HOME",
-				"mute_txt": "MUTE"
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY",
+				"experience": {
+					"alaska": "Break the ice",
+					"gemstone": "Touch the light",
+					"ski": "Make it bounce",
+					"wood": "Hover the circles",
+					"metal": "Drag the ball"
+				}
 			},
 			"es": {
 				"camper_lab": "Camper Lab",
@@ -37,9 +55,18 @@
 				"planet": "Planeta",
 				"buy_title": "Comprar",
 				"campaign_title": "Ver campaña",
+				"experience_title": "See experience",
 				"legal": "Información legal",
 				"home_txt": "HOME",
-				"mute_txt": "MUTE"
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY",
+				"experience": {
+					"alaska": "Break the ice",
+					"gemstone": "Touch the light",
+					"ski": "Make it bounce",
+					"wood": "Hover the circles",
+					"metal": "Drag the ball"
+				}
 			},
 			"it": {
 				"camper_lab": "Camper Lab",
@@ -49,9 +76,11 @@
 				"planet": "Pianeta",
 				"buy_title": "Acquista",
 				"campaign_title": "Guarda la campagna",
+				"experience_title": "See experience",
 				"legal": "Legale",
 				"home_txt": "HOME",
-				"mute_txt": "MUTE"
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY"
 			},
 			"de": {
 				"camper_lab": "Camper Lab",
@@ -61,9 +90,18 @@
 				"planet": "Planet",
 				"buy_title": "Kaufen",
 				"campaign_title": "Kampagne ansehen",
+				"experience_title": "See experience",
 				"legal": "Impressum",
 				"home_txt": "HOME",
-				"mute_txt": "MUTE"
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY",
+				"experience": {
+					"alaska": "Break the ice",
+					"gemstone": "Touch the light",
+					"ski": "Make it bounce",
+					"wood": "Hover the circles",
+					"metal": "Drag the ball"
+				}
 			},
 			"pt": {
 				"camper_lab": "Camper Lab",
@@ -73,9 +111,18 @@
 				"planet": "Planeta",
 				"buy_title": "Comprar",
 				"campaign_title": "Ver campanha",
+				"experience_title": "See experience",
 				"legal": "Legal",
 				"home_txt": "HOME",
-				"mute_txt": "MUTE"
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY",
+				"experience": {
+					"alaska": "Break the ice",
+					"gemstone": "Touch the light",
+					"ski": "Make it bounce",
+					"wood": "Hover the circles",
+					"metal": "Drag the ball"
+				}
 			}
 		}
 	},
@@ -520,7 +567,6 @@
 				"shoe-3.png"
 			],
 			"sounds-assets": [
-				"drums",
 				"bump-0",
 				"bump-1",
 				"flying-0",

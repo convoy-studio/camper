@@ -193,7 +193,7 @@ a {
 }
 .dots-rectangle-btn {
     @include simpleAnim(.6s, 0s, $easeOutExpo);
-    z-index: 9999;
+    z-index: 10;
 }
 #main-loader {
     position: absolute;
@@ -348,5 +348,40 @@ a {
                 }
             }
         }
+    }
+}
+
+#assets-loader-page {
+    @extend .full;
+    position: fixed;
+    z-index: 999999999;
+    visibility: hidden;
+    & > div {
+        position: absolute;
+    }
+    .background {
+        @extend .full;
+        background-color: #000000;
+        @include opacity(0.4);
+    }
+    .spinner-img {
+        z-index: 2;
+    }
+}
+#cta-container {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 36px;
+    white-space: nowrap;
+    z-index: 999999;
+    .cta-text-wrapper {
+        position: absolute;
+        z-index: 11;
+    }
+    .background {
+        position: absolute;
+        z-index: 10;
+        background-color: #000000;
+        @include opacity(0.8);
     }
 }

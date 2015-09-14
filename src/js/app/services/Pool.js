@@ -4,7 +4,7 @@ import SpringGarden from 'SpringGarden'
 export default class Pool {
 	constructor() {
 		var planets = AppStore.planets()
-		var pxContainerNum = 22 + (planets.length * 1)
+		var pxContainerNum = 50 + (planets.length * 1)
 		var graphicsNum = (planets.length * 3) - 2
 		var spritesNum = planets.length + (3*2) + (8*4) + 40
 		var springGardensNum = 12
@@ -45,8 +45,8 @@ export default class Pool {
 		container.rotation = 0
 		container.alpha = 1
 		container.blendMode = PIXI.BLEND_MODES.NORMAL
-		container.mask = undefined
-		container.filters = undefined
+		container.mask = null
+		container.filters = null
 		return container
 	}
 	releaseContainer(item) {
@@ -72,7 +72,7 @@ export default class Pool {
 	}
 	getSprite() {
 		if(AppStore.Detector.oldIE) return
-		var sprite = this.sprites.get()
+		// var sprite = this.sprites.get()
 		// sprite.scale.x = 1
 		// sprite.scale.y = 1
 		// sprite.position.x = 0
@@ -89,34 +89,44 @@ export default class Pool {
 		// sprite.filters = null
 		// sprite.mask = null
   // 		sprite.shader = null
-  		sprite.renderable = true
+  		// sprite.renderable = true
 		// console.log('get >>>>>>>>>>>>>>>', sprite)
-		return sprite
+		return new PIXI.Sprite()
 	}
 	releaseSprite(item) {
 		if(AppStore.Detector.oldIE) return
 		// console.log('release <<<<<<<<<<<<<<', item)
-		item.scale.x = 1
-		item.scale.y = 1
-		item.position.x = 0
-		item.position.y = 0
-		item.x = 0
-		item.y = 0
-		item.anchor.x = 0
-		item.anchor.y = 0
-		item.pivot.x = 0
-		item.pivot.y = 0
-		item.rotation = 0
-		item.alpha = 1
-		item.blendMode = PIXI.BLEND_MODES.NORMAL
-		item.filters = null
-		item.mask = null
-  		item.shader = null
-  		item.renderable = false
-		item.texture.valid = false
-  		item.texture.baseTexture.dispose()
-  		// item.texture.destroy()
-		this.sprites.release(item)
+		// console.log(item.parent)
+		if(item.parent != undefined) {
+			item.parent.removeChild(item)
+		}
+		// if(item.texture.baseTexture != null) {
+
+		// }
+		// item.texture.baseTexture.dispose()
+		item.destroy(true, true)
+		// item.texture.baseTexture
+		// item.scale.x = 1
+		// item.scale.y = 1
+		// item.position.x = 0
+		// item.position.y = 0
+		// item.x = 0
+		// item.y = 0
+		// item.anchor.x = 0
+		// item.anchor.y = 0
+		// item.pivot.x = 0
+		// item.pivot.y = 0
+		// item.rotation = 0
+		// item.alpha = 1
+		// item.blendMode = PIXI.BLEND_MODES.NORMAL
+		// item.filters = null
+		// item.mask = null
+  // 		item.shader = null
+  // 		item.renderable = false
+		// item.texture.valid = false
+  // 		item.texture.baseTexture.dispose()
+  // 		// item.texture.destroy()
+		// this.sprites.release(item)
 	}
 	getSpringGarden() {
 		if(AppStore.Detector.oldIE) return

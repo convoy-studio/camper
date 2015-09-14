@@ -75,6 +75,9 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 			}
 		}
 
+		this.containers['product-container-a'].spinner.tween = TweenMax.to(this.containers['product-container-a'].spinner.svg, 0.5, { paused:true, rotation:'360deg', repeat:-1, ease:Linear.easeNone })
+		this.containers['product-container-b'].spinner.tween = TweenMax.to(this.containers['product-container-b'].spinner.svg, 0.5, { paused:true, rotation:'360deg', repeat:-1, ease:Linear.easeNone })
+
 		this.arrowClicked = this.arrowClicked.bind(this)
 		this.onPlanetClicked = this.onPlanetClicked.bind(this)
 		this.bottomClicked = this.bottomClicked.bind(this)
@@ -89,6 +92,16 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.downBtn = new ArrowBtn(this.child.find('.down-btn'), AppConstants.BOTTOM)
 		this.downBtn.btnClicked = this.bottomClicked
 		this.downBtn.componentDidMount()
+
+		this.$experienceBtn = this.child.find('.go-experience-btn')
+		this.goExperienceBtn = new RectangleBtn(this.$experienceBtn, this.infos.experience_title)
+		this.goExperienceBtn.btnClicked = this.onGoExperienceClicked
+		this.goExperienceBtn.componentDidMount()
+
+		this.onExperienceMouseEnter = this.onExperienceMouseEnter.bind(this)
+		this.onExperienceMouseLeave = this.onExperienceMouseLeave.bind(this)
+		this.$experienceBtn.on('mouseenter', this.onExperienceMouseEnter)
+		this.$experienceBtn.on('mouseleave', this.onExperienceMouseLeave)
 
 		if(AppStore.Detector.oldIE || AppStore.Detector.isMobile) {
 			this.downBtn.element.css('display','none')
@@ -114,6 +127,18 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.updateTitles(this.infos.planet.toUpperCase(), this.id.toUpperCase())
 
 		super.componentDidMount()
+	}
+	onExperienceMouseEnter(e) {
+		e.preventDefault()
+		this.goExperienceBtn.rollover()
+	}
+	onExperienceMouseLeave(e) {
+		e.preventDefault()
+		this.goExperienceBtn.rollout()
+	}
+	onGoExperienceClicked() {
+		var url = "/planet/" + this.id
+		Router.setHash(url)
 	}
 	addVideoEvents() {
 		if(this.currentContainer == undefined) return
@@ -291,11 +316,16 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.currentContainer.posterImg.attr('src', this.props.data['empty-image'])
 		this.currentContainer.posterImg.removeClass('opened')
 		this.currentContainer.spinner.el.removeClass('closed')
+		this.currentContainer.spinner.tween.play()
 		var img = new Image()
 		img.onload = ()=> {
 			this.currentContainer.posterImg.attr('src', imgSrc)
 			this.currentContainer.spinner.el.addClass('closed')
 			this.currentContainer.posterImg.addClass('opened')
+
+			setTimeout(()=>{
+				this.currentContainer.spinner.tween.pause()
+			}, 500)
 		}
 		img.src = imgSrc
 
@@ -419,8 +449,13 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		buyTopPos = (AppStore.Detector.isMobile) ? this.videoCss.top + this.videoCss.height + 40 : buyTopPos
 		
 		this.buyBtn.position(
-			(windowW >> 1) - (this.buyBtn.width >> 1),
+			(windowW >> 1) - (this.buyBtn.width) - (AppConstants.PADDING_AROUND >> 1),
 			buyTopPos
+		)
+
+		this.goExperienceBtn.position(
+			(windowW >> 1) + (AppConstants.PADDING_AROUND >> 1),
+			buyTopPos	
 		)
 
 		var downTopPos = (this.videoCss.top + this.videoCss.height) + ((windowH - ((this.videoCss.top) + this.videoCss.height)) >> 1) - (this.downBtn.height >> 1)
@@ -507,6 +542,7 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 		this.nextBtn.componentWillUnmount()
 		this.buyBtn.componentWillUnmount()
 		this.downBtn.componentWillUnmount()
+		this.goExperienceBtn.componentWillUnmount()
 		super.componentWillUnmount()
 	}
 }

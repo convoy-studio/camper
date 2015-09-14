@@ -19,6 +19,7 @@ export default class LandingSlideshow {
 			this.currentId = planet
 		}
 		this.currentId = (this.currentId == undefined) ? 'alaska' : this.currentId
+		AppStore.LandingCurrentPoster = this.currentId
 
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
@@ -130,6 +131,7 @@ export default class LandingSlideshow {
 			if(i == 2) {
 				slide.highlight = true // Highlight the middle elements
 				this.currentId = slide.id
+				AppStore.LandingCurrentPoster = this.currentId
 				this.slideshowWrapper.setChildIndex(slide.wrapperContainer, totalLen)
 				this.updateTitles(this.planetTitleTxt, slide.planetName)
 				this.positionTitlesContainer()

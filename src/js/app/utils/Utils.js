@@ -129,6 +129,13 @@ class Utils {
     static CapitalizeFirstLetter(string) {
 	    return string.charAt(0).toUpperCase() + string.slice(1);
 	}
+	static RemoveVideo($media) {
+		if (!$media.length) return;
+	    $media[0].pause();
+	    $media[0].src = '';
+	    $media.children('source').prop('src', '');
+	    $media.remove().length = 0;
+	}
 }
 
 export default Utils

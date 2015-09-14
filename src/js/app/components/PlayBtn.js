@@ -105,9 +105,15 @@ export default class PlayBtn {
 	}
 	open() {
 		TweenMax.fromTo(this.element, .1, { opacity:0 }, { opacity:1, ease:Expo.easeOut })
+		setTimeout(()=>{
+			this.element.css('visibility', 'visible')
+		}, 80)
 	}
 	close() {
-		TweenMax.fromTo(this.element, .1, { opacity:1 }, { opacity:0, ease:Expo.easeOut })	
+		TweenMax.fromTo(this.element, .1, { opacity:1 }, { opacity:0, ease:Expo.easeOut })
+		setTimeout(()=>{
+			this.element.css('visibility', 'hidden')
+		}, 80)
 	}
 	componentWillUnmount() {
 		AppStore.releaseTimeline(this.tlOver)

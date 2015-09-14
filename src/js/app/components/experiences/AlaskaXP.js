@@ -374,7 +374,8 @@ export default class AlaskaXP extends BaseXP {
 			var shoe = this.shoes[i]
 			AppStore.releaseSprite(shoe)
 		};
-
+		this.videoSprite.destroy(true)
+		Utils.RemoveVideo(this.video)
 		this.pxContainer.filters = null
 		this.removeFromRockById('rock-a')
 		this.removeFromRockById('rock-b')
@@ -383,7 +384,7 @@ export default class AlaskaXP extends BaseXP {
 		this.emitter.destroy()
 		this.particleContainer.removeChildren()
 		AppStore.releaseContainer(this.particleContainer)
-		AppStore.releaseSprite(this.videoSprite)
+		// AppStore.releaseSprite(this.videoSprite)
 		super.componentWillUnmount()
 	}
 }

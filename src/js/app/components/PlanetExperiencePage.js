@@ -23,6 +23,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		
 		var XpClazz = this.getExperienceById(this.id)
 		this.experience = new XpClazz(this.pxContainer, this.child, this.parent)
+		this.experience.cta.txt = infos.experience[this.id]
 		this.experience.id = this.id
 		this.experience.componentDidMount()
 
@@ -84,8 +85,12 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.didTransitionOutComplete()
 	}
 	didTransitionInComplete() {
-		this.transitionInCompleted = true
 		super.didTransitionInComplete()	
+		this.experience.didTransitionInComplete()
+	}
+	willTransitionIn() {
+		this.transitionInCompleted = true
+		super.willTransitionIn()
 	}
 	willTransitionOut() {
 		this.experience.willTransitionOut()

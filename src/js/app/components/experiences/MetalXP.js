@@ -66,7 +66,7 @@ export default class MetalXP extends BaseXP {
 		for (var i = 0; i < 4; i++) {
 			var g = {}
 
-			var line = AppStore.getGraphics()
+			var line = new PIXI.Graphics()
 			this.pxContainer.addChild(line)
 
 			var ball = AppStore.getSprite()
@@ -75,7 +75,8 @@ export default class MetalXP extends BaseXP {
 			ball.scale.x = ball.scale.y = 0.5
 
 			var texture = PIXI.Texture.fromImage(imgUrl)
-			var sprite = new PIXI.Sprite(texture)
+			var sprite = AppStore.getSprite()
+			sprite.texture = texture
 			var uniforms = undefined
 			sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, uniforms = {
 				resolution: { type: '2f', value: { x: 1, y: 1 } },
@@ -110,8 +111,6 @@ export default class MetalXP extends BaseXP {
 			g.uniforms = uniforms
 			this.cranes[i] = g
 		};
-
-		console.log(this.cranes[0].ball)
 
 		this.runner = Engine.run(this.engine);
 
@@ -208,20 +207,20 @@ export default class MetalXP extends BaseXP {
   			var ball = this.cranes[i].ball
   			var lava = this.cranes[i].lava
   			var holder = this.cranes[i].holder
-  			var line = this.cranes[i].line
   			var uniforms = this.cranes[i].uniforms
   			var displacement = this.cranes[i].displacement
   			
   			uniforms = null
 
-  			AppStore.releaseGraphics(line)
   			AppStore.releaseSprite(ball)
+  			AppStore.releaseSprite(lava)
 
   			holder.removeChildren()
   			AppStore.releaseContainer(holder)
   		}
 
-  		AppStore.releaseSprite(this.videoSprite)
+  		this.videoSprite.destroy(true)
+  		Utils.RemoveVideo(this.video)
 		super.componentWillUnmount()
 	}
 }

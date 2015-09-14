@@ -9,6 +9,7 @@ import Sounds from 'Sounds'
 import MobileDetect from 'mobile-detect'
 import AppConstants from 'AppConstants'
 import hasher from 'hasher'
+import PagesLoader from 'PagesLoader'
 
 class App {
 	constructor() {
@@ -36,12 +37,17 @@ class App {
 			// Init Pool
 			AppStore.Pool = new Pool()
 
+			AppStore.PagesLoader = new PagesLoader($('#assets-loader-page'))
+			AppStore.PagesLoader.componentDidMount()
+
 			// Init router
 			this.router = new Router()
 			this.router.init()
 
 			this.$mainLoader = $('#main-loader')
+			this.$mainLoader.css('opacity', 1)
 			var $spinner = this.$mainLoader.find('.spinner-wrapper')
+			var $spinnerSvg = $spinner.find('svg')
 			var $logo = this.$mainLoader.find('.logo')
 			var $background = this.$mainLoader.find('.background')
 			this.tlIn = AppStore.getTimeline()
@@ -50,6 +56,8 @@ class App {
 			this.tlIn.fromTo($spinner, 1, {opacity:0}, { opacity:1, force3D:true, ease:Expo.easeOut }, 0)
 			this.tlIn.fromTo($logo, 1, {opacity:0}, { opacity:1, force3D:true, ease:Expo.easeOut }, 0)
 			this.tlIn.play(0)
+
+			this.spinnerTween = TweenMax.to($spinnerSvg, 0.5, { rotation:'360deg', repeat:-1, ease:Linear.easeNone })
 
 			this.tlOut.to($spinner, 1, { scale:1.2, y:10, opacity:0, force3D:true, ease:Expo.easeInOut }, 0)
 			this.tlOut.to($logo, 1, { scale:1.2, y:-10, opacity:0, force3D:true, ease:Expo.easeInOut }, 0)
@@ -106,6 +114,8 @@ class App {
 			// Start routing
 			this.router.beginRouting()
 			setTimeout(()=>{
+				this.spinnerTween.pause()
+				this.spinnerTween = null
 				this.$mainLoader.remove()
 				AppStore.releaseTimeline(this.tlIn)
 				AppStore.releaseTimeline(this.tlOut)

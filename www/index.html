@@ -49,7 +49,7 @@
 
 <!--- BEGIN HOME REGION ---->
 
-<div id="font-charger">
+<div id="font-charger" style="opacity:0;">
     <div id="FuturaBold">test</div>
     <div id="Mechsuit">test</div>
     <div id="Paladins">test</div>
@@ -70,14 +70,23 @@
     }
     head.appendChild(style);
 </script>
-<div id="main-loader">
+<div id="main-loader" style="opacity:0;">
     <div class="logo">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 136.013 49.375" enable-background="new 0 0 136.013 49.375" xml:space="preserve"><path fill-rule="evenodd" clip-rule="evenodd" d="M82.141,8.002h3.354c1.213,0,1.717,0.499,1.717,1.725v7.137c0,1.231-0.501,1.736-1.705,1.736h-3.365V8.002z M82.523,24.617v8.426l-7.087-0.384V1.925H87.39c3.292,0,5.96,2.705,5.96,6.044v10.604c0,3.338-2.668,6.044-5.96,6.044H82.523z M33.491,7.913c-1.132,0-2.048,1.065-2.048,2.379v11.256h4.409V10.292c0-1.314-0.917-2.379-2.047-2.379H33.491z M32.994,0.974h1.308c4.702,0,8.514,3.866,8.514,8.634v25.224l-6.963,1.273v-7.848h-4.409l0.012,8.787l-6.974,2.018V9.608C24.481,4.839,28.292,0.974,32.994,0.974 M121.933,7.921h3.423c1.215,0,1.718,0.497,1.718,1.724v8.194c0,1.232-0.502,1.736-1.705,1.736h-3.436V7.921z M133.718,31.055v17.487l-6.906-3.368V31.591c0-4.92-4.588-5.08-4.588-5.08v16.774l-6.983-2.914V1.925h12.231c3.291,0,5.959,2.705,5.959,6.044v11.077c0,2.207-1.217,4.153-2.991,5.115C131.761,24.894,133.718,27.077,133.718,31.055 M10.809,0.833c-4.703,0-8.514,3.866-8.514,8.634v27.936c0,4.769,4.019,8.634,8.722,8.634l1.306-0.085c5.655-1.063,8.306-4.639,8.306-9.407v-8.94h-6.996v8.736c0,1.409-0.064,2.65-1.994,2.992c-1.231,0.219-2.417-0.816-2.417-2.132V10.151c0-1.314,0.917-2.381,2.047-2.381h0.315c1.13,0,2.048,1.067,2.048,2.381v8.464h6.996V9.467c0-4.768-3.812-8.634-8.514-8.634H10.809 M103.953,23.162h6.977v-6.744h-6.977V8.423l7.676-0.002V1.924H96.72v33.278c0,0,5.225,1.141,7.532,1.666c1.517,0.346,7.752,2.253,7.752,2.253v-7.015l-8.051-1.508V23.162z M46.879,1.927l0.003,32.35l7.123-0.895V18.985l5.126,10.426l5.126-10.484l0.002,13.664l7.022-0.054V1.895h-7.545L59.13,14.6L54.661,1.927H46.879z"/></svg>
     </div>
     <div class="spinner-img spinner-wrapper">
         <svg width="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#ffffff">
-                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" begin="0s" dur="0.5s" fill="freeze" repeatCount="indefinite"></animateTransform>
+            </path>
+        </svg>
+    </div>
+    <div class="background"></div>
+</div>
+
+<div id="assets-loader-page">
+    <div class="spinner-img spinner-wrapper">
+        <svg width="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#ffffff">
             </path>
         </svg>
     </div>
@@ -103,7 +112,7 @@
 <script src="lib/es5-shim.min.js"></script>
 <script src="lib/preloadjs-0.6.1.min.js"></script>
 <script src="lib/modernizr.js"></script>
-<!--[if !(IE 7|IE 8)]><!--><script src="lib/pixi.min.js"></script><!--<![endif]-->
+<!--[if !(IE 7|IE 8)]><!--><script src="lib/pixi.js"></script><!--<![endif]-->
 <!--[if !(IE 7|IE 8)]><!--><script src="lib/object-pool.min.js"></script><!--<![endif]-->
 <!--[if !(IE 7|IE 8)]><!--><script src="lib/matter.min.js"></script><!--<![endif]-->
 <!--[if !(IE 7|IE 8)]><!--><script src="lib/soundjs-0.6.1.min.js"></script><!--<![endif]-->
