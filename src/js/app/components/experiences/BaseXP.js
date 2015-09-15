@@ -22,7 +22,7 @@ export default class BaseXP {
 		this.cta.effectTween = TweenMax.to(this.cta.text, 0.1, { opacity:0, repeat:-1 })
 	}
 	componentDidMount() {
-		this.cta.text.text(this.cta.txt)
+		this.cta.text.html(this.cta.txt)
 	}
 	didTransitionInComplete() {
 		setTimeout(()=>{

@@ -30,9 +30,9 @@ export default class AlaskaXP extends BaseXP {
 
 		this.particleContainer = AppStore.getContainer()
 
-	 	this.twistFilter = new PIXI.filters.TwistFilter()
-	 	this.twistFilter.angle = 0
-		this.pxContainer.filters = [this.twistFilter]
+	 // 	this.twistFilter = new PIXI.filters.TwistFilter()
+	 // 	this.twistFilter.angle = 0
+		// this.pxContainer.filters = [this.twistFilter]
 
 		this.emitter = new cloudkid.Emitter(
 			this.particleContainer,
@@ -67,8 +67,8 @@ export default class AlaskaXP extends BaseXP {
 		            "max": 2
 		        },
 		        "frequency": 0.006,
-		        "maxParticles": 600,
-		        "emitter-lifetime": -1,
+		        "maxParticles": 200,
+		        "emitter-lifetime": 0,
 		        "pos": {
 		            "x": 0,
 		            "y": 0
@@ -226,10 +226,10 @@ export default class AlaskaXP extends BaseXP {
 		this.currentRock.wrapperShoe.scale.y = 0
 		this.previousRock.wrapperShoe.rotation = Utils.Rand(-2.8, -1.8)
 
-		this.twistFilter.angle = 2
+		// this.twistFilter.angle = 2
 
 		setTimeout(()=>{
-			TweenMax.to(this.currentRock.holder, 1, { y:this.currentRock.anim.toY, ease:Elastic.easeOut })
+			TweenMax.to(this.currentRock.holder, 1.4, { y:this.currentRock.anim.toY, ease:Elastic.easeOut })
 			TweenMax.fromTo(this.currentRock.holder.scale, 2, { x:-0.1, y:0 }, { x:1, y:1, ease:Elastic.easeOut })
 			this.isAnimate = false
 			this.previousRock.wrapperShoe.removeChildren()
@@ -238,8 +238,8 @@ export default class AlaskaXP extends BaseXP {
 		TweenMax.to(this.previousRock.wrapperBack, 2, { x:Utils.Rand(-240, -100), rotation:Utils.Rand(-.7, -.2), ease:Elastic.easeOut })
 		TweenMax.to(this.previousRock.wrapperFront, 2, { x:Utils.Rand(240, 300), y:Utils.Rand(160, 240), rotation:Utils.Rand(.2, .4), ease:Elastic.easeOut })
 
-		TweenMax.to(this.previousRock.wrapperShoe.scale, 1, { x:1.4, y:1.4, ease:Elastic.easeOut })
-		TweenMax.to(this.previousRock.wrapperShoe, 1, { rotation:0, ease:Elastic.easeOut })
+		TweenMax.to(this.previousRock.wrapperShoe.scale, 1.4, { x:1.4, y:1.4, ease:Elastic.easeOut })
+		TweenMax.to(this.previousRock.wrapperShoe, 1.4, { rotation:0, ease:Elastic.easeOut })
 
 		var randIndex = Utils.Rand(0, 2, 0)
 		var soundId = 'alaska-sounds-rock-open-' + randIndex
@@ -307,7 +307,7 @@ export default class AlaskaXP extends BaseXP {
     	this.elapsed = now
 
     	this.particleContainer.alpha -= (this.particleContainer.alpha + 0.0001) * 0.01
-    	this.twistFilter.angle -= (this.twistFilter.angle + 0.001) * 0.1
+    	// this.twistFilter.angle -= (this.twistFilter.angle + 0.001) * 0.1
 
 		this.currentRock.anim.time += 0.04
 		this.currentRock.normalWrapperBack.x = -(this.currentRock.paddingX) + (this.currentRock.offsetX) + Math.cos(this.currentRock.anim.time) * 5
@@ -377,7 +377,7 @@ export default class AlaskaXP extends BaseXP {
 		};
 		this.videoSprite.destroy(true)
 		Utils.RemoveVideo(this.video)
-		this.pxContainer.filters = null
+		// this.pxContainer.filters = null
 		this.removeFromRockById('rock-a')
 		this.removeFromRockById('rock-b')
 		this.button.off('click', this.onClick)

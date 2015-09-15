@@ -19,11 +19,11 @@
 				"mute_txt": "MUTE",
 				"play_txt": "PLAY",
 				"experience": {
-					"alaska": "Break the ice",
-					"gemstone": "Touch the light",
-					"ski": "Make it bounce",
-					"wood": "Hover the circles",
-					"metal": "Drag the ball"
+					"alaska": "'Break the ice'",
+					"gemstone": "'Enter the vortex'",
+					"ski": "'Hit the bumps'",
+					"wood": "'Play the temple blocks'",
+					"metal": "'Bang the balls'",
 				}
 			},
 			"fr": {
@@ -40,11 +40,11 @@
 				"mute_txt": "MUTE",
 				"play_txt": "PLAY",
 				"experience": {
-					"alaska": "Break the ice",
-					"gemstone": "Touch the light",
-					"ski": "Make it bounce",
-					"wood": "Hover the circles",
-					"metal": "Drag the ball"
+					"alaska": "'Break the ice'",
+					"gemstone": "'Enter the vortex'",
+					"ski": "'Hit the bumps'",
+					"wood": "'Play the temple blocks'",
+					"metal": "'Bang the balls'",
 				}
 			},
 			"es": {
@@ -61,11 +61,11 @@
 				"mute_txt": "MUTE",
 				"play_txt": "PLAY",
 				"experience": {
-					"alaska": "Break the ice",
-					"gemstone": "Touch the light",
-					"ski": "Make it bounce",
-					"wood": "Hover the circles",
-					"metal": "Drag the ball"
+					"alaska": "'Break the ice'",
+					"gemstone": "'Enter the vortex'",
+					"ski": "'Hit the bumps'",
+					"wood": "'Play the temple blocks'",
+					"metal": "'Bang the balls'",
 				}
 			},
 			"it": {
@@ -80,7 +80,14 @@
 				"legal": "Legale",
 				"home_txt": "HOME",
 				"mute_txt": "MUTE",
-				"play_txt": "PLAY"
+				"play_txt": "PLAY",
+				"experience": {
+					"alaska": "'Break the ice'",
+					"gemstone": "'Enter the vortex'",
+					"ski": "'Hit the bumps'",
+					"wood": "'Play the temple blocks'",
+					"metal": "'Bang the balls'",
+				}
 			},
 			"de": {
 				"camper_lab": "Camper Lab",
@@ -96,11 +103,11 @@
 				"mute_txt": "MUTE",
 				"play_txt": "PLAY",
 				"experience": {
-					"alaska": "Break the ice",
-					"gemstone": "Touch the light",
-					"ski": "Make it bounce",
-					"wood": "Hover the circles",
-					"metal": "Drag the ball"
+					"alaska": "'Break the ice'",
+					"gemstone": "'Enter the vortex'",
+					"ski": "'Hit the bumps'",
+					"wood": "'Play the temple blocks'",
+					"metal": "'Bang the balls'",
 				}
 			},
 			"pt": {
@@ -117,11 +124,11 @@
 				"mute_txt": "MUTE",
 				"play_txt": "PLAY",
 				"experience": {
-					"alaska": "Break the ice",
-					"gemstone": "Touch the light",
-					"ski": "Make it bounce",
-					"wood": "Hover the circles",
-					"metal": "Drag the ball"
+					"alaska": "'Break the ice'",
+					"gemstone": "'Enter the vortex'",
+					"ski": "'Hit the bumps'",
+					"wood": "'Play the temple blocks'",
+					"metal": "'Bang the balls'",
 				}
 			}
 		}
@@ -130,6 +137,7 @@
 	"planets": ["ski", "metal", "alaska", "wood", "gemstone"],
 	"elements": ["fire", "earth", "metal", "water", "wood"],
 	"gender": ["male", "female", "animal"],
+	"langs": ["en", "fr", "es", "it", "de", "pt"],
 
 	"colors": {
 		"ski": ["0x6181aa", "0xc3d9f1"],
@@ -156,18 +164,6 @@
 			},{
 				"id": 1,
 				"name": "FISS",
-				"color": "0x343a5c",
-				"video-id": "mzs5yc3i5x",
-				"video-thumb": "thumb-1",
-				"product-url": "/men/shoes/fiss_lab",
-				"knots": [
-					{"x":0.2, "y":0.5},
-					{"x":0.0, "y":0.3},
-					{"x":0.1, "y":0.7}
-				]
-			},{
-				"id": 2,
-				"name": "FISS",
 				"color": "0xcff0fc",
 				"video-id": "0l1dswyr4x",
 				"video-thumb": "thumb-2",
@@ -178,7 +174,7 @@
 					{"x":-0.4, "y":0.7}
 				]
 			},{
-				"id": 3,
+				"id": 2,
 				"name": "FISS",
 				"color": "0xe7e33c",
 				"video-id": "cwj04a3z55",
@@ -190,7 +186,7 @@
 					{"x":0.5, "y":-0.6}
 				]
 			},{
-				"id": 4,
+				"id": 3,
 				"name": "FISS",
 				"color": "0xdb3076",
 				"video-id": "8fbp0pbww8",
@@ -218,18 +214,6 @@
 				]
 			},{
 				"id": 1,
-				"name": "BELUGA",
-				"color": "0x818181",
-				"video-id": "gsun7amzq8",
-				"video-thumb": "thumb-0",
-				"product-url": "/men/shoes/bella_lab",
-				"knots": [
-					{"x":0.1, "y":-0.7},
-					{"x":-0.1, "y":-0.1},
-					{"x":0.4, "y":0}
-				]
-			},{
-				"id": 2,
 				"name": "HARDWOOD",
 				"color": "0xe82b18",
 				"video-id": "fevnsbsj84",
@@ -257,18 +241,6 @@
 				]
 			},{
 				"id": 1,
-				"name": "gemma",
-				"color": "0xb6937d",
-				"video-id": "ljrt61icha",
-				"video-thumb": "thumb-0",
-				"product-url": "/women/shoes/gemma_lab",
-				"knots": [
-					{"x":-0.2, "y":-0.3},
-					{"x":0.1, "y":-0.4},
-					{"x":0.3, "y":-0.1}
-				]
-			},{
-				"id": 2,
 				"name": "pelotas",
 				"color": "0xc98e94",
 				"video-id": "n0ksuy0wua",
@@ -280,7 +252,7 @@
 					{"x":0.4, "y":0.7}
 				]
 			},{
-				"id": 3,
+				"id": 2,
 				"name": "ENDURO",
 				"color": "0x616a71",
 				"video-id": "8xpnpynqup",
@@ -292,7 +264,7 @@
 					{"x":-0.6, "y":-0.6}
 				]
 			},{
-				"id": 4,
+				"id": 3,
 				"name": "ENDURO",
 				"color": "0x0e2e61",
 				"video-id": "m509p0iu4u",

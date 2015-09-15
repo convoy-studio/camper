@@ -127,7 +127,14 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         return _getAppData()
     },
     lang: function() {
-        return JS_lang
+        var defaultLang = true
+        for (var i = 0; i < data.langs.length; i++) {
+            var lang = data.langs[i]
+            if(lang == JS_lang) {
+                defaultLang = false
+            }
+        };
+        return (defaultLang == true) ? 'en' : JS_lang
     },
     defaultRoute: function() {
         return _getDefaultRoute()

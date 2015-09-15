@@ -70,7 +70,7 @@ export default class SpringGarden {
 		this.container.rotation -= (this.container.rotation) * 0.4
 	}
 	assignOpenedConfig() {
-		this.config.spring = 0.09
+		this.config.spring = 0.05
 		this.config.friction = 0.9
 	}
 	clear() {

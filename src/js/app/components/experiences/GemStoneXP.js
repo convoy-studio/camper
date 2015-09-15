@@ -2,6 +2,7 @@ import BaseXP from 'BaseXP'
 import AppStore from 'AppStore'
 import Vec2 from 'Vec2'
 import Utils from 'Utils'
+import AppConstants from 'AppConstants'
 const glslify = require('glslify')
 
 export default class GemStoneXP extends BaseXP {
@@ -16,6 +17,14 @@ export default class GemStoneXP extends BaseXP {
 			radius: 0,
 			normalDist: 0
 		}
+		this.isAnimating = false
+
+		// var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/gemstone/experience-assets/bg-video/gemstone' + '.' + AppStore.videoExtensionSupport())
+		// this.video = $(texture.baseTexture.source)
+		// this.video.attr('loop', true)
+		// this.videoSprite = AppStore.getSprite()
+		// this.videoSprite.texture = texture
+		// this.pxContainer.addChild(this.videoSprite)
 
 		this.stepsCounter = 0
 		this.state = 'normal'
@@ -112,12 +121,14 @@ export default class GemStoneXP extends BaseXP {
 	}
 	onMouseOver(e) {
 		e.preventDefault()
-		this.activationInterval = setInterval(this.toggleActivationStep, 1000)
+		if(this.isAnimating) return 
+		this.activationInterval = setInterval(this.toggleActivationStep, 200)
 		AppStore.Sounds.play('gemstone-sounds-reveal-0', { interrupt: createjs.Sound.INTERRUPT_ANY, volume:0.1 })
 	}
 	toggleActivationStep() {
-		this.stepsCounter += 3
-		if(this.stepsCounter > 6) {
+		this.stepsCounter += 2
+		if(this.stepsCounter > 4) {
+			this.isAnimating = true
 			this.resetActivationState()
 			this.stateToShowroom()
 			this.animateInShoe()
@@ -127,7 +138,10 @@ export default class GemStoneXP extends BaseXP {
 				this.state = 'normal'
 				this.updateMousePos()
 				this.animateOutShoe()
-			}, 2800)
+				setTimeout(()=>{
+					this.isAnimating = false
+				}, 500)
+			}, 2200)
 		}
 	}
 	stateToShowroom() {
@@ -149,7 +163,7 @@ export default class GemStoneXP extends BaseXP {
 		ll.shoeWrapper.rotation = 0
 
 		TweenMax.fromTo(ll.backgroundSpr.scale, 2, {x:1.8, y:1.8}, { x:1.6, y:1.6, ease:Expo.easeOut })
-		TweenMax.fromTo(ll.mask.scale, 2, {x:0, y:0}, { x:4.1, y:3.6, ease:Elastic.easeOut })
+		TweenMax.fromTo(ll.mask.scale, 2, {x:0, y:0}, { x:4.1*0.8, y:3.6*0.8, ease:Elastic.easeOut })
 		TweenMax.fromTo(this.currentShoe.scale, 2, {x:0, y:0}, { x:1.2, y:1.2, ease:Elastic.easeOut })
 		TweenMax.fromTo(this.currentShoe, 2, {rotation:Utils.Rand(-1, 1)}, { rotation:0, ease:Elastic.easeOut })
 
@@ -247,6 +261,15 @@ export default class GemStoneXP extends BaseXP {
 			left: (windowW >> 1) - (buttonW >> 1),
 			top: (windowH >> 1) - (buttonH >> 1)
 		})
+
+		// var videoResize = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
+
+		// this.video.css({
+		// 	width: videoResize.width,
+		// 	height: videoResize.height,
+		// 	left: videoResize.left,
+		// 	top: videoResize.top,
+		// })
 
 		this.illusion.holder.x = windowW >> 1
 		this.illusion.holder.y = windowH >> 1

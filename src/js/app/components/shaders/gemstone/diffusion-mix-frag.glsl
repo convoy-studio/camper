@@ -32,7 +32,6 @@ void main(void) {
     col *= 1.0 + 0.4 * ints;
     float ao = smoothstep(0.0,0.3,h)-smoothstep(0.5,1.0,h);
     col *= twirl-0.6*ao*r;
-    // col = col / r +  .05 / r / r;
     col = (col * 0.8) / (1.8 * r);
     gl_FragColor = vec4(col,1.0);
 

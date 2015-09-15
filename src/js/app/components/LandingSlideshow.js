@@ -18,8 +18,16 @@ export default class LandingSlideshow {
 			var planet = oldHash.parts[1]
 			this.currentId = planet
 		}
-		this.currentId = (this.currentId == undefined) ? 'alaska' : this.currentId
+		this.currentId = (this.currentId == undefined) ? 'gemstone' : this.currentId
 		AppStore.LandingCurrentPoster = this.currentId
+
+		this.displacementOffsets = {
+			ski: [100, 30, 0.85, 0.85],
+			metal: [100, 30, 0.85, 0.85],
+			alaska: [100, 30, 0.85, 0.85],
+			wood: [0, 0, 0.92, 0.92],
+			gemstone: [-80, 0, 0.92, 0.92]
+		}
 
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
@@ -56,7 +64,7 @@ export default class LandingSlideshow {
 	 			x: 0
 	 		}
 	 		var imgUrl = AppStore.mainImageUrl(id, AppConstants.RESPONSIVE_IMAGE)
-	 		var imgMapUrl = AppStore.mainImageMapUrl(id, AppConstants.RESPONSIVE_IMAGE)
+	 		// var imgMapUrl = AppStore.mainImageMapUrl(id, AppConstants.RESPONSIVE_IMAGE)
 	 		var texture = PIXI.Texture.fromImage(imgUrl)
 	 		// var displacementTexture = PIXI.Texture.fromImage(imgMapUrl)
 	 		// s.displacementSprite = new PIXI.Sprite(displacementTexture)
@@ -177,8 +185,8 @@ export default class LandingSlideshow {
 			var ease = this.maskEasing.get(s.maskRect.valueScale)
 			s.wrapperContainer.x += (s.newPosition.x - s.wrapperContainer.x) * 0.2
 			s.maskRect.width += (s.maskRect.newW - s.maskRect.width) * 0.2
-			// s.displacementSprite.x = s.displacementSprite.xPos + Math.sin(this.counter) * 30
-			// s.displacementSprite.y = s.displacementSprite.yPos + Math.cos(this.counter) * 20
+			// s.displacementSprite.x = s.displacementSprite.xPos + Math.sin(this.counter) * 18
+			// s.displacementSprite.y = s.displacementSprite.yPos + Math.cos(this.counter) * 12
 			var maskRectX = (1 - ease) * s.maskRect.newX
 			s.sprite.x += (s.sprite.toX - s.sprite.x) * 0.2
 			this.drawCenteredMaskRect(s.maskRect.g, maskRectX, 0, s.maskRect.width, s.maskRect.height)
@@ -213,11 +221,14 @@ export default class LandingSlideshow {
 			if(s.highlight) slideW = hightlightedSlideW
 			else slideW = normalSlideW
 			this.resizeAndPositionImgSprite(s, slideW, windowW, windowH)
-			// s.displacementSprite.x = slideW >> 1
-			// s.displacementSprite.y = windowH >> 1
-			// s.displacementSprite.xPos = slideW >> 1
-			// s.displacementSprite.yPos = windowH >> 1
-			// s.displacementSprite.scale.x = s.displacementSprite.scale.y = 1.7
+			var displacementVars = this.displacementOffsets[s.id]
+			// s.displacementSprite.x = (slideW >> 1) + displacementVars[0]
+			// s.displacementSprite.y = (windowH >> 1) + displacementVars[1]
+			// s.displacementSprite.xPos = s.displacementSprite.x
+			// s.displacementSprite.yPos = s.displacementSprite.y
+			// s.displacementSprite.scale.x = displacementVars[2]
+			// s.displacementSprite.scale.y = displacementVars[3]
+			// s.displacementSprite.alpha = 0.5
 			s.maskRect.newW = slideW
 			s.maskRect.height = windowH
 			s.maskRect.newX = slideW >> 1
