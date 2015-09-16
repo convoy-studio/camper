@@ -16,10 +16,12 @@ export default class BaseXP {
 			container: this.element.find('#cta-container'),
 			text: this.element.find('#cta-container .cta-text'),
 			wrapper: this.element.find('#cta-container .cta-text-wrapper'),
-			background: this.element.find('#cta-container .background')
+			background: this.element.find('#cta-container .background'),
+			icon: this.element.find('#cta-container .headphone-icon')
 		}
 
 		this.cta.effectTween = TweenMax.to(this.cta.text, 0.1, { opacity:0, repeat:-1 })
+		this.cta.effectIconTween = TweenMax.to(this.cta.icon, 0.1, { opacity:0, repeat:-1 })
 	}
 	componentDidMount() {
 		this.cta.text.html(this.cta.txt)
@@ -27,7 +29,9 @@ export default class BaseXP {
 	didTransitionInComplete() {
 		setTimeout(()=>{
 			this.cta.effectTween.pause()
+			this.cta.effectIconTween.pause()
 			TweenMax.to(this.cta.wrapper, 0.4, { opacity:0, scale:1.2, force3D:true, ease:Expo.easeOut })
+			TweenMax.to(this.cta.icon, 0.4, { opacity:0, scale:1.2, force3D:true, ease:Expo.easeOut })
 			TweenMax.to(this.cta.background, 0.6, { opacity:0, force3D:true, ease:Expo.easeOut })
 			setTimeout(()=>{
 				this.cta.container.remove()

@@ -240,7 +240,7 @@ a {
     }
 }
 .xp-button {
-    cursor: pointer;
+    // cursor: pointer;
     position: absolute;
     // background-color: red;
     // @include opacity(0.5);
@@ -384,5 +384,16 @@ a {
         z-index: 10;
         background-color: #000000;
         @include opacity(0.8);
+    }
+    .headphone-icon {
+        $size: 50px;
+        width: $size;
+        position: relative;
+        left: 50%;
+        margin-left: -$size/2;
+        margin-top: 20px;
+        svg > * {
+            fill: #ffffff;
+        }
     }
 }

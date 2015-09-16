@@ -18,16 +18,16 @@ export default class LandingSlideshow {
 			var planet = oldHash.parts[1]
 			this.currentId = planet
 		}
-		this.currentId = (this.currentId == undefined) ? 'gemstone' : this.currentId
+		this.currentId = (this.currentId == undefined) ? 'alaska' : this.currentId
 		AppStore.LandingCurrentPoster = this.currentId
 
-		this.displacementOffsets = {
-			ski: [100, 30, 0.85, 0.85],
-			metal: [100, 30, 0.85, 0.85],
-			alaska: [100, 30, 0.85, 0.85],
-			wood: [0, 0, 0.92, 0.92],
-			gemstone: [-80, 0, 0.92, 0.92]
-		}
+		// this.displacementOffsets = {
+		// 	ski: [100, 30, 0.85, 0.85],
+		// 	metal: [100, 30, 0.85, 0.85],
+		// 	alaska: [100, 30, 0.85, 0.85],
+		// 	wood: [0, 0, 0.92, 0.92],
+		// 	gemstone: [-80, 0, 0.92, 0.92]
+		// }
 
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
@@ -221,7 +221,7 @@ export default class LandingSlideshow {
 			if(s.highlight) slideW = hightlightedSlideW
 			else slideW = normalSlideW
 			this.resizeAndPositionImgSprite(s, slideW, windowW, windowH)
-			var displacementVars = this.displacementOffsets[s.id]
+			// var displacementVars = this.displacementOffsets[s.id]
 			// s.displacementSprite.x = (slideW >> 1) + displacementVars[0]
 			// s.displacementSprite.y = (windowH >> 1) + displacementVars[1]
 			// s.displacementSprite.xPos = s.displacementSprite.x

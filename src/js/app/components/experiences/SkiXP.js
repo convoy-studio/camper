@@ -15,7 +15,6 @@ export default class SkiXP extends BaseXP {
 		this.count = 0;
 		this.pointsLen = 20
 		this.ropeLength = 1920 / this.pointsLen;
-		this.points = []
 		this.isTitleAnimate = false
 		this.elapsed = Date.now()
 		this.counter = {
@@ -24,16 +23,19 @@ export default class SkiXP extends BaseXP {
 
 		// AppStore.Sounds.play('ski-sounds-drums', { interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1 })
 
-		for (var i = 0; i < this.pointsLen; i++) {
-		    this.points.push(new PIXI.Point(i * this.ropeLength, 0));
-		}
 		var texture = PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('ski-experience-bumps'))
 		this.bumps = []
 		for (var i = 0; i < 6; i++) {
+			var points = []
+			for (var j = 0; j < this.pointsLen; j++) {
+			    points.push(new PIXI.Point(j * this.ropeLength, 0));
+			}
 			this.bumps.push({
 				counter: 0,
 				ease: BezierEasing(1,.04,0,1),
-				rope: new PIXI.mesh.Rope(texture, this.points)
+				points: points,
+				vel:0.05,
+				rope: new PIXI.mesh.Rope(texture, points)
 			})
 		};
 		this.bumpsContainer = AppStore.getContainer()
@@ -102,8 +104,8 @@ export default class SkiXP extends BaseXP {
 					"max": 8
 				},
 				"blendMode": "normal",
-				"frequency": 0.6,
-				"emitterLifetime": 0,
+				"frequency": 1.10,
+				"emitterLifetime": -1,
 				"maxParticles": 100,
 				"pos": {
 					"x": 0,
@@ -114,10 +116,11 @@ export default class SkiXP extends BaseXP {
 				"spawnCircle": {
 					"x": 0,
 					"y": 0,
-					"r": 700
+					"r": AppStore.Window.w * 0.6
 				}
 		    }
 		)
+
 
 		this.setupBumps()
 
@@ -150,7 +153,7 @@ export default class SkiXP extends BaseXP {
 			var bump = this.bumps[i]
 			var rope = bump.rope
 			rope.y = (160 * i)
-			rope.buttonMode = true
+			rope.buttonMode = false
 			rope.interactive = true
 			rope.id = 'bump_' + i
 			rope.on('mouseover', this.onBumpOver)
@@ -186,7 +189,9 @@ export default class SkiXP extends BaseXP {
 		var index = Math.round(id.replace('bump_', ''))
 		var bump = this.bumps[index]
 		var scale = Utils.Rand(0.01, 0.02)
-		bump.counter = 0
+		// bump.counter = 0
+
+		bump.vel = 0.9
 		this.gameStatus.lastScore = this.gameStatus.score
 
 		this.gameStatus.textField.text = 'SCORE: ' + this.gameStatus.score + ' pts'
@@ -208,6 +213,7 @@ export default class SkiXP extends BaseXP {
 
 		this.gameStatus.counter += 1
 		if(this.gameStatus.counter > 10) {
+
 			this.currentGradientText = this.getGradientText()
 			this.currentGradientText.setText()
 			this.resizeGradientTexts()
@@ -234,14 +240,14 @@ export default class SkiXP extends BaseXP {
 			TweenMax.fromTo(this.currentGradientText.container, 0.4, { alpha:0 }, { alpha:1, ease:Elastic.easeOut })
 			this.currentGradientText.toggle()
 			this.isTitleAnimate = true
-			TweenMax.to(this.counter, 0.4, { vel:0.3, ease:Elastic.easeOut })
+			// TweenMax.to(this.counter, 0.4, { vel:0.3, ease:Elastic.easeOut })
 			setTimeout(()=>{
 				TweenMax.to(this.currentGradientText.container.scale, 0.6, { x:this.currentGradientText.scale + 2, y:this.currentGradientText.scale + 0.1, ease:Expo.easeInOut })
 				TweenMax.to(this.currentGradientText.container, 0.6, { alpha:0, ease:Expo.easeInOut })
 			}, 1600)
 			setTimeout(()=>{
 				this.isTitleAnimate = false
-				TweenMax.to(this.counter, 0.5, { vel:0.02, ease:Expo.easeInOut })
+				// TweenMax.to(this.counter, 0.5, { vel:0.02, ease:Expo.easeInOut })
 			}, 2000)
 			this.gameStatus.counter = 0
 		}
@@ -253,20 +259,33 @@ export default class SkiXP extends BaseXP {
 		return this.gradientTexts[this.gradientTextIndex]
 	}
 	update() {
-		this.count += this.counter.vel
+		// this.count += this.counter.vel
 
 		if(this.currentGradientText != undefined) {
 			this.currentGradientText.update()
 		}
 
+		// var mouse = AppStore.Mouse
+		// this.particleContainer.x += (mouse.x - this.particleContainer.x) * 0.1
+		// this.particleContainer.y += (mouse.y - this.particleContainer.y) * 0.1
+
 		var now = Date.now()
 		this.emitter.update((now - this.elapsed) * 0.001)
+		// this.emitter.emit = false
     	this.elapsed = now
 
-	    for (var i = 0; i < this.points.length; i++) {
-	        this.points[i].x = i * this.ropeLength + Math.cos((i * 0.3) + this.count) * 10;
-	        this.points[i].y = Math.sin((i * 0.5) + this.count) * 40;
-	    }
+    	for (var i = 0; i < this.bumps.length; i++) {
+    		var bump = this.bumps[i]
+    		var points = bump.points
+    		bump.vel -= (bump.vel - 0.05) * 0.2
+    		bump.counter += bump.vel
+    		for (var j = 0; j < points.length; j++) {
+		        points[j].x = j * this.ropeLength + Math.cos((j * 0.3) + bump.counter) * 10;
+		        points[j].y = Math.sin((j * 0.5) + bump.counter) * 40;
+		    }
+    	};
+
+	    
 		super.update()
 	}
 	resizeGradientTexts() {

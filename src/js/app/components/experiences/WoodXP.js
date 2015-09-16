@@ -94,9 +94,9 @@ export default class WoodXP extends BaseXP {
 					"max": 0.81
 				},
 				"blendMode": "normal",
-				"frequency": 0.002,
+				"frequency": 0.01,
 				"emitterLifetime": 0,
-				"maxParticles": 400,
+				"maxParticles": 200,
 				"pos": {
 					"x": 0,
 					"y": -400
@@ -114,8 +114,8 @@ export default class WoodXP extends BaseXP {
 
 		this.emitter.emit = true
 
-		var totalScale = 0.9
-		this.totalSteps = 15
+		var totalScale = 0.6
+		this.totalSteps = 18
 		var scaleStep = totalScale / this.totalSteps
 		var currentScale = totalScale
 		for (var i = 0; i < this.totalSteps; i++) {
@@ -126,11 +126,6 @@ export default class WoodXP extends BaseXP {
 			
 			part.scale.x = part.scale.y = currentScale
 			currentScale -= scaleStep
-
-			// var filter = new PIXI.filters.ColorMatrixFilter()
-			// part.filters = [filter]
-			// var brightness = Utils.Rand(0.7, 1)
-			// filter.brightness(brightness)
 
 			this.circles.container.addChild(part)
 			this.circles.parts[i] = part
@@ -152,25 +147,35 @@ export default class WoodXP extends BaseXP {
 		this.displacementTween.play(0)
 	}
 	update() {
-		this.counter += 0.3
+		this.counter += 0.8
 
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		var mouse = AppStore.Mouse
 
-		var normalX = (mouse.x / windowW) * 1
-		var normalY = (mouse.y / windowH) * 1
-		var offsetNormalX = normalX - 0.5
-		var offsetNormalY = normalY - 0.5
-		var middleX = (mouse.x > (windowW >> 1)) ? 0.5 - (normalX - 0.5) : normalX
-		var middleY = (mouse.y > (windowH >> 1)) ? 0.5 - (normalY - 0.5) : normalY
+		var normalX = (mouse.x / windowW) * 3
+		var normalY = (mouse.y / windowH) * 3
+		var offsetNormalX = normalX - 1.5
+		var offsetNormalY = normalY - 1.5
+		var middleX = (mouse.x > (windowW >> 1.5)) ? 1.5 - (normalX - 1.5) : normalX
+		var middleY = (mouse.y > (windowH >> 1.5)) ? 1.5 - (normalY - 1.5) : normalY
+
+		// var parts = this.circles.parts
+		// for (var i = 0; i < parts.length; i++) {
+		// 	var part = parts[i]
+		// 	part.rotation = Math.cos((this.counter + i) / this.totalSteps) * 2
+		// 	part.x += offsetNormalX * (1*i)
+		// 	part.y += offsetNormalY * (1*i)
+		// };
 
 		var parts = this.circles.parts
 		for (var i = 0; i < parts.length; i++) {
 			var part = parts[i]
-			part.rotation = Math.sin((this.counter + i) / this.totalSteps) * 2
-			part.x += offsetNormalX * (1.1*i)
-			part.y += offsetNormalY * (1.1*i)
+			var deltaX = ((mouse.x - (windowW>>1)) - part.x) / (i + parts.length)
+			var deltaY = ((mouse.y - (windowH>>1)) - part.y) / (i + parts.length)
+			part.rotation = Math.cos((this.counter + i) / this.totalSteps) * 2
+			part.x += deltaX
+			part.y += deltaY
 		};
 
 		this.displacementMapTexture.x = mouse.x

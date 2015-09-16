@@ -49,6 +49,8 @@ export default class MetalXP extends BaseXP {
 		this.cradle = Composites.newtonsCradle((windowW * 0.5) - ((ratio*6) >> 1), 0, 4, ratio, windowH * 0.58);
 		World.add(this.engine.world, this.cradle);
 
+		this.engine.world.gravity.y = 6
+
 		this.bodies = this.cradle.bodies
 		for (var i = 0; i < this.bodies.length; i++) {
 			var body = this.bodies[i]
@@ -56,6 +58,9 @@ export default class MetalXP extends BaseXP {
 			body.render.visible = false
 			body.render.lineWidth = 0
 			this.cradle.constraints[i].render.visible = false
+
+			body.restitution = 1
+			body.friction = 16
 		};
 
 		Body.translate(this.cradle.bodies[0], { x: -580, y: -500 });
@@ -76,41 +81,45 @@ export default class MetalXP extends BaseXP {
 			ball.anchor.x = ball.anchor.y = 0.5
 			ball.scale.x = ball.scale.y = 0.5
 
-			var texture = PIXI.Texture.fromImage(imgUrl)
-			var sprite = AppStore.getSprite()
-			sprite.texture = texture
-			var uniforms = undefined
-			sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, uniforms = {
-				resolution: { type: '2f', value: { x: 1, y: 1 } },
-				uSampler: {type: 'sampler2D', value: texture},
-				mask: {type: 'sampler2D', value: PIXI.Texture.fromImage(gradientMaskUrl)},
-				time: {type: '1f', value: 0},
-				rotation: {type: '1f', value: Utils.Rand(-80,80)},
-				displace: {type: '1f', value: Utils.Rand(0.01,0.3)},
-				intensity: {type: '1f', value: 0.1},
-				zoom: {type: '1f', value: Utils.Rand(1,5)},
-				octave: {type: '1f', value: Utils.Rand(0.5,1)},
-				offset: { type: '2f', value: { x: Utils.Rand(8,24), y: Utils.Rand(2,16) } },
-		    })
-			sprite.blendMode = PIXI.BLEND_MODES.OVERLAY
+			var lava = new PIXI.Sprite(PIXI.Texture.fromImage(AppStore.Preloader.getImageURL('metal-experience-ball-b')))
+			lava.anchor.x = lava.anchor.y = 0.5
+			lava.scale.x = lava.scale.y = 0.5
+
+			// var texture = PIXI.Texture.fromImage(imgUrl)
+			// var sprite = AppStore.getSprite()
+			// sprite.texture = texture
+			// var uniforms = undefined
+			// sprite.shader = new PIXI.AbstractFilter(null, explosionFrag, uniforms = {
+			// 	resolution: { type: '2f', value: { x: 1, y: 1 } },
+			// 	uSampler: {type: 'sampler2D', value: texture},
+			// 	mask: {type: 'sampler2D', value: PIXI.Texture.fromImage(gradientMaskUrl)},
+			// 	time: {type: '1f', value: 0},
+			// 	rotation: {type: '1f', value: Utils.Rand(-80,80)},
+			// 	displace: {type: '1f', value: Utils.Rand(0.01,0.3)},
+			// 	intensity: {type: '1f', value: 0.1},
+			// 	zoom: {type: '1f', value: Utils.Rand(1,5)},
+			// 	octave: {type: '1f', value: Utils.Rand(0.5,1)},
+			// 	offset: { type: '2f', value: { x: Utils.Rand(8,24), y: Utils.Rand(2,16) } },
+		 //    })
+			lava.blendMode = PIXI.BLEND_MODES.SCREEN
 
 			var holder = AppStore.getContainer()
 			holder.addChild(ball)
-			holder.addChild(sprite)
+			holder.addChild(lava)
 			this.pxContainer.addChild(holder)
 
-			var ratio = 226
-			sprite.width = ratio
-			sprite.height = ratio
-			uniforms.resolution.x = ratio
-			uniforms.resolution.y = ratio
-			sprite.anchor.x = sprite.anchor.y = 0.5
+			// var ratio = 226
+			// sprite.width = ratio
+			// sprite.height = ratio
+			// uniforms.resolution.x = ratio
+			// uniforms.resolution.y = ratio
+			// sprite.anchor.x = sprite.anchor.y = 0.5
 
 			g.holder = holder
 			g.ball = ball
-			g.lava = sprite
+			g.lava = lava
 			g.line = line
-			g.uniforms = uniforms
+			// g.uniforms = uniforms
 			this.cranes[i] = g
 		};
 
@@ -138,12 +147,10 @@ export default class MetalXP extends BaseXP {
 				pair.bodyA.active = true
 				pair.bodyB.active = true
 			}
-
 			clearTimeout(this.burnSoundTimeout)
 			this.burnSoundTimeout = setTimeout(()=>{
-				AppStore.Sounds.play('metal-sounds-burn', { interrupt: createjs.Sound.INTERRUPT_ANY, volume:Utils.Rand(0.2, 0.8, 0.1) })	
-			}, 300)
-			
+				AppStore.Sounds.play('metal-sounds-burn', { interrupt: createjs.Sound.INTERRUPT_ANY, volume:Utils.Rand(0.2, 0.6, 0.1) })	
+			}, 200)
 		})
 
 		Matter.Events.on(this.engine, 'collisionEnd', function(event) {
@@ -174,13 +181,19 @@ export default class MetalXP extends BaseXP {
   			holder.x = body.position.x
   			holder.y = body.position.y
 
+  			// if(body.active) {
+  			// 	uniforms.intensity.value += (1.6 - uniforms.intensity.value) * 0.1
+  			// }else{
+  			// 	uniforms.intensity.value -= (uniforms.intensity.value + 0.5) * 0.005
+  			// }
+
   			if(body.active) {
-  				uniforms.intensity.value += (1.6 - uniforms.intensity.value) * 0.1
+  				lava.alpha += (0.8 - lava.alpha) * 0.1
   			}else{
-  				uniforms.intensity.value -= (uniforms.intensity.value + 0.5) * 0.005
+  				lava.alpha -= (lava.alpha + 0.1) * 0.01
   			}
 
-  			uniforms.time.value += 0.001
+  			// uniforms.time.value += 0.001
 
   			line.clear()
   			line.lineStyle(1, 0xffffff, 1);

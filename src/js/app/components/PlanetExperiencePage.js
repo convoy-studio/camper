@@ -18,6 +18,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 	}
 	componentDidMount() {
 		this.transitionInCompleted = false
+		this.activateArrows = false
 
 		var infos = AppStore.generalInfosLangScope()
 		
@@ -48,6 +49,7 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 		super.componentDidMount()
 	}
 	arrowClicked(direction) {
+		if(this.activateArrows == false) return
 		var planet;
 		switch(direction) {
 			case AppConstants.RIGHT:
@@ -89,6 +91,9 @@ export default class PlanetExperiencePage extends BasePlanetPage {
 	didTransitionInComplete() {
 		super.didTransitionInComplete()	
 		this.experience.didTransitionInComplete()
+		setTimeout(()=>{
+			this.activateArrows = true
+		}, 1400)
 	}
 	willTransitionIn() {
 		this.transitionInCompleted = true

@@ -26,6 +26,7 @@ export default class AlaskaXP extends BaseXP {
 		this.pxContainer.addChild(this.videoSprite)
 
 		this.button = $('<div class="xp-button"></div>')
+		this.button.css('cursor', 'pointer')
 		this.element.append(this.button)
 
 		this.particleContainer = AppStore.getContainer()
