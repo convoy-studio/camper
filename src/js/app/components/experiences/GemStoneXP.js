@@ -122,7 +122,7 @@ export default class GemStoneXP extends BaseXP {
 	onMouseOver(e) {
 		e.preventDefault()
 		if(this.isAnimating) return 
-		this.activationInterval = setInterval(this.toggleActivationStep, 200)
+		this.activationInterval = setInterval(this.toggleActivationStep, 380)
 		AppStore.Sounds.play('gemstone-sounds-reveal-0', { interrupt: createjs.Sound.INTERRUPT_ANY, volume:0.1 })
 	}
 	toggleActivationStep() {

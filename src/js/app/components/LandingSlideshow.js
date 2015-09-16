@@ -94,7 +94,7 @@ export default class LandingSlideshow {
 
 	 	this.shiftUntilCorrectCurrentSlide()
 
-	 	this.maskEasing = BezierEasing(.84,.13,0,1.03)
+	 	this.maskEasing = BezierEasing(1,-0.02,.01,1.07)
 	 	this.chooseSlideToHighlight()
 	}
 	shiftUntilCorrectCurrentSlide() {

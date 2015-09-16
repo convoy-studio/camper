@@ -17,6 +17,7 @@ export default class PXContainer {
 			    antialias: true
 			};
 			this.renderer = new PIXI.autoDetectRenderer(1, 1, renderOptions)
+			// this.renderer = new PIXI.CanvasRenderer(1, 1, renderOptions)
 			this.currentColor = undefined
 			var el = $(elementId)
 			$(this.renderer.view).attr('id', 'px-container')

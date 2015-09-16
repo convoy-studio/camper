@@ -23,7 +23,7 @@ export default class Landing extends Page {
 					url: "#!/planet/" + planet + '/0'
 				}
 				mobileScope[i] = g
-			};
+			}
 			props.data.mobileScope = mobileScope
 		}
 
