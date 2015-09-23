@@ -12,6 +12,8 @@ class Router {
 		hasher.newHash = undefined
 		hasher.oldHash = undefined
 		hasher.prependHash = '!'
+		var hash = window.location.hash.split('?')
+		window.location.hash = hash[0]
 		hasher.initialized.add(this._didHasherChange.bind(this))
 		hasher.changed.add(this._didHasherChange.bind(this))
 		this._setupCrossroads()
@@ -23,7 +25,7 @@ class Router {
 		var planets = AppStore.planets()
 		var basicSection = crossroads.addRoute('{page}', this._onFirstDegreeURLHandler.bind(this), 3)
 		basicSection.rules = {
-	        page : ['landing'] //valid sections
+	        page : ['landing']
 	    }
 	    var planetProductSection = crossroads.addRoute('/planet/{planetId}/{productId}', this._onPlanetProductURLHandler.bind(this), 2)
 	    planetProductSection.rules = {
@@ -43,7 +45,9 @@ class Router {
 	}
 	_onPlanetURLHandler(planetId) {
 
-		if(AppStore.Detector.isMobile) {
+		var isSupportWebGL = AppStore.Detector.isSupportWebGL
+
+		if(AppStore.Detector.isMobile || !isSupportWebGL) {
 			var mobileUrl = '/planet/'+planetId+'/0'
 			Router.setHash(mobileUrl)
 			return

@@ -1,4 +1,5 @@
 import AppStore from 'AppStore'
+import Router from 'Router'
 
 export default class BaseXP {
 	constructor(parentContainer, parentElement, topParent) {
@@ -65,6 +66,13 @@ export default class BaseXP {
 		})
 	}
 	componentWillUnmount() {
+
+		var hash = Router.getNewHash()
+		if(hash.targetId == 'alaska' || hash.targetId == 'metal') {
+		}else{
+			AppStore.BackgroundElement.html('')
+		}
+
 		this.containerMask.clear()
 		this.pxContainer.mask = null
 		AppStore.Sounds.stopSoundsByPlanetId(this.id)

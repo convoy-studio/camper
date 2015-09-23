@@ -1,10 +1,13 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
+import Router from 'Router'
 
 export default class PXContainer {
 	constructor() {
 	}
 	init(elementId) {
+
+		this.clearBack = false
 
 		this.didHasherChange = this.didHasherChange.bind(this)
 		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.didHasherChange)
@@ -14,6 +17,7 @@ export default class PXContainer {
 		} else {
 			var renderOptions = {
 			    resolution: 1,
+			    transparent: true,
 			    antialias: true
 			};
 			this.renderer = new PIXI.autoDetectRenderer(1, 1, renderOptions)
@@ -21,6 +25,9 @@ export default class PXContainer {
 			this.currentColor = undefined
 			var el = $(elementId)
 			$(this.renderer.view).attr('id', 'px-container')
+			var $backgroundElement = $('<div id="background-element"></div>')
+			AppStore.BackgroundElement = $backgroundElement
+			el.append($backgroundElement)
 			el.append(this.renderer.view)
 			this.stage = new PIXI.Container()
 			this.background = new PIXI.Graphics()
@@ -32,6 +39,7 @@ export default class PXContainer {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
+		this.background.clear()
 		this.background.lineStyle(0);
 		this.background.beginFill(color, 1);
 		this.background.drawRect(0, 0, windowW, windowH);
@@ -55,12 +63,19 @@ export default class PXContainer {
 		var scale = 1
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
+		AppStore.BackgroundElement.css({
+			width: windowW,
+			height: windowH
+		})
 		this.renderer.resize(windowW * scale, windowH * scale)
-		this.drawBackground(this.currentColor)
+		if(!this.clearBack) {
+			this.drawBackground(this.currentColor)
+		}
 	}
 	didHasherChange() {
 		var pageId = AppStore.getPageId()
 		var palette = AppStore.paletteColorsById(pageId)
+		this.clearBack = false
 		if(AppStore.Detector.isMobile) {
 			if(palette != undefined) {
 				var c = palette[0]
@@ -71,7 +86,19 @@ export default class PXContainer {
 			if(palette != undefined) {
 				var c = palette[0]
 				this.currentColor = c
-				this.drawBackground(c)
+
+				if(AppStore.getTypeOfPage() == AppConstants.EXPERIENCE) {
+					var hash = Router.getNewHash()
+					if(hash.targetId == 'alaska' || hash.targetId == 'metal') {
+						this.clearBack = true
+						this.background.clear()						
+					}else{
+						this.drawBackground(c)
+					}
+
+				}else{
+					this.drawBackground(c)
+				}
 			}
 		}
 	}

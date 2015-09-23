@@ -10,6 +10,7 @@ import MobileDetect from 'mobile-detect'
 import AppConstants from 'AppConstants'
 import hasher from 'hasher'
 import PagesLoader from 'PagesLoader'
+import Utils from 'Utils'
 
 class App {
 	constructor() {
@@ -23,6 +24,8 @@ class App {
 			var $appContainer = $('#app-container')
 			AppStore.Detector.oldIE = $appContainer.is('.ie6, .ie7, .ie8')
 			// AppStore.Detector.oldIE = true
+
+			AppStore.Detector.isSupportWebGL = Utils.SupportWebGL()
 
 			if(AppStore.Detector.oldIE) {
 				AppStore.Detector.isMobile = true

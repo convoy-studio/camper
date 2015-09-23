@@ -228,6 +228,7 @@ a {
     position: absolute;
     z-index: 2;
     width: $w;
+    height: $w;
     left: 50%;
     top: 50%;
     margin-left: -$w / 2;
@@ -353,6 +354,7 @@ a {
 
 #assets-loader-page {
     @extend .full;
+    @extend .top-left;
     position: fixed;
     z-index: 999999999;
     visibility: hidden;

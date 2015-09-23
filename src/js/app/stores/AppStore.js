@@ -163,7 +163,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
             } else if (Modernizr.video.webm) {
                 return 'webm'
             } else if (Modernizr.video.ogg){
-                return 'ogv'
+                return 'ogg'
             }
         }
     },

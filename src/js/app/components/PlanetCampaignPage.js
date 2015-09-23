@@ -345,13 +345,6 @@ export default class PlanetCampaignPage extends BaseCampaignPage {
 
 		this.currentContainer.video.container.addClass('opened')
 		this.currentContainer.video.el.css('background-color', 'transparent')
-
-		// setTimeout(()=>{
-		// 	var wistiaEmbed = $('#'+frameUUID)[0].wistiaApi
-		// 	wistiaEmbed.bind("end", ()=> {
-		// 		alert("The video ended!");
-		// 	});
-		// }, 2000)
 	}
 	animateContainers() {
 		var windowW = AppStore.Window.w

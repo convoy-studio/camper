@@ -8,15 +8,20 @@ export default class MetalXP extends BaseXP {
 	constructor(parentContainer, parentElement) {
 		super(parentContainer, parentElement)
 	}
+	didTransitionInComplete() {
+		setTimeout(()=>{
+			var videoId = 'v6zreywdqq'
+			var iframeStr = '<iframe src="//fast.wistia.net/embed/iframe/'+videoId+'" allowtransparency="false" frameborder="0" scrolling="yes" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe>'
+			this.iframe = $(iframeStr)
+			AppStore.BackgroundElement.html(this.iframe)
+			this.resizeIFrame()
+		}, 200)
+		
+		super.didTransitionInComplete()
+	}
 	componentDidMount() {
 
-		var videoSize = AppStore.responsivePosterImage()
-		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/metal/experience-assets/bg-video/metal_'+videoSize+'.' + AppStore.videoExtensionSupport())
-		this.video = $(texture.baseTexture.source)
-		this.video.attr('loop', true)
-		this.videoSprite = AppStore.getSprite()
-		this.videoSprite.texture = texture
-		this.pxContainer.addChild(this.videoSprite)
+		AppStore.BackgroundElement.html('')
 
 		var Engine = Matter.Engine,
 		    World = Matter.World,
@@ -204,16 +209,26 @@ export default class MetalXP extends BaseXP {
 
 		super.update()
 	}
+	resizeIFrame() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		var videoResize = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
+		
+		this.iframe.css({
+			position: 'absolute',
+			left: videoResize.left,
+			top: videoResize.top,
+			width: videoResize.width,
+			height: videoResize.height,
+		})
+	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		var videoResize = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
-
-		this.videoSprite.x = videoResize.left
-		this.videoSprite.y = videoResize.top
-		this.videoSprite.width = videoResize.width
-		this.videoSprite.height = videoResize.height
+		if(this.iframe != undefined) {
+			this.resizeIFrame()
+		}
 
 		this.matterCanvas.get(0).width = windowW
 		this.matterCanvas.get(0).height = windowH
@@ -241,8 +256,8 @@ export default class MetalXP extends BaseXP {
   			AppStore.releaseContainer(holder)
   		}
 
-  		this.videoSprite.destroy(true)
-  		Utils.RemoveVideo(this.video)
+  		// this.videoSprite.destroy(true)
+  		// Utils.RemoveVideo(this.video)
 		super.componentWillUnmount()
 	}
 }

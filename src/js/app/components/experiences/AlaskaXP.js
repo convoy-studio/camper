@@ -15,15 +15,20 @@ export default class AlaskaXP extends BaseXP {
 		this.shoeIndex = 0
 		this.isFirstTimePass = true
 	}
+	didTransitionInComplete() {
+		setTimeout(()=>{
+			var videoId = 'enq5mr5vth'
+			var iframeStr = '<iframe src="//fast.wistia.net/embed/iframe/'+videoId+'" allowtransparency="false" frameborder="0" scrolling="yes" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe>'
+			this.iframe = $(iframeStr)
+			AppStore.BackgroundElement.html(this.iframe)
+			this.resizeIFrame()
+		}, 200)
+
+		super.didTransitionInComplete()
+	}
 	componentDidMount() {
 
-		var videoSize = AppStore.responsivePosterImage()
-		var texture = PIXI.Texture.fromVideo(AppStore.baseMediaPath() + 'image/planets/alaska/experience-assets/bg-video/alaska_'+videoSize+'.' + AppStore.videoExtensionSupport())
-		this.video = $(texture.baseTexture.source)
-		this.video.attr('loop', true)
-		this.videoSprite = AppStore.getSprite()
-		this.videoSprite.texture = texture
-		this.pxContainer.addChild(this.videoSprite)
+		AppStore.BackgroundElement.html('')
 
 		this.button = $('<div class="xp-button"></div>')
 		this.button.css('cursor', 'pointer')
@@ -327,15 +332,26 @@ export default class AlaskaXP extends BaseXP {
 		this.currentRock.wrapperBack.y += this.currentRock.wrapperBack.vy
 		this.currentRock.wrapperFront.y += this.currentRock.wrapperFront.vy
 	}
-	resize() {
+	resizeIFrame() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		var videoResize = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 
-		this.videoSprite.x = videoResize.left
-		this.videoSprite.y = videoResize.top
-		this.videoSprite.width = videoResize.width
-		this.videoSprite.height = videoResize.height
+		this.iframe.css({
+			position: 'absolute',
+			left: videoResize.left,
+			top: videoResize.top,
+			width: videoResize.width,
+			height: videoResize.height,
+		})
+	}
+	resize() {
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+
+		if(this.iframe != undefined) {
+			this.resizeIFrame()
+		}
 
 		this.particleContainer.x = (windowW >> 1)
 		this.particleContainer.y = (windowH >> 1)
@@ -376,8 +392,8 @@ export default class AlaskaXP extends BaseXP {
 			var shoe = this.shoes[i]
 			AppStore.releaseSprite(shoe)
 		};
-		this.videoSprite.destroy(true)
-		Utils.RemoveVideo(this.video)
+		// this.videoSprite.destroy(true)
+		// Utils.RemoveVideo(this.video)
 		// this.pxContainer.filters = null
 		this.removeFromRockById('rock-a')
 		this.removeFromRockById('rock-b')

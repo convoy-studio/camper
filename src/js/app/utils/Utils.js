@@ -136,6 +136,14 @@ class Utils {
 	    $media.children('source').prop('src', '');
 	    $media.remove().length = 0;
 	}
+	static SupportWebGL() {
+		try {
+			var canvas = document.createElement( 'canvas' );
+			return !! ( window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ) );
+		} catch ( e ) {
+			return false;
+		}
+	}
 }
 
 export default Utils

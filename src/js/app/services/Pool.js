@@ -6,7 +6,7 @@ export default class Pool {
 		var planets = AppStore.planets()
 		var pxContainerNum = 50 + (planets.length * 1)
 		var graphicsNum = (planets.length * 3) - 2
-		var spritesNum = planets.length + (3*2) + (8*4) + 40
+		// var spritesNum = planets.length + (3*2) + (8*4) + 40
 		var springGardensNum = 12
 	
 		if(!AppStore.Detector.oldIE) {
@@ -14,7 +14,7 @@ export default class Pool {
 			this.timelines = op.generate(TimelineMax, { count: 20 })
 			this.pxContainers = op.generate(PIXI.Container, { count: pxContainerNum })
 			this.graphics = op.generate(PIXI.Graphics, { count: graphicsNum })
-			this.sprites = op.generate(PIXI.Sprite, { count: spritesNum })
+			// this.sprites = op.generate(PIXI.Sprite, { count: spritesNum })
 			this.springGardens = op.generate(SpringGarden, { count: springGardensNum })
 		}		
 	}
