@@ -68,7 +68,12 @@ export default class Landing extends Page {
 
 			this.middleArea.on('click', this.middleAreaClick)
 
-			this.tweenCompass = TweenMax.to(this.compass.container.scale, 0.6, { x:1.1, y:1.1, ease:Back.easeInOut })
+			var rings = this.compass.rings
+			var scale = 1.2
+			this.tweenCompass = new TimelineMax()
+			this.tweenCompass.to(rings.bigCircle.scale, 1, { x:scale, y:scale, ease:Expo.easeInOut }, 0)
+			this.tweenCompass.to(rings.middleCircle.scale, 1, { x:scale, y:scale, ease:Expo.easeInOut }, 0.1)
+			this.tweenCompass.to(rings.smallCircle.scale, 1, { x:scale, y:scale, ease:Expo.easeInOut }, 0.2)
 			this.tweenCompass.pause(0)
 		}
 
@@ -76,11 +81,15 @@ export default class Landing extends Page {
 	}
 	middleAreaMouseEnter(e) {
 		e.preventDefault()
-		this.tweenCompass.timeScale(1).play()
+		this.tweenCompass.timeScale(1.8).play()
+		// this.compass.rollover()
+		this.landingSlideshow.rolloverBig()
 	}
 	middleAreaMouseLeave(e) {
 		e.preventDefault()
-		this.tweenCompass.timeScale(1.4).reverse()
+		this.tweenCompass.timeScale(2).reverse()
+		// this.compass.rollout()
+		this.landingSlideshow.rolloutBig()
 	}
 	middleAreaClick(e) {
 		e.preventDefault()
@@ -99,6 +108,7 @@ export default class Landing extends Page {
 				this.next()
 				break
 		}
+		this.landingSlideshow.clickedSmall()
 	}
 	arrowMouseEnter(e) {
 		e.preventDefault()
@@ -106,6 +116,7 @@ export default class Landing extends Page {
 		var direction = id.toUpperCase()
 		var arrow = this.getArrowByDirection(direction)
 		arrow.mouseOver()
+		this.landingSlideshow.rolloverSmall(id)
 	}
 	arrowMouseLeave(e) {
 		e.preventDefault()
@@ -113,6 +124,7 @@ export default class Landing extends Page {
 		var direction = id.toUpperCase()
 		var arrow = this.getArrowByDirection(direction)
 		arrow.mouseOut()
+		this.landingSlideshow.rolloutSmall(id)
 	}
 	getArrowByDirection(direction) {
 		switch(direction) {
@@ -152,10 +164,12 @@ export default class Landing extends Page {
 	next() {
 		this.landingSlideshow.next()
 		this.updateCompassPlanet()
+		this.compass.rings.next()
 	}
 	previous() {
 		this.landingSlideshow.previous()
 		this.updateCompassPlanet()
+		this.compass.rings.previous()
 	}
 	update() {
 		

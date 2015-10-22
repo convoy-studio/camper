@@ -158,8 +158,8 @@ var tasks = {
                 })
 
                 .pipe(source('app.js'))
-                // .pipe(gulpif(production, buffer()))
-                // .pipe(gulpif(production, uglify()))
+                .pipe(gulpif(production, buffer()))
+                .pipe(gulpif(production, uglify()))
                 .pipe(gulp.dest('./www/js'))
                 .pipe(livereload())
         }

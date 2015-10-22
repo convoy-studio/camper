@@ -2,6 +2,7 @@ import BasePage from 'BasePage'
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
+import Router from 'Router'
 
 export default class Page extends BasePage {
 	constructor(props) {
@@ -20,6 +21,7 @@ export default class Page extends BasePage {
 		else this.parent.css('cursor', 'auto')
 
 		setTimeout(()=>{AppActions.pxAddChild(this.pxContainer)}, 0)
+
 		super.componentDidMount()
 	}
 	componentWillMount() {

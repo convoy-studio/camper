@@ -4,6 +4,7 @@ import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
 import Router from 'Router'
+import SimpleTextBtn from 'SimpleTextBtn'
 
 class FrontContainer extends BaseComponent {
 	constructor() {
@@ -70,6 +71,14 @@ class FrontContainer extends BaseComponent {
 			$twitter.html('<img src=' + AppStore.baseMediaPath() + 'image/twitter.png' +'>')
 			$instagram.html('<img src=' + AppStore.baseMediaPath() + 'image/instagram.png' +'>')
 		}
+
+		var simpleTextBtn = this.child.find('.simple-text-btn')
+		this.simpleTextBtns = []
+		for (var i = 0; i < simpleTextBtn.length; i++) {
+			var el = simpleTextBtn[i]
+			this.simpleTextBtns[i] = new SimpleTextBtn($(el))
+			this.simpleTextBtns[i].componentDidMount()
+		};
 
 		this.onSubMenuMouseEnter = this.onSubMenuMouseEnter.bind(this)
 		this.onSubMenuMouseLeave = this.onSubMenuMouseLeave.bind(this)

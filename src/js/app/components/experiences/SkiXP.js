@@ -3,7 +3,6 @@ import AppStore from 'AppStore'
 import BezierEasing from 'bezier-easing'
 import Utils from 'Utils'
 import GradientText from 'GradientText'
-import particles from 'pixi-particles'
 import AppConstants from 'AppConstants'
 
 export default class SkiXP extends BaseXP {

@@ -2,7 +2,6 @@ import BaseXP from 'BaseXP'
 import Utils from 'Utils'
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
-import particles from 'pixi-particles'
 
 export default class AlaskaXP extends BaseXP {
 	constructor(parentContainer, parentElement) {

@@ -1,7 +1,6 @@
 import BaseXP from 'BaseXP'
 import AppStore from 'AppStore'
 import Utils from 'Utils'
-import particles from 'pixi-particles'
 import Sounds from 'Sounds'
 
 export default class WoodXP extends BaseXP {

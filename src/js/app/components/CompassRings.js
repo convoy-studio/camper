@@ -5,19 +5,36 @@ import Utils from 'Utils'
 export default class CompassRings {
 	constructor(parentContainer) {
 		this.container = parentContainer
+		this.circleDeg = {
+			small: 0,
+			big: 0
+		}
 	}
 	componentDidMount() {
 		this.ringsContainer = AppStore.getContainer()
 		this.titlesContainer = AppStore.getContainer()
 		this.container.addChild(this.ringsContainer)
 		this.container.addChild(this.titlesContainer)
+		
+		this.smallCircle = AppStore.getContainer()
+		this.middleCircle = AppStore.getContainer()
+		this.bigCircle = AppStore.getContainer()
 
 		this.circles = []
 		var ciclesLen = 6
 		for (var i = 0; i < ciclesLen; i++) {
 			var g = new PIXI.Graphics()
 			this.circles[i] = g
-			this.ringsContainer.addChild(g)
+			if(i==0 || i==1 || i==2) {
+				this.smallCircle.addChild(g)				
+				this.ringsContainer.addChild(this.smallCircle)
+			}else if(i==3) {
+				this.middleCircle.addChild(g)				
+				this.ringsContainer.addChild(this.middleCircle)
+			}else{
+				this.bigCircle.addChild(g)				
+				this.ringsContainer.addChild(this.bigCircle)
+			}
 		}
 
 		this.titles = []
@@ -32,13 +49,30 @@ export default class CompassRings {
 			var txt = new PIXI.Text(elementTitle, { font: fontSize + 'px FuturaBold', fill: 'white', align: 'center' })
 			txt.anchor.x = 0.5
 			txt.anchor.y = 0.5
-			this.titlesContainer.addChild(txt)
+			this.bigCircle.addChild(txt)
 			this.titles.push({
 				txt: txt,
 				degBegin: this.getDegreesBeginForTitlesById(elementId),
 			})
 		}
+		this.titlesContainer.addChild(this.bigCircle)
 
+	}
+	next() {
+		this.circleDeg.small += Math.PI
+		this.circleDeg.big -= Math.PI
+		TweenMax.to(this.smallCircle, 0.8, { rotation:this.circleDeg.small, ease:Expo.easeOut })
+		TweenMax.to(this.bigCircle, 0.8, { rotation:this.circleDeg.big, ease:Expo.easeOut })
+	}
+	previous() {
+		this.circleDeg.small -= Math.PI
+		this.circleDeg.big += Math.PI
+		TweenMax.to(this.smallCircle, 0.8, { rotation:this.circleDeg.small, ease:Expo.easeOut })	
+		TweenMax.to(this.bigCircle, 0.8, { rotation:this.circleDeg.big, ease:Expo.easeOut })	
+	}
+	rollover() {
+	}
+	rollout() {
 	}
 	getDegreesBeginForTitlesById(id) {
 		// be careful starts from center -90deg

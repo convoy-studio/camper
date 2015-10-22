@@ -18,6 +18,18 @@ export default class Compass {
 	 	this.springGardens = []
 	 	this.getRadius()
 	}
+	rollover() {
+		for (var i = 0; i < this.springGardens.length; i++) {
+			var springGarden = this.springGardens[i]
+			springGarden.rollover()
+		}
+	}
+	rollout() {
+		for (var i = 0; i < this.springGardens.length; i++) {
+			var springGarden = this.springGardens[i]
+			springGarden.rollout()
+		}	
+	}
 	updateData(data) {
 		this.removePreviousSpringGardens()
 		this.springGardens = []

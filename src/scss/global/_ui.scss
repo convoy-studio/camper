@@ -399,3 +399,15 @@ a {
         }
     }
 }
+.simple-text-btn {
+    .text-line {
+        background-color: white;
+        height: 2px;
+        position: absolute;
+        z-index: 10;
+    }
+    .text-wrap {
+        position: relative;
+        z-index: 8;
+    }
+}

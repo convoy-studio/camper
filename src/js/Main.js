@@ -2,9 +2,9 @@
 if ( ! window.console ) console = { log: function(){} };
 
 import App from 'App'
-import $ from 'jquery'
 import TweenMax from 'gsap'
 import raf from 'raf'
+import $ from 'jquery'
 import wheel from 'jquery-mousewheel'
 
 window.jQuery = window.$ = $

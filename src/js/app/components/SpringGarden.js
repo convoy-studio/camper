@@ -15,6 +15,8 @@ export default class SpringGarden {
 		this.lineW = AppStore.getLineWidth()
 		this.paused = true
 		this.opened = false
+		this.isRollover = false
+		this.counter = 0
 
 		this.knots = []
 		for (var i = 0; i < AppConstants.TOTAL_KNOT_NUM; i++) {
@@ -42,6 +44,10 @@ export default class SpringGarden {
 			knot.changeSize(this.knotRadius)
 			knot.toX = newKnotScale.x * (this.radius)
 			knot.toY = newKnotScale.y * (this.radius)
+			knot.initialX = knot.toX
+			knot.initialY = knot.toY
+			knot.timer = 0
+			knot.timerVel = 0.005
 			knot.x = 0
 			knot.y = 0
 		}
@@ -55,12 +61,20 @@ export default class SpringGarden {
 		var len = this.knots.length
 		var spring = this.config.spring
 		var friction = this.config.friction
+		this.counter += 0.1
 		for (var i = 0; i < len; i++) {
 			var knot = this.knots[i]
 			var previousKnot = this.knots[i-1]
 			previousKnot = (previousKnot == undefined) ? this.knots[len-1] : previousKnot
 
-			Utils.SpringTo(knot, knot.toX, knot.toY, i, spring, friction, this.config.springLength)
+			if(this.isRollover) {
+				knot.timer += knot.timerVel
+				var kX = knot.initialX + Math.cos(knot.timer*(i+1)) * 6
+				var kY = knot.initialY + Math.sin(knot.timer*(i+1)) * 6
+				Utils.SpringTo(knot, kX, kY, i, spring, friction, this.config.springLength)
+			}else{
+				Utils.SpringTo(knot, knot.toX, knot.toY, i, spring, friction, this.config.springLength)
+			}
 			knot.position(knot.x + knot.vx, knot.y + knot.vy)
 
 			this.areaPolygon.moveTo(previousKnot.x, previousKnot.y)
@@ -68,6 +82,12 @@ export default class SpringGarden {
 		}
 		this.config.springLength -= (this.config.springLength) * 0.4
 		this.container.rotation -= (this.container.rotation) * 0.4
+	}
+	rollover() {
+		this.isRollover = true
+	}
+	rollout() {
+		this.isRollover = false
 	}
 	assignOpenedConfig() {
 		this.config.spring = 0.05

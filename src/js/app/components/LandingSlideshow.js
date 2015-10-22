@@ -4,7 +4,7 @@ import Vec2 from 'Vec2'
 import Utils from 'Utils'
 import BezierEasing from 'bezier-easing'
 import Router from 'Router'
-const glslify = require('glslify')
+// const glslify = require('glslify')
 
 export default class LandingSlideshow {
 	constructor(pxContainer, parentEl) {
@@ -21,20 +21,20 @@ export default class LandingSlideshow {
 		this.currentId = (this.currentId == undefined) ? 'alaska' : this.currentId
 		AppStore.LandingCurrentPoster = this.currentId
 
-		// this.displacementOffsets = {
-		// 	ski: [100, 30, 0.85, 0.85],
-		// 	metal: [100, 30, 0.85, 0.85],
-		// 	alaska: [100, 30, 0.85, 0.85],
-		// 	wood: [0, 0, 0.92, 0.92],
-		// 	gemstone: [-80, 0, 0.92, 0.92]
-		// }
+		// this.displacementMapTexture = AppStore.getSprite()
+		// this.displacementMapTexture.texture = PIXI.Texture.fromImage(AppStore.baseMediaPath() + 'image/displacement.jpg')
+		// this.displacementMapTexture.anchor.x = this.displacementMapTexture.anchor.y = 0.5
+		// this.displacementFilter = new PIXI.filters.DisplacementFilter(this.displacementMapTexture)
+		// this.displacementMapTexture.scale.x = this.displacementMapTexture.scale.y = 0
+		// this.displacementTween = TweenMax.fromTo(this.displacementMapTexture.scale, 2, { x:0, y:0 }, { x:10, y:10, ease:Expo.easeOut })
+
+		// this.pxContainer.filters = [this.displacementFilter]
 
 		var infos = AppStore.generalInfosLangScope()
 		this.slideshowContainer = AppStore.getContainer()
 	 	this.slideshowWrapper = AppStore.getContainer()
 	 	this.pxContainer.addChild(this.slideshowContainer)
 	 	this.slideshowContainer.addChild(this.slideshowWrapper)
-	 	this.counter = 0
 	 	this.planetTitleTxt = infos.planet.toUpperCase()
 
 		var slideshowTitle = this.parentEl.find('.slideshow-title')
@@ -49,7 +49,7 @@ export default class LandingSlideshow {
 	 	this.planetNameTween = TweenMax.fromTo(planetName, 0.5, {scaleX:1.4, scaleY:0, opacity:0}, { scale:1, opacity:1, force3D:true, ease:Elastic.easeOut })
 	 	this.planetNameTween.pause(0)
 
-	 	var displacementFrag = glslify('./shaders/displacement.glsl')
+	 	// var displacementFrag = glslify('./shaders/displacement.glsl')
 
 	 	var planets = AppStore.planets()
 	 	this.slides = []
@@ -66,6 +66,8 @@ export default class LandingSlideshow {
 	 		var imgUrl = AppStore.mainImageUrl(id, AppConstants.RESPONSIVE_IMAGE)
 	 		// var imgMapUrl = AppStore.mainImageMapUrl(id, AppConstants.RESPONSIVE_IMAGE)
 	 		var texture = PIXI.Texture.fromImage(imgUrl)
+	 		var filter = new PIXI.filters.GrayFilter()
+	 		filter.gray = 0.4
 	 		// var displacementTexture = PIXI.Texture.fromImage(imgMapUrl)
 	 		// s.displacementSprite = new PIXI.Sprite(displacementTexture)
 	 		// s.displacementSprite.anchor.x = s.displacementSprite.anchor.y = 0.5
@@ -83,9 +85,11 @@ export default class LandingSlideshow {
 	 		s.newPosition = new Vec2(0, 0)
 	 		s.wrapperContainer = wrapperContainer
 	 		s.sprite = sprite
+	 		sprite.filters = [filter]
 	 		s.texture = texture
 	 		s.maskRect = maskRect
 	 		s.planetName = id.toUpperCase()
+	 		s.filterTween = TweenMax.to(filter, 1, { gray:0, paused:true, ease:Expo.easeOut })
 	 		s.imgResponsiveSize = AppStore.responsiveImageSize(AppConstants.RESPONSIVE_IMAGE)
 	 		s.imgUrl = imgUrl
 	 		s.id = planets[i]
@@ -96,6 +100,48 @@ export default class LandingSlideshow {
 
 	 	this.maskEasing = BezierEasing(1,-0.02,.01,1.07)
 	 	this.chooseSlideToHighlight()
+		// this.pxContainer.addChild(this.displacementMapTexture)
+	}
+	rolloverBig() {
+		var slide = this.getCurrentSlideById(this.currentId)
+		slide.focusAnim.play(0).timeScale(1.4)
+		// slide.filterTween.play(0).timeScale(1.4)
+	}
+	rolloutBig() {
+		var slide = this.getCurrentSlideById(this.currentId)
+		slide.focusAnim.reverse().timeScale(2)
+		// slide.filterTween.reverse().timeScale(2)
+	}
+	rolloverSmall(id) {
+		// var slide;
+		// if(id == 'right') {
+		// 	slide = this.slides[3]
+		// }else{
+		// 	slide = this.slides[1]
+		// }
+		// slide.focusAnim.play(0).timeScale(1.4)
+	}
+	rolloutSmall(id) {
+		// var slide;
+		// if(id == 'right') {
+		// 	slide = this.slides[3]
+		// }else{
+		// 	slide = this.slides[1]
+		// }
+		// slide.focusAnim.reverse().timeScale(2)
+	}
+	clickedSmall() {
+		// for (var i = 0; i < this.slides.length; i++) {
+		// 	var slide = this.slides[i]
+		// 	slide.focusAnim.reverse().timeScale(2)
+		// };
+	}
+	getCurrentSlideById(id) {
+		for (var i = 0; i < this.slides.length; i++) {
+			if(this.slides[i].id == id) {
+				return this.slides[i]
+			}
+		};
 	}
 	shiftUntilCorrectCurrentSlide() {
 		if(this.currentId == this.slides[2].id) {
@@ -128,6 +174,7 @@ export default class LandingSlideshow {
 		this.elementThatMovedInSlidesArray = firstElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()
+		// this.displacementTween.play(0)
 	}
 	previous() {
 		var lastElement = this.slides.pop()
@@ -135,6 +182,7 @@ export default class LandingSlideshow {
 		this.elementThatMovedInSlidesArray = lastElement
 		this.chooseSlideToHighlight()
 		this.applyValuesToSlides()
+		// this.displacementTween.play(0)
 	}
 	chooseSlideToHighlight() {
 		var totalLen = this.slides.length-1
@@ -147,9 +195,11 @@ export default class LandingSlideshow {
 				this.slideshowWrapper.setChildIndex(slide.wrapperContainer, totalLen)
 				this.updateTitles(this.planetTitleTxt, slide.planetName)
 				this.positionTitlesContainer()
+				slide.filterTween.play(0).timeScale(1.4)
 			}else{
 				slide.highlight = false
 				this.slideshowWrapper.setChildIndex(slide.wrapperContainer, i)
+				slide.filterTween.reverse().timeScale(1)
 			}
 		}
 	}
@@ -175,18 +225,16 @@ export default class LandingSlideshow {
 		s.sprite.height = resizeVars.height
 		s.sprite.toX = resizeVars.left
 		s.sprite.y = resizeVars.top
+		s.focusAnim = TweenMax.fromTo(s.sprite.scale, 1.4, { x:resizeVars.scale, y:resizeVars.scale }, { paused:true, x:resizeVars.scale + 0.1, y:resizeVars.scale + 0.1, ease:Expo.easeInOut })
 	}
 	update() {
 		var slides = this.slides
-		this.counter += 0.012
 		for (var i = 0; i < slides.length; i++) {
 			var s = slides[i]
 			s.maskRect.valueScale += (1 - s.maskRect.valueScale) * 0.2
 			var ease = this.maskEasing.get(s.maskRect.valueScale)
 			s.wrapperContainer.x += (s.newPosition.x - s.wrapperContainer.x) * 0.2
 			s.maskRect.width += (s.maskRect.newW - s.maskRect.width) * 0.2
-			// s.displacementSprite.x = s.displacementSprite.xPos + Math.sin(this.counter) * 18
-			// s.displacementSprite.y = s.displacementSprite.yPos + Math.cos(this.counter) * 12
 			var maskRectX = (1 - ease) * s.maskRect.newX
 			s.sprite.x += (s.sprite.toX - s.sprite.x) * 0.2
 			this.drawCenteredMaskRect(s.maskRect.g, maskRectX, 0, s.maskRect.width, s.maskRect.height)
@@ -229,7 +277,7 @@ export default class LandingSlideshow {
 			// s.displacementSprite.scale.x = displacementVars[2]
 			// s.displacementSprite.scale.y = displacementVars[3]
 			// s.displacementSprite.alpha = 0.5
-			s.maskRect.newW = slideW
+			s.maskRect.newW = slideW + 30
 			s.maskRect.height = windowH
 			s.maskRect.newX = slideW >> 1
 			s.maskRect.valueScale = 2
@@ -255,6 +303,9 @@ export default class LandingSlideshow {
 			}
 			this.titleContainer.parent.css(titlesContainerCss)
 		}, 0)
+
+		// this.displacementMapTexture.x = windowW >> 1
+		// this.displacementMapTexture.y = windowH >> 1
 	}
 	resize() {
 		this.applyValuesToSlides()
