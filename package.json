@@ -63,6 +63,7 @@
     "crossroads": "^0.12.0",
     "eventemitter2": "^0.4.14",
     "flux-dispatcher": "^1.0.6",
+    "flux": "file:///Users/panagiotisthomoglou/Libs/flux-2.0.2",
     "glslify": "^2.2.1",
     "hasher": "^1.2.0",
     "jquery": "^1.11.3",
